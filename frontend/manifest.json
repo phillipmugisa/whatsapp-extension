@@ -1,0 +1,29 @@
+{
+  "name": "Whatsapp Extension",
+  "description": "Whatsapp Extension",
+  "homepage_url": "https://mugisathedev.netlify.app/",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "action": {
+    "default_title": "Whatsapp Extension"
+  },
+  "content_scripts": [
+    {
+      "js": ["contentScript.js"],
+      "css": ["popup.css"],
+      "run_at": "document_end",
+      "matches": [
+        "https://web.whatsapp.com/",
+        "https://web.whatsapp.com/"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["downloads", "tabs", "cookies", "storage"],
+  "host_permissions": [
+    "https://web.whatsapp.com/",
+    "https://web.whatsapp.com/"
+  ]
+}
