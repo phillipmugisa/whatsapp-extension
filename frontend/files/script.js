@@ -32,4 +32,23 @@ document.addEventListener("DOMContentLoaded", () => {
             modalToShow.classList.add("inview")
         }
     }
+
+
+    // sending messages
+    const new_number_send = document.querySelector("#new_number_send");
+    new_number_send.addEventListener("click", sendMsgToNewNo)
+
+    function sendMsgToNewNo() {
+        const sendMsgToNewNoform = document.querySelector("#sendMsgToNewNoform");
+
+        let countryCode = sendMsgToNewNoform.querySelector("#country_code").value;
+        let phoneNumber = sendMsgToNewNoform.querySelector("#new_phone_number").value;
+        let message = sendMsgToNewNoform.querySelector("#new_extension_message").value;
+
+        if (countryCode && phoneNumber && message) {
+            let fullNumber = `+${countryCode}${phoneNumber[0] == '0' ? phoneNumber.slice(1) : phoneNumber}`
+            let requestUrl = `https://api.whatsapp.com/send?phone=${fullNumber}&text=${message}`
+        }
+        
+    }
 })

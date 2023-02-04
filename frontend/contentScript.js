@@ -537,7 +537,9 @@
             extension_lower_area.appendChild(extension_sidebar_area);
 
             // add modals
-            extension_area.innerHTML = extension_area.innerHTML + modalsUI;
+            const modalSpace = document.createElement("section")
+            modalSpace.innerHTML = modalsUI;
+            extension_area.appendChild(modalSpace)
 
             chatAreaParent.appendChild(extension_area);
     
