@@ -304,20 +304,6 @@
                     </div>
                     <hr>
                     <div class="extension_sidebar_notes">
-                        <div class="extension_sidebar_note">
-                            <p class="note_content">Schedule Meeting</p>                            
-                            <div class="note_actions">
-                                <button class="edit_note">&#9998;</button>
-                                <button class="delete_note">&#9885;</button>
-                            </div>
-                        </div>
-                        <div class="extension_sidebar_note">
-                            <p class="note_content">Place date, and go back home after the match</p>
-                            <div class="note_actions">
-                                <button class="edit_note">&#9998;</button>
-                                <button class="delete_note">&#9885;</button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -328,19 +314,19 @@
         <header>
             <h3 class="extension_modal_heading">Create New Memo.</h3>
         </header>
-        <form action="" class="extension_modal_form">
+        <form action="" id="create_memo_form" class="extension_modal_form">
             <div class="fields">
                 <div class="extension_form_group">
-                    <input type="text" id="memo_name" name="memo_name" placeholder="Memo Name">
+                    <input type="text" id="memo_name" name="memo_name" placeholder="Memo Name" required>
                 </div>
                 <div class="extension_form_group">
-                    <textarea name="extension_memo" id="extension_memo" rows="3" placeholder="Memo Description" required></textarea>
+                    <textarea name="extension_memo" id="memo_description" rows="5" placeholder="Memo Description"></textarea>
                 </div>
             </div>
         </form>
         <footer>
             <button class="cancel_button">Cancel</button>
-            <button class="text-link" type="submit">Create</button>
+            <button class="text-link" id="create_memo_activator" type="submit">Create</button>
         </footer>
     </div>
 

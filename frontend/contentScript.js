@@ -44,7 +44,7 @@
                         <header>
                             <h3 class="extension_modal_heading">Send Message to New Number.</h3>
                         </header>
-                        <form action="" class="extension_modal_form">
+                        <form action="" class="extension_modal_form" id="sendMsgToNewNoform">
                             <div class="fields">
                                 <div class="extension_form_group number">
                                     <div>
@@ -266,17 +266,17 @@
                                             <option data-countryCode="ZW" value="263">Zimbabwe (+263)</option>
                                         </datalist>
                                     </div>
-            
+
                                     <input type="text" id="new_phone_number" name="new_phone_number" placeholder="Phone Number" required>
                                 </div>
                                 <div class="extension_form_group">
-                                    <textarea name="new_extension_message" id="new_extension_message" rows="5" placeholder="Enter Message" required></textarea>
+                                    <textarea name="new_extension_message" id="new_extension_message" rows="3" placeholder="Enter Message" required></textarea>
                                 </div>
                             </div>
                         </form>
                         <footer>
                             <button class="cancel_button">Cancel</button>
-                            <button class="text-link" type="submit">Send</button>
+                            <button id="new_number_send" class="text-link" type="submit">Send</button>
                         </footer>
                     </div>
                     <button class="extension_tab" data-modal-id="msg_to_new_user" id="msg_to_new_user_activator">&#9885;</button>
@@ -299,7 +299,7 @@
                                     </datalist>
                                 </div>
                                 <div class="extension_form_group">
-                                    <textarea name="extension_message" id="extension_message" rows="5" placeholder="Enter Message" required></textarea>
+                                    <textarea name="extension_message" id="extension_message" rows="3" placeholder="Enter Message" required></textarea>
                                 </div>
                             </div>
                         </form>
@@ -316,7 +316,7 @@
                 <button class="auth-tabs">Sign up</button>
                 <button class="auth-tabs" id="close_ext">&#9932;</button>
             </div>
-        </div>
+            </div>
     `
 
     var sidebarUI = `
@@ -328,20 +328,6 @@
                 </div>
                 <hr>
                 <div class="extension_sidebar_notes">
-                    <div class="extension_sidebar_note">
-                        <p class="note_content">Schedule Meeting</p>                            
-                        <div class="note_actions">
-                            <button class="edit_note">&#9998;</button>
-                            <button class="delete_note">&#9885;</button>
-                        </div>
-                    </div>
-                    <div class="extension_sidebar_note">
-                        <p class="note_content">Place date, and go back home after the match</p>
-                        <div class="note_actions">
-                            <button class="edit_note">&#9998;</button>
-                            <button class="delete_note">&#9885;</button>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -352,19 +338,19 @@
             <header>
                 <h3 class="extension_modal_heading">Create New Memo.</h3>
             </header>
-            <form action="" class="extension_modal_form">
+            <form action="" id="create_memo_form" class="extension_modal_form">
                 <div class="fields">
                     <div class="extension_form_group">
-                        <input type="text" id="memo_name" name="memo_name" placeholder="Memo Name">
+                        <input type="text" id="memo_name" name="memo_name" placeholder="Memo Name" required>
                     </div>
                     <div class="extension_form_group">
-                        <textarea name="extension_memo" id="extension_memo" rows="5" placeholder="Memo Description" required></textarea>
+                        <textarea name="extension_memo" id="memo_description" rows="5" placeholder="Memo Description"></textarea>
                     </div>
                 </div>
             </form>
             <footer>
                 <button class="cancel_button">Cancel</button>
-                <button class="text-link" type="submit">Create</button>
+                <button class="text-link" id="create_memo_activator" type="submit">Create</button>
             </footer>
         </div>
     `
@@ -618,7 +604,7 @@
             calcUI.classList.remove("in-view");
             document.querySelector(".extension-popup").classList.remove("calcInView");
     
-            var formErrMsg = document.querySelector("#popup-error-msg");
+            var formErrMsg = document.querySelector("#popup-error-msg");       
     
             document.querySelector(".popupform").addEventListener('submit', async (e) => {
                 e.preventDefault();
@@ -698,6 +684,142 @@
                         )
                     })
                     modalToShow.classList.add("inview")
+                }
+            }
+
+            // sending messages
+            const new_number_send = document.querySelector("#new_number_send");
+            new_number_send.addEventListener("click", sendMsgToNewNo)
+
+            function sendMsgToNewNo() {
+                const sendMsgToNewNoform = document.querySelector("#sendMsgToNewNoform");
+
+                let countryCode = sendMsgToNewNoform.querySelector("#country_code").value;
+                let phoneNumber = sendMsgToNewNoform.querySelector("#new_phone_number").value;
+                let message = sendMsgToNewNoform.querySelector("#new_extension_message").value;
+
+                if (countryCode && phoneNumber && message) {
+                    let fullNumber = `+${countryCode}${phoneNumber[0] == '0' ? phoneNumber.slice(1) : phoneNumber}`
+                    let requestUrl = `https://api.whatsapp.com/send?phone=${fullNumber}&text=${message}`;
+                    
+                    console.log(requestUrl)
+
+                    chrome.runtime.sendMessage({
+                        type:  'NEWNUMBER',
+                        url: requestUrl
+                    });
+
+                    document.querySelector("#sendMsgToNewNoform").reset();
+                    document.querySelector("#msg_to_new_user").querySelector(".cancel_button").click()
+
+                }
+                
+            }
+
+            var memos = JSON.parse(localStorage.getItem("extensionMemos")) || [];
+            renderMemos(null); 
+
+            const create_memo_activator = document.querySelector("#create_memo_activator");
+        
+            create_memo_activator.addEventListener("click", () => {
+                const create_memo_form = document.querySelector("#create_memo_form");
+                let memo_name = create_memo_form.querySelector("#memo_name").value;
+                let memo_description = create_memo_form.querySelector("#memo_description").value;
+    
+                if (!memo_name) {
+                    return;
+                }
+    
+                var editedFound = false;
+                memos.map(_memo => {
+                    if (_memo.inEdit) {
+                        editedFound = true;
+    
+                        _memo["inEdit"] = false;
+                        _memo["name"] = memo_name;
+                        _memo["description"] = memo_description;
+                    }
+                })
+    
+                if (!editedFound) {
+                    var memo = {
+                        id: Math.random() * 50,
+                        name: memo_name,
+                        description: memo_description
+                    }
+                }
+                
+                renderMemos(memo);
+    
+                // close modal
+                create_memo_form.reset()
+                create_memo_form.parentElement.querySelector(".cancel_button").click();
+            })
+    
+            function renderMemos(newMemo=null){
+                let savedMemos = localStorage.getItem("extensionMemos");
+    
+                if (!savedMemos) {
+                    localStorage.setItem("extensionMemos", JSON.stringify(memos));
+                } else {
+                    if (newMemo) {
+                        memos = [...JSON.parse(localStorage.getItem("extensionMemos")), newMemo];
+                    }
+                    localStorage.setItem('extensionMemos', JSON.stringify(memos));
+                }
+                
+                const extension_sidebar_notes = document.querySelector(".extension_sidebar_notes");
+    
+                function createNoteElem(memo) {
+                    const memoElem = document.createElement("div");
+                    memoElem.className = 'extension_sidebar_note';
+                    memoElem.dataset.memoId = memo.id;
+                    memoElem.innerHTML = `
+                        <p class="note_content">${memo.name}</p>                            
+                        <div class="note_actions">
+                            <button class="edit_note">&#9998;</button>
+                            <button class="delete_note">&#9885;</button>
+                        </div>
+                    `;
+                    memoElem.querySelector(".delete_note").addEventListener("click", () => {
+                        memos = memos.filter(memo => memo.id != memoElem.dataset.memoId);
+                        localStorage.setItem('extensionMemos', JSON.stringify(memos));
+                        renderMemos(null);
+                    })
+                    memoElem.querySelector(".edit_note").addEventListener("click", () => editMemo(memo))
+                    // memoElem.addEventListener("click", () => editMemo(memo))
+                    return memoElem;
+                }
+    
+    
+                if (newMemo) {
+                    extension_sidebar_notes.prepend(createNoteElem(newMemo));
+                }
+                else {
+                    extension_sidebar_notes.querySelectorAll(".extension_sidebar_note").forEach(
+                        note => {
+                            note.parentElement.removeChild(note)
+                        }
+                    )
+                    memos.forEach(memo => {
+                        extension_sidebar_notes.prepend(createNoteElem(memo));
+                    })
+                }
+    
+                function editMemo(memo) {
+                    create_note_activator.click();
+                    let modal = document.querySelector(".extension_modal#create_note");
+                    if (modal.classList.contains("inview")) {
+                        const create_memo_form = document.querySelector("#create_memo_form");
+                        create_memo_form.querySelector("#memo_name").value = memo.name;
+                        create_memo_form.querySelector("#memo_description").value = memo.description;
+    
+                        memos.map(_memo => {
+                            if (_memo.id === memo.id) {
+                                _memo["inEdit"] = true;
+                            }
+                        })
+                    }
                 }
             }
         }

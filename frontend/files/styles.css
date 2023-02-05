@@ -251,6 +251,11 @@ button {
     gap: 1rem;
     z-index: 10000;
 }
+@media (max-width: 1000px) {
+    .extension_modal {
+        inline-size: 50vw;
+    }
+}
 .extension_modal.inview {
     display: grid;
 }

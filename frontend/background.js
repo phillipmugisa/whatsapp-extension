@@ -90,8 +90,11 @@ async function messageListener(request, sender, sendResponse) {
       type: "RENDER_EXTUI"
     });
   }
-  else if (request.type === "SHOWSERVERPAGE") {
-    openTab(`serverpage/?calc=${request.source}`);
+  else if (request.type === "NEWNUMBER") {
+    chrome.tabs.create({
+      url: request.url,
+      selected: true,
+    })
   }
   else if (request.type === "SHOWBRIDGEPAGE") {
     openTab(`bridge/?source=${request.source}`);
