@@ -51,6 +51,7 @@ button {
 .extension_area {
     display: grid;
     margin: .5rem;
+    margin-top: .75rem;
     gap: .5rem;
     max-block-size: 100vh;
     max-inline-size: 100vw;
