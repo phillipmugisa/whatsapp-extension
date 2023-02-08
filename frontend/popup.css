@@ -179,14 +179,11 @@ button {
     overflow: auto;
     block-size: 90vh;
 }
-.chat_handler {
-    margin: .05rem;
-}
 .extension_sidebar_area {
     z-index: 10000;
     /* block-size: 90vh; */
     align-self: stretch;
-    margin: .05rem;
+    padding: .05rem;
     display: grid;
     overflow: hidden;
 }
