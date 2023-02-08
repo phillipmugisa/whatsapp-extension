@@ -6,7 +6,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', Verdana, Geneva, Tahoma, sans-serif;
     text-decoration: none;
 }
 
@@ -90,8 +90,7 @@ button {
     place-items: center;
     align-items: center;
     padding: .25rem .65rem;
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-inner);
+    border: none;
     color: hsl(0, 0%, 20%);
     transition: var(--transition-1);
     background: transparent;
@@ -101,8 +100,25 @@ button {
     aspect-ratio: 1/1;
 }
 
+.extension_taskbar .tab-area button {
+    padding: .5rem 0;
+}
+
 .extension_taskbar .tab-area {
-    position: relative;
+    display: grid;
+    align-items: center;
+    gap: .5rem;
+    font-size: .9rem;
+    grid-auto-flow: column;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-inner);
+    padding: .15rem .5rem;
+    color: hsl(0, 0%, 30%);
+    transition: var(--transition-1);
+    cursor: pointer;
+}
+.extension_taskbar .tab-area:hover {
+    border-color: rgb(194, 201, 201);
 }
 
 .extension_taskbar .extension_tab:hover {
@@ -149,15 +165,19 @@ button {
 .extension_sidebar_area {
     z-index: 10000;
 }
-.extension_lower_area .extension_sidebar {
+.extension_lower_area .extension_sidebar .sidebar_part {
     background-color: var(--taskbar-color);
     padding: 0;
     box-shadow: 1px 1px 1px 1px hsla(0, 6%, 90%, 0.61);
-    display: grid;
     align-content: start;
     /* gap: 0.5rem; */
     min-block-size: var(--sidebar-min-height);
     border-radius: var(--border-radius-inner);
+    display: none;
+}
+
+.extension_lower_area .extension_sidebar .sidebar_part.inview {
+    display: grid;
 }
 
 .extension_sidebar_actions {
@@ -171,7 +191,7 @@ button {
     display: grid;
     border: 1px solid var(--border-color);
     padding: 0.5rem 1rem;
-    background-color: transparent;
+    background-color: rgba(211, 214, 214, 0.555);
     border-radius: var(--border-radius-inner);
     transition: var(--transition-1);
 }
@@ -194,19 +214,34 @@ button {
 .extension_sidebar_note {
     border: 1px solid var(--border-color);
     color: hsl(0, 0%, 30%);
-    padding: 0.75rem 1rem;
     position: relative;
     font-size: 16px;
     line-height: 20px;
     overflow: hidden;
+
+    display: grid;
+    grid-template-columns: .2fr 4fr;
+    align-items: stretch;
 }
-.extension_sidebar_note::before {
-    position: absolute;
+.extension_sidebar_note span {
+    /* position: absolute;
     inset: 0;
     content: "";
     block-size: 100%;
-    inline-size: 5px;
+    inline-size: 5px; */
     background-color: var(--accent-color);
+}
+.extension_sidebar_note .note_content {
+    padding: 0.5rem 1rem;
+}
+.extension_sidebar_note .content {
+    display: grid;
+}
+.extension_sidebar_note .note_date {
+    font-size: .8rem;
+    justify-self: flex-end;
+    color: hsl(0, 0%, 51%);
+    padding-inline: .25rem;
 }
 .extension_sidebar_note .note_actions {
     position: absolute;
@@ -239,6 +274,23 @@ button {
     background-color: hsla(0, 2%, 19%, 0.541);
 }
 
+#scheduling_msg .extension_sidebar_notes {
+    padding: .5rem;
+}
+#scheduling_msg .lists .extension_sidebar_actions{
+    margin: .25rem 0;
+    padding: 0;
+    gap: .25rem;
+}
+#scheduling_msg .area_lists {
+    display: none;
+}
+#scheduling_msg .area_lists.inview {
+    display: grid;
+}
+
+
+
 .extension_modal {
     position: absolute;
     background-color: var(--taskbar-color);
@@ -249,9 +301,9 @@ button {
     border-radius: var(--border-radius-inner);
     display: none;
     gap: 1rem;
-    z-index: 10000;
+    z-index: 100000;
 }
-@media (max-width: 1000px) {
+@media (max-width: 1200px) {
     .extension_modal {
         inline-size: 50vw;
     }
@@ -284,11 +336,23 @@ button {
 
 .extension_modal_form  {
     display: grid;
-    gap: 1rem;
+    gap: 2rem;
+}
+.extension_modal_form label {
+    font-size: .9rem;
 }
 .extension_modal_form .fields{
     display: grid;
+    gap: 1rem;
+}
+.extension_form_group.split {
+    display: grid;
+    grid-auto-flow: column;
     gap: 0.5rem;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    font-size: .9rem;
+    justify-items: flex-start;
 }
 .extension_form_group.number{
     display: grid;
@@ -309,6 +373,14 @@ button {
     font-size: .9rem;
     outline: none;  
 }
+.extension_modal_form input[type="file"] {
+    border-style: dashed;
+}
+.extension_modal_form input[type="color"] {
+    padding: 0;
+    border: none;
+    inline-size: 100px;
+}
 
 .extension_modal_form input:focus,
 .extension_modal_form input:focus-within,
@@ -318,12 +390,35 @@ button {
 }
 
 .extension_modal.tab_modal {
-    inset-block-start: 140%;
-    inset-inline-start: 0;
+    /* inset-block-start: 140%;
+    inset-inline-start: 0; */
+    inset-block-start: 40%;
+    inset-inline-start: 50%;
+    transform: translate(-50%, -40%);
 }
 
 #create_note {
     inset-block-start: 40%;
     inset-inline-start: 50%;
     transform: translate(-50%, -40%);
+}
+
+body {
+    position: relative;
+    inline-size: 100vw;
+    block-size: 100vh;
+}
+body::after {
+    content: "";
+    position: absolute;
+    inset: 0 0;
+    inline-size: 100%;
+    block-size: 100%;
+    background-color: rgba(0, 0, 0, 0.664);
+    display: none;
+    transition: var(--transition-1);
+    z-index: 99999;
+}
+body.modal_open::after {
+    display: block;
 }
