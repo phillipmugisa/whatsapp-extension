@@ -1,0 +1,244 @@
+{% extends '../utils/layout.html' %}
+
+{% block content %}
+
+<section class="grid gap-4">
+    <section class="calc_results_list grid grid-cols-2 gap-3">
+    {% for last_record in records %}
+    <main class="result-area">
+        {% if calculator == "Ebay" %}
+        <div class="calc" id="ebay_calc">
+            <div class="results">
+                <div class="calc-part grid">
+                <div class="header grid">
+                    <h3 class="calc-heading text-primary">Your Profit</h3>
+                    <div class="briefs grid grid-cols">
+                    <p class="val-display">
+                        <span>Total profit: </span>
+                        <span class="text-primary" id="total_profit">$ {{last_record.computedTotalProfit}}</span>
+                    </p>
+                    <p class="val-display">
+                        <span>Profit %: </span>
+                        <span class="text-primary" id="total_profit_pecent">{{ last_record.computedTotalProfitPercent }} %</span>
+                    </p>
+                    <p class="val-display">
+                        <span>Sold Price: </span>
+                        <span class="text-primary" id="sold_price">$ {{ last_record.item_sold_price }}</span>
+                    </p>
+                    </div>
+                </div>
+                </div>
+                <hr style="border: 1px solid hsla(182, 100%, 15%, 0.1);">
+                <div class="calc-part grid">
+                <div class="stats-list">
+                    <h4 class="list-title text-primary">eBay transaction fee</h4>
+                    <div class="stats">
+                    <div>
+                        <p>Final value fee %</p>
+                        <p id="final_value_fee">{{ last_record.ebay_fee }} %</p>
+                    </div>
+                    <div>
+                        <p>Fixed transaction fee</p>
+                        <p id="fixed_transaction_fee">$ 0.30 </p>
+                    </div>
+                    <div>
+                        <p>Promotion fee</p>
+                        <p id="promotion_fee">{{ last_record.promotion }} %</p>
+                    </div>
+                    <div>
+                        <p>Total eBay fees</p>
+                        <p id="total_eBay_fees">$ {{ last_record.ebay_fee }}</p>
+                    </div>
+                    <div>
+                        <p>Total eBay fees %</p>
+                        <p id="total_eBay_fees_percent"> {{ last_record.ebay_fee }} %</p>
+                    </div>
+                    </div>
+                </div>
+                <div class="stats-list">
+                    <h4 class="list-title text-primary">Other costs</h4>
+                    <div class="stats">
+                    <div>
+                        <p>Item cost</p>
+                        <p id="item_cost">$ {{ last_record.item_cost_price }}</p>
+                    </div>
+                    <div>
+                        <p>Shipping cost</p>
+                        <p id="shipping_cost">$ {{ last_record.shipping_cost }}</p>
+                    </div>
+                    <div>
+                        <p>Other cost</p>
+                        <p id="other_cost">$ {{ last_record.other_fees }}</p>
+                    </div>
+                    <div>
+                        <p>Total cost</p>
+                        <p id="total_cost">$ {{ last_record.computedTotalCost }}</p>
+                    </div>
+                    </div>
+                </div>
+
+                </div>
+            </div>
+        </div>
+
+        {% elif calculator == "Amazon" %}
+        <div class="calc"  id="amazon_calc">
+            <div class="results">
+                <div class="calc-part grid">
+                <div class="header grid">
+                    <h3 class="calc-heading text-primary">Your Profit</h3>
+                    <div class="briefs grid grid-cols">
+                    <p class="val-display">
+                        <span>Actual profit: </span>
+                        <span class="text-primary" id="total_profit">$ {{ last_record.actual_profit }}</span>
+                    </p>
+                    <p class="val-display">
+                        <span>Return: </span>
+                        <span class="text-primary" id="total_return"> {{ last_record.actual_profit }} %</span>
+                    </p>
+                    <p class="val-display">
+                        <span>Margin: </span>
+                        <span class="text-primary" id="total_margin"> {{ last_record.actual_profit }} %</span>
+                    </p>
+                    <p class="val-display">
+                        <span>Sell At: </span>
+                        <span class="text-primary" id="total_sale_price">$ {{ last_record.sellAtPrice }}</span>
+                    </p>
+                    </div>
+                </div>
+                </div>
+                <hr style="border: 1px solid hsla(182, 100%, 15%, 0.1);">
+                <div class="calc-part grid">
+                <div class="stats-list">
+                    <h4 class="list-title text-primary">Proceeds</h4>
+                    <div class="stats">
+                    <div>
+                        <p>Sales Proceeds</p>
+                        <p id="sales_proceeds">$ {{ last_record.item_cost }}</p>
+                    </div>
+                    <div>
+                        <p>Shipping Proceeds</p>
+                        <p id="shipping_proceeds">$ {{ last_record.shipping_cost }}</p>
+                    </div>
+                    </div>
+                </div>
+                <div class="stats-list">
+                    <h4 class="list-title text-primary">Costs</h4>
+                    <div class="stats">
+                    <div>
+                        <p>Amazon Fees</p>
+                        <p id="amazon_fees">$ {{ last_record.totalAmazonCost }}</p>
+                    </div>
+                    <div>
+                        <p>Category Referral Fee</p>
+                        <p id="category_referral_fee">$ {{ last_record.computedCategoryFee }}</p>
+                    </div>
+                    <div>
+                        <p>Cost To Acquire</p>
+                        <p id="cost_to_aquire">$ {{ last_record.item_cost }}</p>
+                    </div>
+                    <div>
+                        <p>Shipping Cost</p>
+                        <p id="shipping_cost">$ {{ last_record.shipping_cost }}</p>
+                    </div>
+                    <div>
+                        <p>Miscellaneous Cost</p>
+                        <p id="miscellaneous_cost">$ {{ last_record.miscellaneous_cost }}</p>
+                    </div>
+                    <div>
+                        <p><b>Total Cost</b></p>
+                        <p id="total_cost">$ {{ last_record.total_cost }}</p>
+                    </div>
+                    
+                    <hr style="border: 1px solid hsla(182, 100%, 15%, 0.1);">
+                    <div>
+                        <p><b>Desired Profit</b></p>
+                        <p id="desired_profit">$ {{ last_record.desired_return_value }}</p>
+                    </div>
+                    <div>
+                        <p><b>Desired Sale Price</b></p>
+                        <p id="sale_price">$ {{ last_record.item_sold_price }}</p>
+                    </div>
+                    </div>
+                </div>
+
+                </div>
+            </div>
+        </div>
+
+        {% elif calculator == "Custom" %}
+        <div class="calc"  id="custom_calc">
+            <div class="results">
+                <div class="calc-part grid">
+                <div class="header grid">
+                    <h3 class="calc-heading text-primary">Your Profit</h3>
+                    <div class="briefs grid grid-cols">
+                    <p class="val-display">
+                        <span>Total profit: </span>
+                        <span class="text-primary" id="total_profit">$ {{ last_record.Profit }}</span>
+                    </p>
+                    <p class="val-display">
+                        <span>Selling Price: </span>
+                        <span class="text-primary" id="selling_price">$ {{ last_record.sellingPrice }}</span>
+                    </p>
+                    <p class="val-display">
+                        <span>Profit Margin: </span>
+                        <span class="text-primary" id="profit_margin">$ {{ last_record.Gross_Profit_Margin }}</span>
+                    </p>
+                    </div>
+                </div>
+                </div>
+                <hr style="border: 1px solid hsla(182, 100%, 15%, 0.1);">
+                <div class="calc-part grid">
+                <div class="stats-list">
+                    <h4 class="list-title text-primary">Summary of Values</h4>
+                    <div class="stats">
+                    <div>
+                        <p>Item cost</p>
+                        <p id="item_cost">$ {{ last_record.item_cost_price }}</p>
+                    </div>
+                    <div>
+                        <p>Shipping cost</p>
+                        <p id="shipping_cost">$ {{ last_record.shipping_cost }}</p>
+                    </div>
+                    <div>
+                        <p>Selling Cost</p>
+                        <p id="selling_cost">$ {{ last_record.selling_cost }}</p>
+                    </div>
+                    <div>
+                        <p>Transaction Cost</p>
+                        <p id="translation_cost">$ {{ last_record.transaction_cost_percent }}</p>
+                    </div>
+                    <div>
+                        <p>Total cost</p>
+                        <p id="total_cost">$ {{ last_record.total_cost }}</p>
+                    </div>
+                    <div>
+                        <p>Revenue</p>
+                        <p id="revenue">{{ last_record.revenue }} %</p>
+                    </div>
+                    <div>
+                        <p>Profit</p>
+                        <p id="stat_total_profit">$ {{ last_record.Profit }} </p>
+                    </div>
+                    <div>
+                        <p>Margin</p>
+                        <p id="margin">{{ last_record.Gross_Profit_Margin }} %</p>
+                    </div>
+                    <div>
+                        <p>Markup</p>
+                        <p id="markup">{{ last_record.Markup }} %</p>
+                    </div>
+                    </div>
+                </div>
+
+                </div>
+            </div>
+        </div>
+        
+        {% endif %}
+    </main>
+    {% endfor %}
+    </section>
+</section>
+{% endblock %}

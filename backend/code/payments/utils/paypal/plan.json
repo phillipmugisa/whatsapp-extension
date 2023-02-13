@@ -1,0 +1,32 @@
+[
+  {
+    "name" : "Free Package",
+    "status" : "ACTIVE",
+    "currency" : "USD",
+    "product" : "Ease-Sell-Extension-DEV-4",
+    "cost" : "0.0",
+    "description" : "Free Package subscription",
+    "interval_unit" : "MONTH",
+    "interval_count" : "1"
+  },
+  {
+    "name" : "Pro Package",
+    "status" : "ACTIVE",
+    "currency" : "USD",
+    "product" : "Ease-Sell-Extension-DEV-4",
+    "cost" : "1.99",
+    "description" : "Pro Package subscription",
+    "interval_unit" : "MONTH",
+    "interval_count" : "1"
+  },
+  {
+    "name" : "Master Package",
+    "status" : "ACTIVE",
+    "currency" : "USD",
+    "product" : "Ease-Sell-Extension-DEV-4",
+    "cost" : "69.89",
+    "description" : "Master Package subscription",
+    "interval_unit" : "MONTH",
+    "interval_count" : "1"
+  }
+]

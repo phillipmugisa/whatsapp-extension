@@ -1,0 +1,323 @@
+
+.result-area button {
+    border: none;
+    outline: none;
+}
+
+:root {
+    --theme-color: hsl(0, 0, 0);
+    --accent-color: hsl(182, 100%, 20%);
+    --accent-hover-color: hsla(182, 100%, 20%, 0.8);
+    --text-color: hsl(0, 0%, 29%);
+    --border-color: hsl(0, 0%, 90%);
+    --popup-width: 100%;
+    --border-radius-outer: 10px;
+    --border-radius-inner: 5px;
+    --title-font-size: 18px;
+    --body-font-size: 16px;
+    --transition-1: all .25s ease-in-out;
+}
+
+.text-primary {
+    color: var(--accent-color);
+}
+.btn-primary {
+    color: white;
+    background: var(--accent-color);
+    cursor: pointer;
+    transition: var(--transition-1);
+    padding: .5rem 1rem;
+    border-radius: 5px;
+}
+.btn-primary:hover,
+.btn-primary:focus-within,
+.btn-primary:active,
+.btn-primary.active {
+    background: var(--accent-hover-color);
+}
+.centered {
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+.in-view {
+    display: grid;
+}
+.grid {
+    display: grid;
+}
+.grid-cols {
+    grid-auto-flow: column;
+}
+.space-between {
+    justify-content: space-between;
+}
+
+body.extension {
+    border: none;
+}
+/* .result-area {
+    inline-size: calc(var(--popup-width)/2);
+}
+.result-area.calcInView {
+    inline-size: var(--popup-width);
+} */
+.result-area {
+    display: grid;
+}
+
+.result-area > * {
+    padding: 1rem 2em;
+}
+
+.result-area section {
+    border-block: 1px solid var(--border-color);
+    padding: 1rem 2em;
+}
+
+.result-area header .title {
+    color: var(--accent-color);
+    font-size: var(--title-font-size);
+    font-weight: 500;
+}
+
+.result-area footer {
+    justify-content: space-between;
+    align-items: baseline;
+    gap: .5rem;
+}
+
+.result-area footer .footer-touchline {
+    color: var(--accent-color);
+    font-size: 14px;
+    font-weight: 500;
+}
+.result-area footer .set-values {
+    justify-self: flex-end;
+}
+
+.result-area .popupform {
+    display: grid;
+    gap: 1rem;
+}
+.result-area #popup-error-msg {
+    color: rgb(189, 4, 4);
+}
+
+.result-area input {
+    padding: 0.75rem 1rem;
+    --title-font-size: 22px;
+    font-size: var(--body-font-size);
+    border: none;
+    outline: none;
+    border-radius: var(--border-radius-inner);
+    transition: var(--transition-1);
+}
+
+.result-area input[type="text"],
+.result-area input[type="email"],
+.result-area input[type="password"] {
+    border: 1px solid var(--border-color);
+    background-color: white;
+}
+.result-area input[type="submit"] {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.result-area input[type="text"]:focus,
+.result-area input[type="text"]:focus-within,
+.result-area input[type="email"]:focus,
+.result-area input[type="email"]:focus-within,
+.result-area input[type="password"]:focus,
+.result-area input[type="password"]:focus-within {
+    border: 1px solid var(--accent-hover-color);
+}
+
+.result-area input[type="submit"]:hover {
+    background-color: var(--accent-hover-color);
+}
+
+.result-area .text-link {
+    cursor: pointer;
+    color: var(--accent-color);
+    transition: color .25s ease-in-out;
+    font-size: 14px;
+}
+.result-area .text-link:hover,
+.result-area .text-link:focus {
+    color: var(--accent-hover-color);
+}
+
+.result-area #calcs {
+    gap: 0.5rem;
+}
+.result-area .calc {
+    gap: 0.5rem;
+    overflow: auto;
+    scrollbar-width: none;
+    grid-template-columns: 0.8fr 0.001fr 1fr;
+    gap: 2rem;
+}
+.result-area .calc::-webkit-scrollbar {
+    display: none;
+}
+
+.result-area .calc > div {
+    display: grid;
+    gap: 0.5rem;
+}
+.result-area .calc > div.hidden {
+    display: none;
+}
+
+.result-area #calc-tabs {
+    list-style-type: none;
+    list-style-position: outside;
+    display: grid;
+    min-inline-size: 100%;
+    grid-auto-flow: column;
+    gap: .25rem;
+}
+
+.result-area #calc-tabs > li {
+    padding: .5rem 1rem;
+    border-radius: var(--border-radius-inner);
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.result-area .calc-part {
+    gap: 0.5rem;
+}
+.result-area .calc-part .header {
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+}
+
+.result-area .list-title,
+.result-area .calc-heading {
+    font-size: 16px;
+    font-weight: 600;
+}
+.result-area .calc .results {
+    gap: 1rem;
+    align-content: flex-start;
+}
+.result-area .calc .results hr {
+    height: 1px;
+}
+
+.result-area .calc-part .val-display {
+    font-size: 14px;
+    display: grid;
+}
+.result-area .calc-part .val-display span:last-of-type {
+    /* color: hsl(0, 0%, 30%); */
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.result-area .stats-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.result-area .stats-list .stats {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.result-area .stats-list .stats > div {
+    display: grid;
+    grid-auto-flow: column;
+    font-size: 15px;
+    color: hsl(0, 0%, 30%);
+}
+.result-area .stats-list .stats > div p:last-of-type {
+    text-align: right;
+}
+
+
+.result-area .calc_form {
+ display: grid;
+ gap: 0.5rem;
+}
+.result-area .form-group {
+    margin: 0;
+}
+.result-area .calc_form.hidden {
+    display: none;
+}
+.result-area .calc_form label {
+    font-size: 15px;
+    font-weight: 500;
+}
+.result-area .calc_form .form-group.grid:not(.grid-cols) {
+    gap: 0.5rem;
+}
+.result-area .calc_form .form-group.grid.grid-cols {
+    align-items: center;
+    grid-template-columns: 1fr .5fr;
+    gap: 0.5rem;
+}
+.result-area .calc_form input,
+.result-area .calc_form select {
+    padding: .5rem;
+    border: 1px solid var(--border-color);
+    max-width: 200px;
+}
+
+.result-area .preset_cta {
+    display: flex;
+    border-block-end: 1px solid var(--border-color);
+}
+.result-area .preset_cta button {
+    background-color: transparent;
+    padding: .5rem;
+    color: var(--accent-color);
+    font-weight: 600;
+    font-size: 15px;
+}
+
+
+.extension-area {
+    z-index: 10000;
+    position: fixed;
+    background-color: white;
+    inset-block-start: 20px;
+    inset-inline-end: 20px;
+    box-shadow: 1px 1px 1px 1px rgba(143, 142, 142, 0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    opacity: 1;
+    animation: entrance .2s ease-in-out;
+}
+
+@-webkit-keyframes entrance {
+    from {
+        opacity: 0;
+        inset-inline-end: -100px;
+    }
+    to {
+        opacity: 1;
+        inset-inline-end: 20px;
+    }
+}
+@keyframes entrance {
+    from {
+        opacity: 0;
+        inset-inline-end: -100px;
+    }
+    to {
+        opacity: 1;
+        inset-inline-end: 20px;
+    }
+}
+
+.result-area > * {
+    border: 1px dashed rgb(221, 215, 215);
+}
