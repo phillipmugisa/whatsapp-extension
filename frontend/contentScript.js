@@ -747,7 +747,7 @@
 
         function uIManagement() {
 
-            // setInterval(() => watchTask(), 1000);
+            setInterval(() => watchTask(), 1000);
 
             document.querySelector("#sidebar_toggle").addEventListener("click", () => {
                 document.querySelector(".extension_area").classList.toggle("show_sidebar")
@@ -1237,26 +1237,6 @@
                     // elem.addEventListener("click", () => editMemo(memo))
                     return elem;
                 }
-
-                function createScheduledMsgElem(task) {
-                    // get template
-                    let template = templates.filter(template => template.name === task.template)[0]
-
-                    const row = document.createElement("div")
-                    row.className = "row scheduled_msg_area"
-                    row.innerHTML = `
-                        <div class="scheduled_msg">
-                            <div class="msg">
-                                <p>${template.message}</p>
-                            </div>
-                            <div class="brief">
-                                <span id="date">${task.sending_date}</span>
-                                <span id="time">${task.sending_time}</span>
-                            </div>
-                        </div>
-                    `
-                    return row;
-                }
         
                 if (newTask) {
                     task_lists.prepend(createTemplateElem(newTask));
@@ -1268,16 +1248,37 @@
                     // start timing
                     // watchTask(newTask);
                 }
-                // else {
-                //     task_lists.querySelectorAll(".extension_sidebar_note").forEach(
-                //         note => {
-                //             note.parentElement.removeChild(note)
-                //         }
-                //     )
-                //     tasks && tasks.forEach(template => {
-                //         task_lists.prepend(createTemplateElem(template));
-                //     })
-                // }
+                else {
+                    task_lists.querySelectorAll(".extension_sidebar_note").forEach(
+                        note => {
+                            note.parentElement.removeChild(note)
+                        }
+                    )
+                    tasks && tasks.forEach(template => {
+                        task_lists.prepend(createTemplateElem(template));
+                    })
+                }
+            }
+
+            function createScheduledMsgElem(task) {
+                // get template
+                let template = templates.filter(template => template.name === task.template)[0]
+
+                const row = document.createElement("div")
+                row.className = "row scheduled_msg_area"
+                row.dataset.taskId = task.id
+                row.innerHTML = `
+                    <div class="scheduled_msg">
+                        <div class="msg">
+                            <p>${template.message}</p>
+                        </div>
+                        <div class="brief">
+                            <span id="date">${task.sending_date}</span>
+                            <span id="time">${task.sending_time}</span>
+                        </div>
+                    </div>
+                `
+                return row;
             }
         
             function editTask(Task) {
@@ -1303,46 +1304,80 @@
                 }
             }
 
-            // function watchTask() {
-            //     let pendingTask = [];
-            //     let completeTask = [];
+            function watchTask() {
+                let pendingTask = [];
+                let completeTask = [];
                 
-            //     function taskIsComplete (task) {
-            //         let currentDate = new Date();
-            //         let isDay = false;
-            //         let isTime = false
-            //         // if is complete return true
+                function taskIsComplete (task) {
+                    let currentDate = new Date();
+                    // let isDay = false;
+                    // let isTime = false
+                    // // if is complete return true
 
-            //         // check day
-            //         isDay = task.sending_date.split("/")[0] == currentDate.getDate() && task.sending_date.split("/")[1] == currentDate.getMonth() && task.sending_date.split("/")[2] == currentDate.getFullYear()
+                    // // check day
+                    // isDay = task.sending_date.split("/")[0] == currentDate.getDate() && task.sending_date.split("/")[1] == currentDate.getMonth() && task.sending_date.split("/")[2] == currentDate.getFullYear()
 
-            //         // check time
-            //         isTime = task.sending_time.split(":")[0] == currentDate.getHours() && task.sending_time.split(":")[1] == currentDate.getMinutes()
+                    // // check time
+                    // isTime = (task.sending_time.split(":")[0] == currentDate.getHours() && task.sending_time.split(":")[1] == currentDate.getMinutes()) || (true)
 
-            //         return isDay && isTime
+                    return new Date(`${task.sending_date}:${task.sending_time}`) < currentDate;
                     
-            //     }
+                }
 
-            //     function sendTask(task) {
+                function sendTask(task) {
+                    document.querySelectorAll(".g0rxnol2._3fGK2 .ggj6brxn.gfz4du6o.r7fjleex.g0rxnol2.lhj4utae.le5p0ye3.l7jjieqr._11JPr").forEach(elem => {
+                        if (elem.title == task.contact || elem.textContent == task.contact) {
+                            let parentElem = elem.closest(".lhggkp7q.ln8gz9je.rx9719la");
+                            // console.log("elem: ", elem)
+                            // console.log("parentElem: ", parentElem)
+                            // simulate chat select
+                            parentElem.click()
+                        }
+                    })
+                }
 
-            //     }
+                // check if chat open has a scheduled task
+                // if so render it
+                function updateChat() {
+                    let chatHeader = document.querySelector("._23P3O");
+                    if (chatHeader) {
+                        const task_lists = document.querySelector(".extension_sidebar_notes#tasks");
+                        let chatName = document.querySelector(`[data-testid="conversation-info-header-chat-title"]`).title;
 
-            //     tasks.forEach(
-            //         task => {
-            //             // console.log(task, taskIsComplete(task))
-            //             if (taskIsComplete(task)) {
-            //                 completeTask.push(task);
-            //                 // send task and remove from task array
-            //                 sendTask(task)
-            //                 tasks = tasks.filter(_task => task.id != _task.id)
-            //                 localStorage.setItem("extension_tasks", JSON.stringify(tasks))
-            //             }
-            //             else {
-            //                 pendingTask.push(task);
-            //             }
-            //         }
-            //     )
-            // }
+                        let userTasks = tasks.filter(task => task.contact === chatName);
+                        if (userTasks) {
+                            userTasks.forEach(
+                                _task => {
+                                    if (document.querySelectorAll(".scheduled_msg_area").length < 1) {
+                                        let chatArea = document.querySelector(".n5hs2j7m.oq31bsqd.gx1rr48f.qh5tioqs");
+                                        chatArea.appendChild(createScheduledMsgElem(_task))
+                                    }
+                                    else if (document.querySelectorAll(`[data-task-id="${_task.id}"]`).length < 1) {
+                                        // add to open whatsapp chat
+                                        let chatArea = document.querySelector(".n5hs2j7m.oq31bsqd.gx1rr48f.qh5tioqs");
+                                        chatArea.appendChild(createScheduledMsgElem(_task))
+                                    }
+                                })
+                            }
+                    }
+                }
+                updateChat()
+
+                tasks && tasks.forEach(
+                    task => {
+                        if (taskIsComplete(task)) {
+                            completeTask.push(task);
+                            // send task and remove from task array
+                            sendTask(task)
+                            tasks = tasks.filter(_task => task.id != _task.id)
+                            localStorage.setItem("extension_tasks", JSON.stringify(tasks))
+                        }
+                        else {
+                            pendingTask.push(task);
+                        }
+                    }
+                )
+            }
         }
 
         uIManagement()

@@ -451,6 +451,12 @@ body.modal_open::after {
     padding-inline-end: 8%;
 }
 
+@media (max-width: 1000px) {
+    .extension_area  .scheduled_msg_area {
+        padding-inline-end: 10%;
+    }
+}
+
 .extension_area .scheduled_msg {
     background-color: var(--accent-color);
     color: white;
