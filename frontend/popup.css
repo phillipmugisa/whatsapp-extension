@@ -448,7 +448,7 @@ body.modal_open::after {
     display: grid;
     justify-content: flex-end;
     margin-block: 2.5%;
-    padding-inline-end: 5%;
+    padding-inline-end: 8%;
 }
 
 .extension_area .scheduled_msg {
@@ -465,6 +465,6 @@ body.modal_open::after {
     grid-template-columns: repeat(2, 1fr);
     font-size: .7rem;
     color: rgb(216, 213, 213);
-    gap: .5rem;
-    justify-content: space-between;
+    gap: 1rem;
+    justify-content: flex-end;
 }

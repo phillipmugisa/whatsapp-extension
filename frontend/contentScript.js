@@ -40,21 +40,39 @@
         <div class="extension_taskbar">
             <div class="left">
                 <div class="tab-area"  data-modal-id="msg_to_new_user" id="msg_to_new_user_activator">
-                    <button class="extension_tab">&#9885;</button>
+                    <button class="extension_tab"
+                    <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                    <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M10.975 14.51a1.05 1.05 0 0 0 0-1.485 2.95 2.95 0 0 1 0-4.172l3.536-3.535a2.95 2.95 0 1 1 4.172 4.172l-1.093 1.092a1.05 1.05 0 0 0 1.485 1.485l1.093-1.092a5.05 5.05 0 0 0-7.142-7.142L9.49 7.368a5.05 5.05 0 0 0 0 7.142c.41.41 1.075.41 1.485 0zm2.05-5.02a1.05 1.05 0 0 0 0 1.485 2.95 2.95 0 0 1 0 4.172l-3.5 3.5a2.95 2.95 0 1 1-4.171-4.172l1.025-1.025a1.05 1.05 0 0 0-1.485-1.485L3.87 12.99a5.05 5.05 0 0 0 7.142 7.142l3.5-3.5a5.05 5.05 0 0 0 0-7.142 1.05 1.05 0 0 0-1.485 0z" fill="#000000"/></svg>
+                    </button>
                     <p>New Message</p>
                 </div>
                 <div class="tab-area" data-sidebar-id="scheduling_msg" id="schedule_msg_sidebar_activator">
-                    <button class="extension_tab">&#9885;</button>
+                    <button class="extension_tab">
+                    <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                    <svg fill="#000000" width="20px" height="20px" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M960 112.941c-467.125 0-847.059 379.934-847.059 847.059 0 467.125 379.934 847.059 847.059 847.059 467.125 0 847.059-379.934 847.059-847.059 0-467.125-379.934-847.059-847.059-847.059M960 1920C430.645 1920 0 1489.355 0 960S430.645 0 960 0s960 430.645 960 960-430.645 960-960 960m417.905-575.955L903.552 988.28V395.34h112.941v536.47l429.177 321.77-67.765 90.465Z" fill-rule="evenodd"/>
+                    </svg>
+                    </button>
                     <p>Schedule Message</p>
                 </div>
                 <div class="tab-area" data-sidebar-id="memo" id="memo_sidebar_activator">
-                    <button class="extension_tab">&#9885;</button>
+                    <button class="extension_tab">
+                    <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                    <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 14V7C20 5.34315 18.6569 4 17 4H7C5.34315 4 4 5.34315 4 7V17C4 18.6569 5.34315 20 7 20H13.5M20 14L13.5 20M20 14H15.5C14.3954 14 13.5 14.8954 13.5 16V20" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    </button>
                     <p>Create Memo</p>
                 </div>
             </div>
             <div class="right">
                 <button class="auth-tabs">Sign up</button>
-                <button class="auth-tabs" id="sidebar_toggle">&#9932;</button>
+                <button class="auth-tabs" id="sidebar_toggle">
+                <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                <svg fill="#ffffff" width="20px" height="20px" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1468.214 0v564.698h-112.94V112.94H112.94v1694.092h1242.334v-225.879h112.94v338.819H0V0h1468.214Zm129.428 581.311c22.137-22.136 57.825-22.136 79.962 0l225.879 225.879c22.023 22.023 22.023 57.712 0 79.848l-677.638 677.637c-10.616 10.504-24.96 16.49-39.98 16.49h-225.88c-31.17 0-56.469-25.299-56.469-56.47v-225.88c0-15.02 5.986-29.364 16.49-39.867Zm-155.291 314.988-425.895 425.895v146.031h146.03l425.895-425.895-146.03-146.03Zm-764.714 346.047v112.94H338.82v-112.94h338.818Zm225.88-225.88v112.94H338.818v-112.94h564.697Zm734.106-315.44-115.424 115.425 146.03 146.03 115.425-115.423-146.031-146.031ZM1129.395 338.83v451.758H338.82V338.83h790.576Zm-112.94 112.94H451.759v225.878h564.698V451.77Z" fill-rule="evenodd"/>
+                </svg>
+                </button>
             </div>
         </div>
     `
@@ -416,6 +434,10 @@
                     <div class="extension_form_group">
                         <textarea name="new_extension_message" id="new_extension_message" rows="3" placeholder="Enter Message" required></textarea>
                     </div>
+                    <div class="extension_form_group" id="new_msg_link_area" style="display: none;">
+                       <span style="font-size: .9rem;">Link:</span>
+                       <a style="color: teal;font-size: .9rem;" id="new_msg_link" href=""></a>
+                    </div>
                 </div>
             </form>
             <footer>
@@ -725,6 +747,8 @@
 
         function uIManagement() {
 
+            // setInterval(() => watchTask(), 1000);
+
             document.querySelector("#sidebar_toggle").addEventListener("click", () => {
                 document.querySelector(".extension_area").classList.toggle("show_sidebar")
             })
@@ -800,7 +824,6 @@
                         })
 
                         let chatlist = document.querySelectorAll(".g0rxnol2._3fGK2 span[title]:not(.Hy9nV)")
-                        console.log(chatlist.length)
                         let contacts = document.querySelector("#contacts");
                         chatlist.forEach(chat => {
                             let option = document.createElement("option");
@@ -813,6 +836,26 @@
                     }
                 }
             }
+
+
+            document.querySelector("#new_extension_message").addEventListener("keyup", () => {
+                document.querySelector("#new_msg_link_area").style.display = "flex";
+                document.querySelector("#new_msg_link_area").style.gap = "2rem";
+                new_msg_link = document.querySelector("#new_msg_link");
+
+                let countryCode = sendMsgToNewNoform.querySelector("#country_code").value;
+                let phoneNumber = sendMsgToNewNoform.querySelector("#new_phone_number").value;
+                let message = sendMsgToNewNoform.querySelector("#new_extension_message").value;
+        
+                let fullNumber = `+${countryCode}${phoneNumber[0] == '0' ? phoneNumber.slice(1) : phoneNumber}`
+                let requestUrl = `https://api.whatsapp.com/send?phone=${fullNumber}&text=${message}`;
+                new_msg_link.textContent = requestUrl;
+                new_msg_link.href = requestUrl;
+
+                new_msg_link.addEventListener("click", () => {
+                    document.querySelector("#msg_to_new_user").querySelector(".cancel_button").click();
+                })
+            })
         
             // function closeModal(modal) {
                 
@@ -833,7 +876,9 @@
                 if (countryCode && phoneNumber && message) {
                     let fullNumber = `+${countryCode}${phoneNumber[0] == '0' ? phoneNumber.slice(1) : phoneNumber}`
                     let requestUrl = `https://api.whatsapp.com/send?phone=${fullNumber}&text=${message}`;
-                    window.location.replace(requestUrl);
+                    // window.location.href = requestUrl;
+                    new_msg_link.click()
+                    document.querySelector("#msg_to_new_user").querySelector(".cancel_button").click();
                 }
                 
             }
@@ -1194,16 +1239,19 @@
                 }
 
                 function createScheduledMsgElem(task) {
+                    // get template
+                    let template = templates.filter(template => template.name === task.template)[0]
+
                     const row = document.createElement("div")
                     row.className = "row scheduled_msg_area"
                     row.innerHTML = `
                         <div class="scheduled_msg">
                             <div class="msg">
-                                <p>hello world</p>
+                                <p>${template.message}</p>
                             </div>
                             <div class="brief">
-                                <span id="date">1/2/2013</span>
-                                <span id="time">11:50</span>
+                                <span id="date">${task.sending_date}</span>
+                                <span id="time">${task.sending_time}</span>
                             </div>
                         </div>
                     `
@@ -1216,17 +1264,20 @@
                     // add to open whatsapp chat
                     let chatArea = document.querySelector(".n5hs2j7m.oq31bsqd.gx1rr48f.qh5tioqs");
                     chatArea.appendChild(createScheduledMsgElem(newTask))
+
+                    // start timing
+                    // watchTask(newTask);
                 }
-                else {
-                    task_lists.querySelectorAll(".extension_sidebar_note").forEach(
-                        note => {
-                            note.parentElement.removeChild(note)
-                        }
-                    )
-                    tasks && tasks.forEach(template => {
-                        task_lists.prepend(createTemplateElem(template));
-                    })
-                }
+                // else {
+                //     task_lists.querySelectorAll(".extension_sidebar_note").forEach(
+                //         note => {
+                //             note.parentElement.removeChild(note)
+                //         }
+                //     )
+                //     tasks && tasks.forEach(template => {
+                //         task_lists.prepend(createTemplateElem(template));
+                //     })
+                // }
             }
         
             function editTask(Task) {
@@ -1251,6 +1302,47 @@
                     })
                 }
             }
+
+            // function watchTask() {
+            //     let pendingTask = [];
+            //     let completeTask = [];
+                
+            //     function taskIsComplete (task) {
+            //         let currentDate = new Date();
+            //         let isDay = false;
+            //         let isTime = false
+            //         // if is complete return true
+
+            //         // check day
+            //         isDay = task.sending_date.split("/")[0] == currentDate.getDate() && task.sending_date.split("/")[1] == currentDate.getMonth() && task.sending_date.split("/")[2] == currentDate.getFullYear()
+
+            //         // check time
+            //         isTime = task.sending_time.split(":")[0] == currentDate.getHours() && task.sending_time.split(":")[1] == currentDate.getMinutes()
+
+            //         return isDay && isTime
+                    
+            //     }
+
+            //     function sendTask(task) {
+
+            //     }
+
+            //     tasks.forEach(
+            //         task => {
+            //             // console.log(task, taskIsComplete(task))
+            //             if (taskIsComplete(task)) {
+            //                 completeTask.push(task);
+            //                 // send task and remove from task array
+            //                 sendTask(task)
+            //                 tasks = tasks.filter(_task => task.id != _task.id)
+            //                 localStorage.setItem("extension_tasks", JSON.stringify(tasks))
+            //             }
+            //             else {
+            //                 pendingTask.push(task);
+            //             }
+            //         }
+            //     )
+            // }
         }
 
         uIManagement()
