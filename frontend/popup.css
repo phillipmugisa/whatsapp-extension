@@ -494,6 +494,24 @@ body.modal_open::after {
     }
 }
 
+.extension_area .img_holder {
+    inline-size: 20vw;
+    block-size: 10vw;
+    overflow: hidden;
+    object-fit: contain;
+    display: none;
+}
+.extension_area .scheduled_msg_area.with_image .img_holder {
+    display: grid;
+    place-items: center;
+    align-content: center;
+}
+.extension_area .img_holder {
+    inline-size: 20vw;
+    block-size: 10vw;
+    object-fit: contain;
+}
+
 .extension_area .scheduled_msg {
     background-color: var(--accent-color);
     color: white;

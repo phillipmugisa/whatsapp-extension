@@ -189,7 +189,7 @@
                         <label for="template_color">Template Color</label>
                         <input type="color" id="template_color" name="template_color" required>
                     </div>
-                    <div class="extension_form_group">
+                    <div class="extension_form_group" id="image">
                         <input type="file" id="template_file" name="template_file">
                     </div>
                     <div class="extension_form_group">
@@ -836,6 +836,9 @@
                                     tasks && tasks.map(_task => {
                                         _task["inEdit"] = false ;
                                     })
+
+                                    modal.querySelector("form").reset()
+
                                     cancel_cta.closest(".extension_modal").classList.remove("inview");
                                     document.body.classList.remove("modal_open")
                                 })
@@ -1049,13 +1052,35 @@
         
             const create_template_activator = document.querySelector("#create_template_activator");
             
+            function getfileUrl(template, img) {
+                const fileReader = new FileReader();
+
+                fileReader.onload = () => {
+                    const url = fileReader.result;
+                    let data = {
+                        template_id: template["id"],
+                        file_name: url,
+                    }
+
+                    if (!localStorage.getItem("extensionTemplatesImages")) {
+                        localStorage.setItem('extensionTemplatesImages', JSON.stringify([]));
+                    }
+                    
+                    let extensionTemplatesImages = [...JSON.parse(localStorage.getItem("extensionTemplatesImages")), data];
+                    
+                    localStorage.setItem('extensionTemplatesImages', JSON.stringify(extensionTemplatesImages));
+                };
+        
+                return fileReader.readAsDataURL(img.files[0]);
+            }
+
             create_template_activator.addEventListener("click", async () => {
                 let date = new Date();
                 const create_template_form = document.querySelector("#template_modal form");
                 let template_name = create_template_form.querySelector("#template_name").value;
                 let template_color = create_template_form.querySelector("#template_color").value;
                 let template_extension_message = create_template_form.querySelector("#template_extension_message").value;
-                let template_file = create_template_form.querySelector("#template_file").files;
+                let template_file = create_template_form.querySelector("#template_file");
         
                 if (!template_name && !template_extension_message) return;
         
@@ -1068,8 +1093,9 @@
                         _template["name"] = template_name;
                         _template["color"] = template_color;
                         _template["message"] = template_extension_message;
-                        _template["file_name"] = template_file;
                         _template["date_created"] = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+
+                        getfileUrl(_template, template_file)
                     }
                 })
         
@@ -1079,21 +1105,13 @@
                         name: template_name,
                         color: template_color,
                         message: template_extension_message,
-                        file_name: template_file,
                         date_created: `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`,
                     }
-                    // const saveTemplateResult = await makeRequest(templateSaveUrl, "POST", {
-                    //     name: template_name,
-                    //     message: template_extension_message,
-                    // });
-                    // if (saveTemplateResult) {
-                    //     console.log(saveTemplateResult)
-                    // }
+                    getfileUrl(template, template_file)
                 }
-                
                 // save template to backend, only render if post was successful
                 renderTemplates(template);
-        
+
                 // close modal
                 create_template_form.reset()
                 create_template_form.parentElement.querySelector(".cancel_button").click();
@@ -1108,6 +1126,8 @@
                     if (newTemplate) {
                         templates = [...JSON.parse(localStorage.getItem("extensionTemplates")), newTemplate];
                     }
+                    console.log(templates)
+                    console.log(JSON.stringify(templates))
                     localStorage.setItem('extensionTemplates', JSON.stringify(templates));
                 }
         
@@ -1163,7 +1183,7 @@
         
                     // handle file edit 
                     // create_template_form.querySelector("#template_file").files = template.file;
-        
+                    
                     templates.map(_template => {
                         if (_template.id === template.id) {
                             _template["inEdit"] = true;
@@ -1301,12 +1321,26 @@
             function createScheduledMsgElem(task) {
                 // get template
                 let template = templates.filter(template => template.name === task.template)[0]
+                let extensionTemplatesImages = JSON.parse(localStorage.getItem("extensionTemplatesImages"));
+                let img = extensionTemplatesImages.filter(data => data.template_id === template.id)[0]
+                console.log("extensionTemplatesImages: ", extensionTemplatesImages)
+                console.log("img: ", img)
 
+                var imgUrl;
                 const row = document.createElement("div")
                 row.className = "row scheduled_msg_area"
                 row.dataset.taskId = task.id
+
+                if (img) {
+                    imgUrl = img.file_name
+                    row.classList.add("with_image")
+                }
+
                 row.innerHTML = `
                     <div class="scheduled_msg">
+                        <div class="img_holder">
+                            <img src="${imgUrl}"/>
+                        </div
                         <div class="msg">
                             <p>${template.message}</p>
                         </div>
@@ -1316,6 +1350,7 @@
                         </div>
                     </div>
                 `
+
                 return row;
             }
         
@@ -1348,16 +1383,6 @@
                 
                 function taskIsComplete (task) {
                     let currentDate = new Date();
-                    // let isDay = false;
-                    // let isTime = false
-                    // // if is complete return true
-
-                    // // check day
-                    // isDay = task.sending_date.split("/")[0] == currentDate.getDate() && task.sending_date.split("/")[1] == currentDate.getMonth() && task.sending_date.split("/")[2] == currentDate.getFullYear()
-
-                    // // check time
-                    // isTime = (task.sending_time.split(":")[0] == currentDate.getHours() && task.sending_time.split(":")[1] == currentDate.getMinutes()) || (true)
-
                     return new Date(`${task.sending_date}:${task.sending_time}`) < currentDate;
                     
                 }
