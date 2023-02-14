@@ -31,12 +31,9 @@ PRODUCTION = True
 ALLOWED_HOSTS = [
     "localhost",
     "localhost:8000",
-    "157.230.216.201",
     "http://127.0.0.1",
-    "app.ease-sell.com",
-    "https://app.ease-sell.com",
 ]
-CSRF_TRUSTED_ORIGINS = ['https://*.ease-sell.com','https://*.127.0.0.1','https://*.localhost']
+CSRF_TRUSTED_ORIGINS = ['https://*.127.0.0.1','https://*.localhost']
 
 # Application definition
 
@@ -214,9 +211,6 @@ SOCIALACCOUNT_PROVIDERS = {
         'GRAPH_API_URL': 'https://graph.facebook.com/v13.0',
     }
 }
-
-CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
-CELERY_RESULT_BROKER = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
 
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'

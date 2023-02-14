@@ -1,39 +1,36 @@
 (function() {
 
     var authUI = `
-        <section class="extension-popup">
+        <div class="extension_modal" id="auth_modal">
             <header>
-                <h2 class="title">Ecommerce Selling Price Calculator</h2>
+                <h1 class="extension_modal_heading">Welcome to Whatsapp Assistant.</h1>
             </header>
-            <body>
-            <section>
-                <div class="ext-container" id="auth">
-                    <div id="extension-form-area">
-                        <form class="popupform">
-                            <p class="pro-link" id="popup-error-msg" style="display: none;"></p>
-                            <input type="text" placeholder="Email" id="extAuth-username" required>
-                            <input type="password" name="password" id="extAuth-password" placeholder="Password" required>
-                            <input type="submit" value="Sign In" id="signin" style="cursor: pointer;">
-                            <hr style="border-top:1px solid rgb(189, 187, 187);width: 100%;">
-                            <div class="grid" style="gap: .25rem;">
-                            <a style="cursor: pointer;border: 1px solid lightgray;padding: .5rem 1rem;font-size: .9rem;border-radius: 5px;color: gray;text-align: center;" class="signup-social-extension" >Continue with Google</a>
-                            <a style="cursor: pointer;border: 1px solid lightgray;padding: .5rem 1rem;font-size: .9rem;border-radius: 5px;color: rgb(255, 255, 255);text-align: center;white-space: nowrap;background-color: #3A63BE;" class="signup-social-extension" >Continue with Facebook</a>
-                            </div>
-                            <p class="centered">
-                            Don't Have An Account
-                            <a class="text-link" id="signup-extension" >Sign Up</a>
-                            </p>
-                        </form>
+            <form class="extension_modal_form" id="auth_form">
+                <p class="pro-link" id="popup-error-msg" style="display: none;"></p>
+                <div class="fields" style="gap: 1rem">
+                    <div class="extension_form_group">
+                        <input type="text" placeholder="Email" id="extAuth-username" required>
+                    </div>
+                    <div class="extension_form_group">
+                        <input type="password" name="password" id="extAuth-password" placeholder="Password" required>
+                    </div>
+                    <div class="extension_form_group">
+                        <input type="submit" value="Sign In" id="signin" style="cursor: pointer;">
+                    </div>
+                    <div class="extension_form_group split" style="gap: 1rem;display: flex;justify-content: flex-start;">
+                        <a style="cursor: pointer;border: 1px solid lightgray;padding: .5rem 1rem;font-size: .9rem;border-radius: 5px;color: gray;text-align: center;" class="signup-social-extension" >Continue with Google</a>
+                        <a style="cursor: pointer;border: 1px solid lightgray;padding: .5rem 1rem;font-size: .9rem;border-radius: 5px;color: rgb(255, 255, 255);text-align: center;white-space: nowrap;background-color: #3A63BE;" class="signup-social-extension" >Continue with Facebook</a>
                     </div>
                 </div>
-            </section>
-            </body>
-            <footer class="grid grid-cols">
-                <h3 class="footer-touchline">Quick, Precise and Simple</h3>
-                <!-- <span>&copy; <span id="dateNow"></span></span> -->
-                <button class="btn-primary set-values" id="runCalc">Compute</button>
+                <p class="centered">
+                Don't Have An Account
+                    <a class="text-link" id="signup-extension" >Sign Up</a>
+                </p>
+            </form>
+            <footer>
+                <button class="cancel_button">Cancel</button>
             </footer>
-        </section>
+        </div>
     `
 
     var taskbarUI = `
@@ -66,7 +63,11 @@
                 </div>
             </div>
             <div class="right">
-                <button class="auth-tabs">Sign up</button>
+                <div class="user_detail">
+                    <span id="username"></span>
+                    <span id="package"></span>
+                </div>
+                <button class="auth-tabs" id="auth_activator">Login</button>
                 <button class="auth-tabs" id="sidebar_toggle">
                 <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
                 <svg fill="#ffffff" width="20px" height="20px" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
@@ -447,7 +448,8 @@
         </div>
     `
     
-    var backend_url = 'https://app.ease-sell.com/';
+    var backend_url = 'http://localhost/';
+    var templateSaveUrl = "api/data/templates/";
 
     class AppVariables {
         constructor () {
@@ -498,7 +500,7 @@
       
     // make requests
     const makeRequest = async (url, method, data={}) => {
-        var backend_url = 'https://app.ease-sell.com/';
+        var backend_url = 'http://localhost/';
 
         let fetchData = {
             method: method,
@@ -617,6 +619,10 @@
             const modalSpace = document.createElement("section")
             modalSpace.innerHTML = modalsUI;
             extension_area.appendChild(modalSpace)
+            
+            const authModal = document.createElement("section")
+            authModal.innerHTML = authUI;
+            extension_area.appendChild(authModal)
 
             chatAreaParent.appendChild(extension_area);
 
@@ -632,21 +638,20 @@
     }
 
     function UIRendering () {
-        // isUserAuthenticated();
+        isUserAuthenticated();
+        var signupSocialExtension = document.querySelectorAll(".signup-social-extension");
+        var signUpCta = document.querySelector("#signup-extension");
 
-        // signupSocialExtension.forEach(btn => btn.addEventListener("click", () => {
-        //     chrome.runtime.sendMessage({
-        //         type:  'LOGIN'
-        //     });
-        // }))
-        // signUpCta.addEventListener("click", () => {
-        //     chrome.runtime.sendMessage({
-        //         type:  'REGISTER'
-        //     });
-        // })
-        // ext_modal_close.addEventListener("click", () => {
-        //     ext_modal.classList.remove("in-view");
-        // })
+        signupSocialExtension.forEach(btn => btn.addEventListener("click", () => {
+            chrome.runtime.sendMessage({
+                type:  'LOGIN'
+            });
+        }))
+        signUpCta.addEventListener("click", () => {
+            chrome.runtime.sendMessage({
+                type:  'REGISTER'
+            });
+        })
 
 
         async function checkAuth() {
@@ -683,7 +688,7 @@
                         app.setAuthStatus(true);
                         app.setUserFeatures(response); // store fetched data
                         userFeatures = response;
-                        renderCalcUI();
+                        renderUserData();
                 })
                 .catch(error => {
                         chrome.storage.sync.remove(["access_token","refresh_token"],function() {})
@@ -694,20 +699,34 @@
         }
     
         function renderLoginUI() {
-            authUI.classList.add("in-view");
-            authUI.classList.remove("hidden");
-            calcUI.classList.add("hidden");
-            runCalc.classList.add("hidden");
-            calcUI.classList.remove("in-view");
-            document.querySelector(".extension-popup").classList.remove("calcInView");
+            let modalToShow = document.querySelector(`#auth_modal`);
+            if (modalToShow.classList.contains("inview")) {
+                modalToShow.classList.remove("inview")
+            } else {
+                document.querySelectorAll(".extension_modal").forEach(modal => {
+                    if (modal.classList.contains("inview")) {
+                        modal.classList.remove("inview")
+                    }
+                })
+                modalToShow.classList.add("inview")
+                document.body.classList.add("modal_open")
+            }
+            
+            modalToShow.querySelectorAll(".cancel_button").forEach(
+                cancel_cta => {
+                    cancel_cta.addEventListener("click", () => {
+                        cancel_cta.closest(".extension_modal").classList.remove("inview");
+                        document.body.classList.remove("modal_open")
+                    })
+                }
+            )
     
-            var formErrMsg = document.querySelector("#popup-error-msg");       
-    
-            document.querySelector(".popupform").addEventListener('submit', async (e) => {
+            document.querySelector("#auth_form").addEventListener('submit', async (e) => {
                 e.preventDefault();
     
                 const username = document.querySelector("#extAuth-username");
                 const password = document.querySelector("#extAuth-password");
+                var formErrMsg = document.querySelector("#popup-error-msg");
     
                 if (username.value === undefined || username.value === "" || password.value === undefined || password.value === "") {
                     formErrMsg.textContent = "Enter your credentials to Continue";
@@ -728,7 +747,8 @@
                     chrome.storage.sync.set({ "refresh_token": response.refresh}, function(){});
                     localStorage.setItem("ext_access_token", response.access)
                     localStorage.setItem("ext_refresh_token", response.refresh)
-                    renderCalcUI();
+                    renderUserData();
+                    modalToShow.querySelector(".cancel_button").click()
 
                 })
                 .catch(error => {
@@ -745,6 +765,14 @@
     
         }
 
+        function renderUserData(){
+            console.log(app.getUserFeatures())
+            document.querySelector("#auth_activator").style.display = "none";
+            document.querySelector(".user_detail").style.display = "flex";
+            document.querySelector("#username").textContent = `Signed in as ${app.getUserFeatures().user}`
+            document.querySelector("#package").textContent = `${app.getUserFeatures().subscription}`
+        }
+
         function uIManagement() {
 
             setInterval(() => watchTask(), 1000);
@@ -752,6 +780,9 @@
             document.querySelector("#sidebar_toggle").addEventListener("click", () => {
                 document.querySelector(".extension_area").classList.toggle("show_sidebar")
             })
+
+            const auth_activator = document.querySelector("#auth_activator");
+            auth_activator.addEventListener("click", () => renderLoginUI())
 
             // tabs
             const msg_to_new_user_activator = document.querySelector("#msg_to_new_user_activator");
@@ -1018,7 +1049,7 @@
         
             const create_template_activator = document.querySelector("#create_template_activator");
             
-            create_template_activator.addEventListener("click", () => {
+            create_template_activator.addEventListener("click", async () => {
                 let date = new Date();
                 const create_template_form = document.querySelector("#template_modal form");
                 let template_name = create_template_form.querySelector("#template_name").value;
@@ -1037,7 +1068,7 @@
                         _template["name"] = template_name;
                         _template["color"] = template_color;
                         _template["message"] = template_extension_message;
-                        _template["file"] = template_file;
+                        _template["file_name"] = template_file;
                         _template["date_created"] = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
                     }
                 })
@@ -1048,9 +1079,16 @@
                         name: template_name,
                         color: template_color,
                         message: template_extension_message,
-                        file: template_file,
+                        file_name: template_file,
                         date_created: `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`,
                     }
+                    // const saveTemplateResult = await makeRequest(templateSaveUrl, "POST", {
+                    //     name: template_name,
+                    //     message: template_extension_message,
+                    // });
+                    // if (saveTemplateResult) {
+                    //     console.log(saveTemplateResult)
+                    // }
                 }
                 
                 // save template to backend, only render if post was successful

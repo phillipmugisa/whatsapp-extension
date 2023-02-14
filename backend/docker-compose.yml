@@ -3,7 +3,7 @@ version: '3'
 services:
   server:
     build: .
-    container_name: server
+    container_name: server_whatsapp
     mem_limit: 256m
     cpu_quota: 25000
     command: >
@@ -17,37 +17,17 @@ services:
       - ./code/.env
     ports:
       - "8000:8000"
-    environment:
-      - CELERY_BROKER=redis://redis:6379/0
-      - CELERY_BACKEND=redis://redis:6379/0
     depends_on:
       - pgdb
-      - redis
-
-  celery:
-    build: .
-    container_name: celery
-    command: >
-      sh -c "cd ./code && celery --app=core worker --loglevel=info"
-    volumes:
-      - .:/code
-      - ./code/static:/static
-    env_file:
-      - ./code/.env
-    environment:
-      - CELERY_BROKER=redis://redis:6379/0
-      - CELERY_BACKEND=redis://redis:6379/0
-    depends_on:
-      - server
       - redis
       
   redis:
     image: "redis:alpine"
-    container_name: redis
+    container_name: redis_whatsapp
 
   nginx:
     image: nginx:alpine
-    container_name: nginx
+    container_name: nginx_whatsapp
     ports:
       - "80:80"
       - "443:443"
@@ -60,7 +40,7 @@ services:
 
   pgdb:
     image: postgres:15.1-alpine
-    container_name: pgdb
+    container_name: pgdb_whatsapp
     mem_limit: 128m
     cpu_quota: 12500
     environment:

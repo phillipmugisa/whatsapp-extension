@@ -29,7 +29,7 @@
                     <a href="{% url 'manager:pricings' %}" class="px-6 py-2 cursor-pointer bg-blue-400 text-white text-base rounded justify-center" style="justify-self: flex-start;">
                         <span>View</span>
                     </a>
-                    {% if subscriptions.first.plan.name != 'Free Package' and subscriptions.first.active %}
+                    {% if subscriptions.first.plan.name != 'Basic Monthly Package' and subscriptions.first.active %}
                         <form action="{% url 'payments:deactivate_paypal' %}" method="post">
                             {% csrf_token %}
                             <input type="submit" class="px-6 py-2 cursor-pointer text-white bg-red-600 text-white text-base rounded " style="justify-self: flex-start;" value='Deactivate' />

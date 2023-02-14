@@ -64,6 +64,7 @@ class Command(BaseCommand):
                     description = plan["description"],
                     interval_unit = plan["interval_unit"],
                     interval_count = plan["interval_count"],
+                    has_trial = plan["has_trial"],
                 )
                 plan.save()
 

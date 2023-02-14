@@ -19,52 +19,21 @@ from payments import models as PaymentModels
 class UserDetialsViews(APIView):
     def get(self, request, *args, **kwargs):
         response = dict()
-
-        user_id = request.user.id
-        user = AuthModels.User.objects.filter(id=user_id).first()
         
         response = {
             # "email" : user.email,
-            "subscription" : PaymentModels.PaypalSubscription.objects.filter(user=user).first().plan.name
+            "subscription" : PaymentModels.PaypalSubscription.objects.filter(user=request.user).first().plan.name,
+            "user" : request.user.username,
         }   
 
         return Response(response)
 
-class AmazonCalcView(viewsets.ModelViewSet):
-    queryset = ManagerModels.AmazonCalc.objects.all()
-    serializer_class = serializers.AmazonCalcSerializer
+class TemplateListCreateView(generics.ListCreateAPIView):
+    serializer_class = serializers.TemplateSerializer
+    queryset = ManagerModels.Templates.objects.all()
 
-    @action(detail=False, methods=['post'])
-    def create_and_retrieve(self, request):
-        serializer = self.get_serializer(data=request.data)
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
+        serializer.save()
         return Response(serializer.data)
-
-class EbayCalcView(viewsets.ModelViewSet):
-    queryset = ManagerModels.EbayCalc.objects.all()
-    serializer_class = serializers.EbayCalcSerializer
-
-    @action(detail=False, methods=['post'])
-    def create_and_retrieve(self, request):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        return Response(serializer.data)
-
-class CustonCalcView(viewsets.ModelViewSet):
-    queryset = ManagerModels.CustomCalc.objects.all()
-    serializer_class = serializers.CustomCalcSerializer
-
-    @action(detail=False, methods=['post'])
-    def create_and_retrieve(self, request):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        return Response(serializer.data)
-
-
-class CustomCalcPresetView(generics.ListAPIView):
-    queryset = ManagerModels.CustomCalc.objects.filter(preset=True)[:1]
-    serializer_class = serializers.CustomCalcSerializer
-    permission_classes = [permissions.IsAuthenticated]

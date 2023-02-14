@@ -10,7 +10,6 @@ app_name = "app_auth"
 urlpatterns = [
     path("login/", views.loginUserView.as_view(), name="login"),
     path("register/", views.RegisterUserView.as_view(), name="register"),
-    path("verify/", views.VerifyNumberView.as_view(), name="verify_number"),
     path("extension/keys/", views.ExtensionTasksViews.as_view(), name="extension_tasks"),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),

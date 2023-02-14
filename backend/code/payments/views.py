@@ -47,7 +47,7 @@ class CompletePayment(PaymentView):
 
         subscription = PaymentModels.PaypalSubscription.objects.filter(user=request.user.id).first()
         try:
-            if subscription.plan.name.lower() != "Free Package".lower():            
+            if subscription.plan.name.lower() != "Basic Monthly Package".lower():            
                 ret = mode.myapi.post(f"v1/billing/subscriptions/{subscription.order_key}/suspend")
                 if ret.get("error"):
                     messages.add_message(request, messages.ERROR, 'Opps! We are not able to cancel current subcription automatically.')
@@ -181,7 +181,7 @@ def PaypalSubscriptionDeactivateView(request):
                 messages.add_message(request, messages.ERROR, 'Opps! Unable to deactivate, Try Again.')
                 return redirect(reverse('manager:account'))
 
-            subscription.plan = PaymentModels.PaypalPlan.objects.filter(name="Free Package").first()
+            subscription.plan = PaymentModels.PaypalPlan.objects.filter(name="Basic Monthly Package").first()
             subscription.expiry_date=timezone.now()
             subscription.total_amount_paid=0
             subscription.order_key="Not Set"

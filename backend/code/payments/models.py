@@ -118,6 +118,7 @@ class PaypalPlan(models.Model):
     interval_unit = models.CharField(_("Plan Duration"), max_length=256)
     interval_count = models.IntegerField(_("Interval Count"), default=1)
     subscribers = models.IntegerField(_("Plan Subscribers"), default=0)
+    has_trial = models.BooleanField("Has Trial Period", default=False)
 
     def __str__(self):
         return f"{self.name}"
@@ -129,36 +130,56 @@ class PaypalPlan(models.Model):
             "description": f"{self.description}",
             "status": f"{self.status}",
             "billing_cycles": [
-            {
-                "frequency": {
-                "interval_unit": f"{self.interval_unit}",
-                "interval_count": f"{self.interval_count}",
-                },
-                "tenure_type": "REGULAR",
-                "sequence": 1,
-                "total_cycles": 0,
-                "pricing_scheme": {
-                "fixed_price": {
-                    "value": f"{self.cost}",
-                    "currency_code": f"{self.currency}",
+                {
+                    "frequency": {
+                    "interval_unit": f"{self.interval_unit}",
+                    "interval_count": f"{self.interval_count}",
+                    },
+                    "tenure_type": "REGULAR",
+                    "sequence": 2 if self.has_trial else 1,
+                    "total_cycles": 0,
+                    "pricing_scheme": {
+                    "fixed_price": {
+                        "value": f"{self.cost}",
+                        "currency_code": f"{self.currency}",
+                    }
+                    }
                 }
-                }
-            }
             ],
             "payment_preferences": {
-            "auto_bill_outstanding": True,
-            "setup_fee": {
-                "value": "0",
-                "currency_code": f"{self.currency}",
-            },
-            "setup_fee_failure_action": "CONTINUE",
-            "payment_failure_threshold": 3
+                "auto_bill_outstanding": True,
+                "setup_fee": {
+                    "value": "0",
+                    "currency_code": f"{self.currency}",
+                },
+                "setup_fee_failure_action": "CONTINUE",
+                "payment_failure_threshold": 3
             },
             "taxes": {
                 "percentage": "0",
                 "inclusive": False
             }
         }
+
+        if self.has_trial:
+            obj["billing_cycles"].append(
+                {
+                    "frequency": {
+                    "interval_unit": "DAY",
+                    "interval_count": 14
+                    },
+                    "tenure_type": "TRIAL",
+                    "sequence": 1,
+                    "total_cycles": 1,
+                    "pricing_scheme": {
+                    "fixed_price": {
+                        "value": "0",
+                        "currency_code": "USD"
+                        }
+                    }
+                }
+            )
+
         return obj
 
 
@@ -200,12 +221,12 @@ def on_subcription_create(sender, instance, *args, **kwargs):
     if instance.is_superuser:
         return
     if settings.PAYMENTMETHOD == "paypal":
-        free_plan = PaypalPlan.objects.filter(name="Free Package").first()
-        if free_plan:
+        free_plan = PaypalPlan.objects.filter(name="Basic Monthly Package").first()
+        if free_plan and not PaypalSubscription.objects.filter(user=instance):
             new_subscription = PaypalSubscription.objects.create(user=instance, plan=free_plan)
             new_subscription.save()
     elif settings.PAYMENTMETHOD == "braintree":
-        free_plan = BraintreePlan.objects.filter(name="Free Package").first()
+        free_plan = BraintreePlan.objects.filter(name="Basic Monthly Package").first()
         if free_plan:
             new_subscription = BraintreeSubscription.objects.create(user=instance, plan=free_plan)
             new_subscription.save()

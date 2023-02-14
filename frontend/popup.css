@@ -33,6 +33,7 @@
     color: var(--accent-color);
     font-weight: 500;
     transition: var(--transition-1);
+    cursor: pointer;
 }
 .text-link:hover {
     color: var(--accent-hover-color);
@@ -74,9 +75,30 @@ button {
     justify-content: flex-start;
 }
 
+.extension_taskbar .right .user_detail {
+    display: none;
+    gap: .5rem;
+    align-content: center;
+    font-size: 1rem;
+}
+.extension_taskbar .right .user_detail #package,
+.extension_taskbar .right .user_detail #username {
+    background-color: var(--accent-color);
+    color: #ffffff;
+    font-weight: normal;
+    padding: .25rem 1.5rem;
+    display: grid;
+    place-items: center;
+    align-content: center;
+}
+.extension_taskbar .right .user_detail #username {
+    background-color: transparent;
+    color: var(--accent-color);
+    font-weight: 500;
+}
 .extension_taskbar {
     display: grid;
-    grid-template-columns: var(--ui-ratio);
+    grid-template-columns: 1fr 1fr;
     justify-content: space-between;
     background-color: var(--taskbar-color);
     padding: .5rem  1rem;
@@ -127,7 +149,10 @@ button {
 
 .extension_taskbar .auth-tabs {
     background-color: var(--accent-color);
-    padding: 0.5rem 1.5rem;
+    padding: 0.25rem 1.5rem;
+    display: grid;
+    place-items: center;
+    align-content: center;
     border-radius: 30px;
     color: white;
     font-size: 16px;
@@ -150,6 +175,7 @@ button {
 
 .extension_taskbar .right {
     justify-content: flex-end;
+    justify-self: flex-end;
 }
 
 .extension_lower_area {
@@ -323,6 +349,9 @@ button {
     display: none;
     gap: 1rem;
     z-index: 100000;
+    inset-block-start: 40%;
+    inset-inline-start: 50%;
+    transform: translate(-50%, -40%);
 }
 @media (max-width: 1200px) {
     .extension_modal {
@@ -409,10 +438,18 @@ button {
 .extension_modal_form textarea:focus-within {
     outline: 1px solid var(--accent-color);
 }
+.cancel_button {
+    font-weight: normal;
+    transition: var(--transition-1);
+}
+.cancel_button:hover {
+    font-weight: bold;
+}
+#popup-error-msg {
+    color: rgb(189, 4, 4);
+}
 
-.extension_modal.tab_modal {
-    /* inset-block-start: 140%;
-    inset-inline-start: 0; */
+/* .extension_modal.tab_modal {
     inset-block-start: 40%;
     inset-inline-start: 50%;
     transform: translate(-50%, -40%);
@@ -422,7 +459,7 @@ button {
     inset-block-start: 40%;
     inset-inline-start: 50%;
     transform: translate(-50%, -40%);
-}
+} */
 
 body {
     position: relative;
