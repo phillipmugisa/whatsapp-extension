@@ -1422,8 +1422,6 @@
                         messages.forEach(message => {
                             message.addEventListener("mouseenter", () => {
                                 var reaction_area = message.querySelector(".p357zi0d.ktfrpxia.nu7pwgvd.fhf7t426.sap93d0t.gndfcl4n._1m68F");
-                                var message_text = message.querySelector("._11JPr.selectable-text.copyable-text span").textContent;
-                                console.log(message_text)
                                 
                                 if (!message.querySelector(".ai_activator")) {
                                     var ai_activator = document.createElement("div");
@@ -1435,7 +1433,7 @@
                                         </svg>
                                     `;
                                     ai_activator.addEventListener('click', () => {
-
+                                        var message_text = message.querySelector("._11JPr.selectable-text.copyable-text span").textContent;
                                     })
 
                                     reaction_area.appendChild(ai_activator);
