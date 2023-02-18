@@ -1435,14 +1435,15 @@
                                         </svg>
                                     `;
                                     ai_activator.addEventListener('click', () => {
-                                        
+
                                     })
 
                                     reaction_area.appendChild(ai_activator);
+                                } else {
+                                    message.addEventListener("mouseleave", () => {
+                                        reaction_area.removeChild(ai_activator);
+                                    })
                                 }
-                                message.addEventListener("mouseleave", () => {
-                                    reaction_area.removeChild(ai_activator);
-                                })
                             })
                         })
                     }
