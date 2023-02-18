@@ -766,7 +766,6 @@
         }
 
         function renderUserData(){
-            console.log(app.getUserFeatures())
             document.querySelector("#auth_activator").style.display = "none";
             document.querySelector(".user_detail").style.display = "flex";
             document.querySelector("#username").textContent = `Signed in as ${app.getUserFeatures().user}`
@@ -1126,8 +1125,6 @@
                     if (newTemplate) {
                         templates = [...JSON.parse(localStorage.getItem("extensionTemplates")), newTemplate];
                     }
-                    console.log(templates)
-                    console.log(JSON.stringify(templates))
                     localStorage.setItem('extensionTemplates', JSON.stringify(templates));
                 }
         
@@ -1323,8 +1320,6 @@
                 let template = templates.filter(template => template.name === task.template)[0]
                 let extensionTemplatesImages = JSON.parse(localStorage.getItem("extensionTemplatesImages"));
                 let img = extensionTemplatesImages.filter(data => data.template_id === template.id)[0]
-                console.log("extensionTemplatesImages: ", extensionTemplatesImages)
-                console.log("img: ", img)
 
                 var imgUrl;
                 const row = document.createElement("div")
@@ -1391,8 +1386,6 @@
                     document.querySelectorAll(".g0rxnol2._3fGK2 .ggj6brxn.gfz4du6o.r7fjleex.g0rxnol2.lhj4utae.le5p0ye3.l7jjieqr._11JPr").forEach(elem => {
                         if (elem.title == task.contact || elem.textContent == task.contact) {
                             let parentElem = elem.closest(".lhggkp7q.ln8gz9je.rx9719la");
-                            // console.log("elem: ", elem)
-                            // console.log("parentElem: ", parentElem)
                             // simulate chat select
                             parentElem.click()
                         }
@@ -1420,8 +1413,38 @@
                                         let chatArea = document.querySelector(".n5hs2j7m.oq31bsqd.gx1rr48f.qh5tioqs");
                                         chatArea.appendChild(createScheduledMsgElem(_task))
                                     }
+                                }
+                            )
+                        }
+                        
+                        // AI FEATURE
+                        const messages = document.querySelectorAll(".message-in")
+                        messages.forEach(message => {
+                            message.addEventListener("mouseenter", () => {
+                                var reaction_area = message.querySelector(".p357zi0d.ktfrpxia.nu7pwgvd.fhf7t426.sap93d0t.gndfcl4n._1m68F");
+                                var message_text = message.querySelector("._11JPr.selectable-text.copyable-text span").textContent;
+                                console.log(message_text)
+                                
+                                if (!message.querySelector(".ai_activator")) {
+                                    var ai_activator = document.createElement("div");
+                                    ai_activator.className = "ai_activator";
+                                    ai_activator.innerHTML = `
+                                        <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                                        <svg fill="#ffffff" width="10px" height="10px" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M960 112.941c-467.125 0-847.059 379.934-847.059 847.059 0 467.125 379.934 847.059 847.059 847.059 467.125 0 847.059-379.934 847.059-847.059 0-467.125-379.934-847.059-847.059-847.059M960 1920C430.645 1920 0 1489.355 0 960S430.645 0 960 0s960 430.645 960 960-430.645 960-960 960m417.905-575.955L903.552 988.28V395.34h112.941v536.47l429.177 321.77-67.765 90.465Z" fill-rule="evenodd"/>
+                                        </svg>
+                                    `;
+                                    ai_activator.addEventListener('click', () => {
+                                        
+                                    })
+
+                                    reaction_area.appendChild(ai_activator);
+                                }
+                                message.addEventListener("mouseleave", () => {
+                                    reaction_area.removeChild(ai_activator);
                                 })
-                            }
+                            })
+                        })
                     }
                 }
                 updateChat()

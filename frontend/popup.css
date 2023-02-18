@@ -529,3 +529,15 @@ body.modal_open::after {
     gap: 1rem;
     justify-content: flex-end;
 }
+
+.ai_activator {
+    inline-size: 25px;
+    block-size: 25px;
+    border-radius: 50%;
+    background-color: var(--accent-color);
+    display: grid;
+    place-items: center;
+    align-items: center;
+    margin-inline: .25rem;
+    cursor: pointer;
+}
