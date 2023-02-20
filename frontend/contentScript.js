@@ -134,6 +134,28 @@
                 <button class="text-link" id="create_memo_activator" type="submit">Create</button>
             </footer>
         </div>
+        
+        <div id="group_modal" class="extension_modal tab_modal">
+            <header>
+                <h2 class="extension_modal_heading">Select Desired Values</h2>
+            </header>
+            <form action="" id="group_modal_form" class="extension_modal_form">
+                <div class="fields">
+                    <div class="extension_form_group split-fields" style="padding-inline: 0.5rem;">
+                        <input type="checkbox" id="names" name="names" required>
+                        <label for="names">Names</label>
+                    </div>
+                    <div class="extension_form_group split-fields" style="padding-inline: 0.5rem;">
+                        <input type="checkbox" id="numbers" name="numbers" required>
+                        <label for="numbers">Numbers</label>
+                    </div>
+                </div>
+            </form>
+            <footer>
+                <button class="cancel_button">Cancel</button>
+                <button class="text-link" id="download_group_list_activator" type="submit">Download</button>
+            </footer>
+        </div>
 
         <div id="schedule_msg" class="extension_modal tab_modal">
             <header>
@@ -446,9 +468,57 @@
                 <button id="new_number_send" class="text-link" type="submit">Send</button>
             </footer>
         </div>
+
+        <div id="ai_modal" class="extension_modal">
+            <header class="split">
+                <h3 class="extension_modal_heading">Best Match Replies.</h3>
+                <div class="ai_tone">
+                    <span class="cta">
+                        <span class="icon">&#9885;</span>
+                        <span class="brief">Tone</span>
+                    </span>
+                    <div class="tone_options">
+                        <span id="selected_tone"></span>
+                        <ul class="tone_options_list">
+                            <li class="tone_option" data-tone="Tone matched to senders tone." data-toneval="Matching" id="Matching" data-default="true">
+                                <span class="option_value">Matching</span>
+                                <span class="option_des">Tone matched to senders tone.</span>
+                            </li>
+                            <li class="tone_option" data-tone="Use Business Language style." data-toneval="Business" id="Business">
+                                <span class="option_value">Business</span>
+                                <span class="option_des">Use Business Language style.</span>
+                            </li>
+                            <li class="tone_option" data-tone="Keep it light and casual." data-toneval="Casual" id="Casual">
+                                <span class="option_value">Casual</span>
+                                <span class="option_des">Keep it light and casual.</span>
+                            </li>
+                            <li class="tone_option" data-tone="Give positive boost." data-toneval="Empower" id="Empower">
+                                <span class="option_value">Empower</span>
+                                <span class="option_des">Give positive boost.</span>
+                            </li>
+                            <li class="tone_option" data-tone="Decline Politely." data-toneval="Not Interested" id="Not_Interested">
+                                <span class="option_value">Not Interested</span>
+                                <span class="option_des">Decline Politely.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+            <div class="ai_replies">
+                <p class="ai_reply preload"></p>
+                <p class="ai_reply preload"></p>
+                <p class="ai_reply preload"></p>
+                <p class="ai_reply preload"></p>
+                <p class="ai_reply preload"></p>
+                <p class="ai_reply preload"></p>
+            </div>
+            <footer>
+                <button id="close_ai_modal">close</button>
+            </footer>
+        </div>
     `
     
-    var backend_url = 'http://localhost/';
+    var backend_url = 'https://app.wa-my.com/';
     var templateSaveUrl = "api/data/templates/";
 
     class AppVariables {
@@ -500,7 +570,7 @@
       
     // make requests
     const makeRequest = async (url, method, data={}) => {
-        var backend_url = 'http://localhost/';
+        var backend_url = 'https://app.wa-my.com/';
 
         let fetchData = {
             method: method,
@@ -802,6 +872,24 @@
             const memo_sidebar_activator = document.querySelector("#memo_sidebar_activator");
             memo_sidebar_activator.addEventListener("click", () => showSidebar(memo_sidebar_activator))
             schedule_msg_sidebar_activator.click()
+
+
+            // download group list 
+            
+            var csvContent = "Name, Age, Gender\nJohn, 25, Male\nJane, 30, Female";
+            var csvContentName;
+            document.querySelector("#download_group_list_activator").addEventListener("click", () => {
+                const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+                const url = URL.createObjectURL(blob);
+                
+                const link = document.createElement("a");
+                link.setAttribute("href", url);
+                link.setAttribute("download", `${csvContentName}.csv`);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+            })
         
             var memos = JSON.parse(localStorage.getItem("extensionMemos")) || []
             renderMemos();
@@ -811,8 +899,15 @@
         
             var tasks = JSON.parse(localStorage.getItem("extension_tasks")) || [];
             renderTasks();
+
+
+            var checkedChats = [];
         
             function openExtensionModal(activator) {
+                if (!app.getAuthStatus()) {
+                    isUserAuthenticated()
+                    return;
+                }
                 let modalId = activator.dataset.modalId;
                 let modalToShow = document.querySelector(`#${modalId}`);
                 if (modalToShow.classList.contains("inview")) {
@@ -856,14 +951,21 @@
                             template_options.appendChild(option);
                         })
 
-                        let chatlist = document.querySelectorAll(".g0rxnol2._3fGK2 span[title]:not(.Hy9nV)")
                         let contacts = document.querySelector("#contacts");
+                        
+                        const myDiv = document.querySelector("#pane-side")
+                        myDiv.scrollTop = myDiv.scrollHeight
+
+                        let chatlist = document.querySelectorAll("#pane-side span[title].ggj6brxn.gfz4du6o.r7fjleex.g0rxnol2.lhj4utae.le5p0ye3.l7jjieqr._11JPr:not(.Hy9nV)")
                         chatlist.forEach(chat => {
                             let option = document.createElement("option");
                             option.value = chat.title
                             option.textContent = chat.title
                             contacts.appendChild(option);
                         })
+
+                        myDiv.scrollTop = 0
+
 
                         document.querySelector("#task_list_activator").click()
                     }
@@ -1395,8 +1497,67 @@
                 // check if chat open has a scheduled task
                 // if so render it
                 function updateChat() {
-                    let chatHeader = document.querySelector("._23P3O");
+                    var chatHeader = document.querySelector("header._23P3O");
                     if (chatHeader) {
+
+                        
+                        var chat_name = document.querySelector('[data-testid="conversation-info-header-chat-title"]').title
+                        checkedChats = checkedChats.filter(chat => chat == chat_name)
+                        if (!checkedChats.includes(chat_name)) {
+    
+                            // determine if it is a group chat
+                            document.querySelector("#close_ai_modal").click()
+                            document.querySelector("._24-Ff").click()
+    
+                            
+                            setTimeout(() => {
+                                var drawer = document.querySelector('._2Ts6i._1xFRo[data-testid="drawer-right"]')
+                                drawer.style.visibility = "hidden"
+                                drawer.style.opacity = "0"
+        
+                                var group_list;
+                                let chat_label = document.querySelector("span._10kwi._1BX24.dd2Ow") ? document.querySelector("span._10kwi._1BX24.dd2Ow").textContent : ""
+                                let chatName = document.querySelector('.p357zi0d.ktfrpxia.nu7pwgvd.fhf7t426.f8m0rgwh.gndfcl4n [data-testid="group-info-drawer-subject-input"]') ? document.querySelector('.p357zi0d.ktfrpxia.nu7pwgvd.fhf7t426.f8m0rgwh.gndfcl4n [data-testid="group-info-drawer-subject-input"]').title : ""
+    
+                                drawer.style.visibility = "visible"
+                                drawer.style.opacity = "1"
+                                document.querySelector("._18eKe").click()
+                                
+                                if (chat_label.includes("Group")) {
+                                    // is group
+    
+                                    if (!chatHeader.querySelector(".extension_header_icon")) {
+                                        // add group list icon
+                                        icons_area = chatHeader.querySelector("._1sPvB._2XdMx");
+                                        let icon = document.createElement("div")
+                                        icon.className = "extension_header_icon"
+                                        icon.id = "group_modal_activator"
+                                        icon.dataset.modalId = "group_modal"
+                                        icon.style.cursor = "pointer"
+                                        icon.innerHTML = `
+                                        <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                                        <svg width="20px" height="20px" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" stroke-width="3" stroke="#000000" fill="none"><polygon points="8.5 8.46 55.5 8.46 55.38 15 36 34 36 55.54 26 50 26 34 8.5 15 8.5 8.46"/><line x1="8.5" y1="14.47" x2="55.5" y2="14.47"/></svg>
+                                        `
+                                        icons_area.style.display = "flex"
+                                        icons_area.style.alignItems = "center"
+                                        icons_area.style.gap = ".5rem"
+                                        icons_area.prepend(icon)
+
+                                        icon.addEventListener("click", () => {
+                                            // csvContent
+                                            csvContentName = chatName
+                                            openExtensionModal(icon)
+                                        })
+                                    }
+                                    
+                                }
+
+                                checkedChats.push(chat_name)
+                                
+                            }, 100)
+
+                        }
+
                         const task_lists = document.querySelector(".extension_sidebar_notes#tasks");
                         let chatName = document.querySelector(`[data-testid="conversation-info-header-chat-title"]`).title;
 
@@ -1418,10 +1579,38 @@
                         }
                         
                         // AI FEATURE
+
+                        const copyToClipboard = async (text) => {
+                            try {
+                                await navigator.clipboard.writeText(text);
+                                document.querySelector("#close_ai_modal").click()
+                                document.querySelector("._24-Ff").click()
+                                setTimeout(() => {
+                                    document.querySelector("._18eKe").click()
+                                    let phone_number = document.querySelector("._11JPr.selectable-text.copyable-text ._3LrrN._2qKga.dd2Ow").textContent
+    
+                                    let requestUrl = `https://api.whatsapp.com/send?phone=${phone_number}&text=${text}`;
+                                    
+                                    let new_msg_link = document.createElement("a")
+                                    new_msg_link.href = requestUrl;
+                                    new_msg_link.style.visibility = "hidden";
+                                    new_msg_link.style.zIndex = "-10000";
+                                    new_msg_link.style.opacity = "0";
+                                    document.body.appendChild(new_msg_link)
+                                    new_msg_link.click()
+                                    
+                                    document.body.removeChild(new_msg_link)
+                                }, 100)
+
+
+                            } catch (err) {
+                            }
+                        };
+
                         const messages = document.querySelectorAll(".message-in")
                         messages.forEach(message => {
+                            var reaction_area = message.querySelector(".p357zi0d.ktfrpxia.nu7pwgvd.fhf7t426.sap93d0t.gndfcl4n._1m68F");
                             message.addEventListener("mouseenter", () => {
-                                var reaction_area = message.querySelector(".p357zi0d.ktfrpxia.nu7pwgvd.fhf7t426.sap93d0t.gndfcl4n._1m68F");
                                 
                                 if (!message.querySelector(".ai_activator")) {
                                     var ai_activator = document.createElement("div");
@@ -1433,14 +1622,77 @@
                                         </svg>
                                     `;
                                     ai_activator.addEventListener('click', () => {
-                                        var message_text = message.querySelector("._11JPr.selectable-text.copyable-text span").textContent;
+
+                                        
+                                        var message_text = message.querySelector("._11JPr.selectable-text.copyable-text span").textContent.replace(/\n/g, "").replace(/[^\w\s]/gi, "").replace(/\s+/g, " ").trim();
+                                        var selected_reply;
+
+                                        // show modal
+                                        const ai_modal = document.querySelector("#ai_modal");
+                                        ai_modal.classList.add("inview")
+
+                                        document.querySelector("#close_ai_modal").addEventListener("click", () => {
+                                            ai_modal.classList.remove("inview")
+                                        })
+
+                                        const selected_tone = document.querySelector("#selected_tone")
+                                        document.querySelectorAll(".tone_option").forEach(
+                                            option => {
+                                                
+                                                var ai_replies = document.querySelector(".ai_replies");
+                                                ai_replies.innerHTML = "";
+
+                                                for (let i = 0; i < 6; i++) {
+                                                    let reply_elem = document.createElement("p")
+                                                    reply_elem.classList.add("ai_reply")
+                                                    reply_elem.classList.add("preload")
+                                                    ai_replies.appendChild(reply_elem)
+                                                }
+
+                                                if (localStorage.getItem("ai_tone")) {
+                                                    selected_tone.textContent = localStorage.getItem("ai_tone");
+                                                }
+                                                else if (option.dataset.default === "true") {
+                                                    selected_tone.textContent = option.dataset.toneval;
+                                                    localStorage.setItem("ai_tone", option.dataset.toneval)
+                                                }
+                                                option.addEventListener("click", () => {
+                                                    selected_tone.textContent = option.dataset.toneval;
+                                                    localStorage.setItem("ai_tone", option.dataset.toneval)
+                                                    
+                                                    var selected_tone_value = option.dataset.tone;
+
+                                                    // make api call
+                                                    
+                                                    makeRequest(`api/ai/${message_text}/${selected_tone_value}/`, "GET")
+                                                    .then((response) => {
+
+                                                        // ai_replies.childNodes.forEach(child => ai_replies.removeChild(child));
+                                                        ai_replies.innerHTML = "";
+
+                                                        response["replies"].forEach(
+                                                            reply => {
+                                                                let reply_elem = document.createElement("p")
+                                                                reply_elem.className = "ai_reply"
+                                                                reply_elem.textContent = reply
+                                                                ai_replies.appendChild(reply_elem)
+
+                                                                reply_elem.addEventListener("click", () => copyToClipboard(reply))
+                                                            }
+                                                        )
+                                                    })
+                                                })
+                                            }
+                                        )
                                     })
 
                                     reaction_area.appendChild(ai_activator);
-                                } else {
-                                    message.addEventListener("mouseleave", () => {
-                                        reaction_area.removeChild(ai_activator);
-                                    })
+                                }
+                            })
+                            message.addEventListener("mouseleave", () => {
+                                if (message.querySelector(".ai_activator")) {
+                                    let ai_activator = reaction_area.querySelector(".ai_activator")
+                                    reaction_area.removeChild(ai_activator);
                                 }
                             })
                         })

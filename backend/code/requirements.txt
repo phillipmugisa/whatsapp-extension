@@ -34,3 +34,4 @@ django-braintree
 django_redis
 paypalrestsdk
 psycopg2-binary>=2.8
+openai

@@ -8,4 +8,5 @@ app_name = "app_api"
 urlpatterns = [
     path("user/details/", ApiViews.UserDetialsViews.as_view(), name="user_detials_api"),
     path("data/templates/", ApiViews.TemplateListCreateView.as_view(), name="templates"),
+    path("ai/<str:user_message>/<str:reply_tone>/", ApiViews.AIView.as_view(), name="ai"),
 ]

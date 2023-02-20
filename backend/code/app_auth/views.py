@@ -40,9 +40,9 @@ class loginUserView(View):
         user = auth.authenticate(email=email, password=password)
 
         if user is not None:
-            if not user.is_phone_activated and not user.is_email_activated:
-                messages.add_message(request, messages.ERROR, 'Verify Phone Number or Email to Proceed')
-                return redirect(reverse("app_auth:login"))
+            # if not user.is_phone_activated and not user.is_email_activated:
+            #     messages.add_message(request, messages.ERROR, 'Verify Phone Number or Email to Proceed')
+            #     return redirect(reverse("app_auth:login"))
 
             auth.login(request, user)
             return redirect(reverse("app_auth:extension_tasks"))

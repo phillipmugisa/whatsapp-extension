@@ -10,6 +10,12 @@ from app_api import serializers
 from manager import models as ManagerModels
 from payments import models as PaymentModels
 
+import os
+import openai
+import re
+
+openai.api_key = os.environ.get("OPENAIKEY")
+
 
 # class UserDetialsViews(generics.RetrieveAPIView):
 #     serializer_class = serializers.UserSerializer
@@ -37,3 +43,24 @@ class TemplateListCreateView(generics.ListCreateAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
+
+
+class AIView(APIView):
+    def get(self, request, user_message, reply_tone):
+        response = dict()
+        
+        response = openai.Completion.create(
+                model="text-davinci-003",
+                prompt=f"suggest 3 replies to this message: {user_message}. {reply_tone}",
+                max_tokens=80,
+        )
+
+        replies = re.split(r'\d+\.', response.choices[0].text.replace('\n', ''))
+
+        replies = [ reply.strip() for reply in replies if reply.strip()]
+        
+        response = {
+            "replies" : replies
+        }   
+
+        return Response(response)

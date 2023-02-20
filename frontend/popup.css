@@ -410,6 +410,15 @@ button {
     gap: 0.5rem;
     grid-template-columns: 1fr 3fr;
 }
+.extension_form_group .split-fields {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 0.5rem;
+    grid-template-columns: 0.2fr 1fr;
+    align-items: center;
+    font-size: .9rem;
+    justify-items: flex-start;
+}
 
 .extension_modal_form textarea {
     inline-size: 100%;
@@ -541,3 +550,123 @@ body.modal_open::after {
     margin-inline: .25rem;
     cursor: pointer;
 }
+
+
+#ai_modal {
+    inline-size: 40vw;
+}
+
+#ai_modal header {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    align-items: center;
+    align-content: center;
+}
+
+#ai_modal .ai_tone {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    padding: 0;
+    border: 1px solid rgb(217, 232, 236);
+    border-radius: 5px;
+    align-items: center;
+    transition: var(--transition-1);
+    cursor: pointer;
+    position: relative;
+}
+#ai_modal .ai_tone:hover {
+    border: 1px solid rgb(30, 169, 216);
+}
+
+#ai_modal .cta {
+    display: grid;
+    justify-content: center;
+    grid-auto-flow: column;
+    gap: .5rem;
+    align-items: center;
+    padding: .5rem;
+    border: none
+}
+#ai_modal .tone_options {
+    background-color: rgb(217, 232, 236);
+    display: grid;
+    place-items: center;
+    align-self: stretch;
+    transition: var(--transition-1);
+}
+#ai_modal .ai_tone:hover .tone_options{
+    background-color: rgb(30, 169, 216);
+}
+#ai_modal .tone_options_list {
+    position: absolute;
+    inset-block-start: 100%;
+    inset-inline-end: 0;
+
+    list-style: none;
+    inline-size: 30vw;
+
+    display: none;
+    background-color: white;
+    box-shadow: 1px 1px 1px rgba(97, 97, 97, 0.281);
+    border-radius: 5px;
+    transition: var(--transition-1);
+    z-index: 10;
+}
+#ai_modal .tone_options:hover  .tone_options_list {
+    display: grid;
+}
+#ai_modal .tone_option {
+    padding: 1rem;
+    display: flex;
+    gap: .5rem;
+    align-items: baseline;
+    transition: var(--transition-1);
+}
+#ai_modal .tone_option:hover {
+    background-color: hsl(0, 0%, 98%);
+}
+.tone_option .option_value {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-color);
+}
+.tone_option .option_des {
+    font-size: 1rem;
+    font-weight: 400;
+    color: rgb(167, 163, 163);
+}
+
+#ai_modal .ai_replies {
+    border-block: 1px solid hsl(0, 0%, 90%);
+    padding: .5rem;
+    display: grid;
+    gap: 0.5rem;
+}
+#ai_modal .ai_replies .ai_reply {
+    cursor: pointer;
+    color: var(--text-color);
+    transition: var(--transition-1);
+    padding: .25rem;
+}
+#ai_modal .ai_replies .ai_reply:hover {
+    background-color: hsl(0, 0%, 98%);
+}
+
+#ai_modal .ai_replies .ai_reply.preload {
+    height: 20px;
+    width: 100%;
+    background-color: hsl(0, 4%, 90%);
+    animation: fade 1s ease-in-out infinite;
+    border-radius: 2px;
+    z-index: 0;
+}
+#ai_modal .ai_replies .ai_reply.preload:nth-child(even) {
+    width: 70%;
+}
+
+
+@keyframes fade {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
+  }
