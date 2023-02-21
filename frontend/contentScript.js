@@ -28,7 +28,7 @@
                 </p>
             </form>
             <footer>
-                <button class="cancel_button">Cancel</button>
+                <button class="cancel_button" id="close_auth_modal">Cancel</button>
             </footer>
         </div>
     `
@@ -782,14 +782,10 @@
                 document.body.classList.add("modal_open")
             }
             
-            modalToShow.querySelectorAll(".cancel_button").forEach(
-                cancel_cta => {
-                    cancel_cta.addEventListener("click", () => {
-                        cancel_cta.closest(".extension_modal").classList.remove("inview");
-                        document.body.classList.remove("modal_open")
-                    })
-                }
-            )
+            document.querySelector("#close_auth_modal").addEventListener("click", () => {
+                modalToShow.classList.remove("inview");
+                document.body.classList.remove("modal_open")
+            })
     
             document.querySelector("#auth_form").addEventListener('submit', async (e) => {
                 e.preventDefault();
@@ -813,12 +809,13 @@
                     "password": password.value
                 })
                 .then(response => {
+                    modalToShow.classList.remove("inview");
+                    document.body.classList.remove("modal_open")
                     chrome.storage.sync.set({ "access_token": response.access}, function(){});
                     chrome.storage.sync.set({ "refresh_token": response.refresh}, function(){});
                     localStorage.setItem("ext_access_token", response.access)
                     localStorage.setItem("ext_refresh_token", response.refresh)
-                    renderUserData();
-                    modalToShow.querySelector(".cancel_button").click()
+                    isUserAuthenticated();
 
                 })
                 .catch(error => {
@@ -1666,8 +1663,8 @@
                                                     var selected_tone_value = option.dataset.tone;
 
                                                     // make api call
-                                                    
-                                                    makeRequest(`api/ai/${message_text}/${selected_tone_value}/`, "GET")
+                                                    let url = `api/ai/${message_text}/${selected_tone_value}/`;
+                                                    makeRequest(url, "GET")
                                                     .then((response) => {
 
                                                         // ai_replies.childNodes.forEach(child => ai_replies.removeChild(child));
@@ -1683,6 +1680,7 @@
                                                                 reply_elem.addEventListener("click", () => copyToClipboard(reply))
                                                             }
                                                         )
+                                                        url = ""
                                                     })
                                                 })
                                             }
