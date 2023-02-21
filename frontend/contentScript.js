@@ -876,7 +876,7 @@
 
             // download group list 
             
-            var csvContent = "Name, Age, Gender\nJohn, 25, Male\nJane, 30, Female";
+            var csvContent;
             var csvContentName;
             document.querySelector("#download_group_list_activator").addEventListener("click", () => {
                 const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
@@ -1546,6 +1546,9 @@
                                         icon.addEventListener("click", () => {
                                             // csvContent
                                             csvContentName = chatName
+
+                                            csvContent = document.querySelector(`[data-testid="chat-subtitle"] span`).title.split(",")
+
                                             openExtensionModal(icon)
                                         })
                                     }
