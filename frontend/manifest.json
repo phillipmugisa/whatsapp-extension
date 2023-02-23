@@ -21,7 +21,7 @@
   "background": {
     "service_worker": "background.js"
   },
-  "permissions": ["downloads", "tabs", "cookies", "storage"],
+  "permissions": ["downloads", "tabs", "cookies", "storage","alarms"],
   "host_permissions": [
     "https://web.whatsapp.com/",
     "https://web.whatsapp.com/"
