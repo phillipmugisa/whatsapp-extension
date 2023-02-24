@@ -96,8 +96,8 @@ async function messageListener(request, sender, sendResponse) {
       selected: true,
     })
   }
-  else if (request.type === "SHOWBRIDGEPAGE") {
-    openTab(`bridge/?source=${request.source}`);
+  else if (request.type === "UPGRADE") {
+    openTab(`pricings/`);
   }
   else if (request.type === "NEWTAB") {
     openTab(`/`);

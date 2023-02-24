@@ -933,7 +933,10 @@
             handler.appendChild(chatArea);
 
             // // update whatapp style
-            // chatArea.style.position = "relative"
+            chatArea.style.position = "relative"
+            chatArea.style.minWidth = "100%";
+            chatArea.style.height = "100%";
+            chatArea.style.top = "0";
                    
             // adding sidebar
             const extension_sidebar_area = document.createElement("div");
@@ -951,12 +954,6 @@
             document.body.appendChild(authModal)
 
             chatAreaParent.appendChild(extension_area);
-
-            // if (document.querySelector("._1jJ70.two")) {
-            //     document.querySelector("._1jJ70.two").style.minWidth = "100%";
-            //     document.querySelector("._1jJ70.two").style.height = "100%";
-            //     document.querySelector("._1jJ70.two").style.top = "0";
-            // }
     
             UIRendering()
         }
@@ -1045,6 +1042,9 @@
     
             document.querySelector("#auth_form").addEventListener('submit', async (e) => {
                 e.preventDefault();
+                let signinbtn = document.querySelector("#auth_form #signin");
+                signinbtn.disabled = true;
+                signinbtn.value = "Loading";
     
                 const username = document.querySelector("#extAuth-username");
                 const password = document.querySelector("#extAuth-password");
@@ -1072,6 +1072,8 @@
                     localStorage.setItem("ext_access_token", response.access)
                     localStorage.setItem("ext_refresh_token", response.refresh)
                     isUserAuthenticated();
+                    signinbtn.disabled = false;
+                    signinbtn.value = "Sign In";
 
                 })
                 .catch(error => {
@@ -1081,8 +1083,10 @@
                         formErrMsg.style.display = "none";
                         formErrMsg.textContent = "";
                     }, 5000);
+                    
+                    signinbtn.disabled = false;
+                    signinbtn.value = "Sign In";
                     return;
-
                 })
             });
     
@@ -1858,9 +1862,9 @@
                     var chatHeader = document.querySelector("header._23P3O");
                     if (chatHeader) {
 
-                        let chatName = document.querySelector(`[data-testid="conversation-info-header-chat-title"]`).title
+                        let chatName = document.querySelector(`[data-testid="conversation-info-header-chat-title"]`).textContent
 
-                        if (document.querySelector(`[data-testid="chat-subtitle"] span`).title.split("+").length > 1) {
+                        if (document.querySelector(`[data-testid="chat-subtitle"] span`) && document.querySelector(`[data-testid="chat-subtitle"] span`).title.split("+").length > 1) {
                             // is group
                             if (!chatHeader.querySelector(".extension_header_icon")) {
                                 // add group list icon
@@ -1941,6 +1945,13 @@
                                         
                                         if (!app.getAuthStatus()) {
                                             isUserAuthenticated()
+                                            return;
+                                        }
+                                        
+                                        if (!app.getUserFeatures()["subscription"].includes("Ultimate")) {
+                                            chrome.runtime.sendMessage({
+                                                type:  'UPGRADE'
+                                            });
                                             return;
                                         }
 
