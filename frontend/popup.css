@@ -61,7 +61,7 @@ button {
 
 .extension_taskbar_area {
     /* border: 1px solid #000; */
-    z-index: 10000;
+    /* z-index: 10000; */
     position: relative;
 }
 
@@ -214,7 +214,7 @@ button {
 }
 .extension_sidebar_area {
     position: relative;
-    z-index: 1000;
+    /* z-index: 1000; */
     /* block-size: 90vh; */
     align-self: stretch;
     padding: .05rem;
@@ -222,9 +222,9 @@ button {
     overflow: hidden;
 }
 
-.overlay._3IBSU {
+/* .overlay._3IBSU {
     z-index: 10000 !important;
-}
+} */
 
 .extension_lower_area .extension_sidebar .sidebar_part {
     background-color: var(--taskbar-color);
@@ -495,7 +495,7 @@ body {
     inline-size: 100vw;
     block-size: 100vh;
 }
-body::after {
+body::before {
     content: "";
     position: absolute;
     inset: 0 0;
@@ -581,6 +581,12 @@ body.modal_open::after {
     grid-template-columns: 1.2fr 0.8fr;
     align-items: center;
     align-content: center;
+}
+#ai_modal footer {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
 #ai_modal .ai_tone {
@@ -692,7 +698,7 @@ body.modal_open::after {
   }
 
 /* whatsapp edits */
-body.extension_triggered ._2Ts6i._1xFRo[data-testid="drawer-right"] {
+/* body.extension_triggered ._2Ts6i._1xFRo[data-testid="drawer-right"] {
     visibility: hidden;
     inline-size: 0px !important;
     opacity: 0;
@@ -706,4 +712,4 @@ body.extension_triggered ._2Ts6i._1xFRo[data-testid="drawer-right"] {
 body.image_open .extension_taskbar_area,
 body.image_open .extension_sidebar_area {
     z-index: 90 !important;
-}
+} */

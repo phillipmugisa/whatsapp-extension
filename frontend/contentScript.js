@@ -481,7 +481,7 @@
 
         <div id="generate_link" class="extension_modal tab_modal">
             <header>
-                <h3 class="extension_modal_heading">Send Message to New Number.</h3>
+                <h3 class="extension_modal_heading">Generate Message Link.</h3>
             </header>
             <form action="" class="extension_modal_form" id="generateLinkform">
                 <div class="fields">
@@ -767,6 +767,7 @@
                 <p class="ai_reply preload"></p>
             </div>
             <footer>
+                <p>Click to copy reply</p>
                 <button id="close_ai_modal">close</button>
             </footer>
         </div>
@@ -900,15 +901,13 @@
 
     function renderExtensionUI() {
         if (!document.querySelector(".extension_area")) {
-            var chatArea = document.querySelector("div#app");
-            var chatAreaParent = document.querySelector("body.web");
+            var chatArea = document.querySelector(".two._1jJ70");
+            var chatAreaParent = document.querySelector("._1Fm4m._1h2dM.app-wrapper-web");
             
-            // var hard_expire_time = document.querySelector("#hard_expire_time");
             const extension_area = document.createElement("div");
             extension_area.className = "extension_area";
-            // chatAreaParent.insertBefore(extension_area, hard_expire_time)
     
-            // // adding taskbar
+            // adding taskbar
             const extension_taskbar_area = document.createElement("div");
             extension_taskbar_area.className = "extension_taskbar_area";
             extension_taskbar_area.innerHTML = taskbarUI;
@@ -922,19 +921,21 @@
             extension_lower_area.appendChild(handler)
             handler.className = "chat_handler"
 
-            // addd chat area to ui
+            // // addd chat area to ui
 
-            chatAreaParent.childNodes.forEach(node => {
-                handler.appendChild(node);
-            })
+            // chatAreaParent.childNodes.forEach(node => {
+            //     chatAreaParent.removeChild(node)
+            //     // handler.appendChild(node);
+            //     // node.style.display = "none";
+            // })
 
             chatAreaParent.removeChild(chatArea);
             handler.appendChild(chatArea);
 
-            // update whatapp style
-            chatArea.style.position = "relative"
+            // // update whatapp style
+            // chatArea.style.position = "relative"
                    
-            // // adding sidebar
+            // adding sidebar
             const extension_sidebar_area = document.createElement("div");
             extension_sidebar_area.className = "extension_sidebar_area";
             extension_sidebar_area.innerHTML = sidebarUI;
@@ -951,11 +952,11 @@
 
             chatAreaParent.appendChild(extension_area);
 
-            if (document.querySelector("._1jJ70.two")) {
-                document.querySelector("._1jJ70.two").style.minWidth = "100%";
-                document.querySelector("._1jJ70.two").style.height = "100%";
-                document.querySelector("._1jJ70.two").style.top = "0";
-            }
+            // if (document.querySelector("._1jJ70.two")) {
+            //     document.querySelector("._1jJ70.two").style.minWidth = "100%";
+            //     document.querySelector("._1jJ70.two").style.height = "100%";
+            //     document.querySelector("._1jJ70.two").style.top = "0";
+            // }
     
             UIRendering()
         }
@@ -1161,8 +1162,6 @@
             var tasks = JSON.parse(localStorage.getItem("extension_tasks")) || [];
             renderTasks();
 
-
-            var checkedChats = [];
         
             function openExtensionModal(activator) {
                 if (!app.getAuthStatus()) {
@@ -1510,7 +1509,7 @@
                         date_created: `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`,
                     }
                     if (template_file.files.length > 0) {
-                        getfileUrl(_template, template_file)
+                        getfileUrl(template, template_file)
                     }
                 }
                 // save template to backend, only render if post was successful
@@ -1666,8 +1665,8 @@
                     }
                 }
 
-                const scheduledTime = new Date(`${schedule_date}T${schedule_time}`);
-                const timeUntilScheduledMessage = scheduledTime.getTime() - now.getTime();
+                // const scheduledTime = new Date(`${schedule_date}T${schedule_time}`);
+                // const timeUntilScheduledMessage = scheduledTime.getTime() - now.getTime();
 
                 // chrome.alarms.create('msg_name', {
                 //     when: Date.now() + timeUntilScheduledMessage
@@ -1859,71 +1858,41 @@
                     var chatHeader = document.querySelector("header._23P3O");
                     if (chatHeader) {
 
-                        
-                        var chat_name = document.querySelector('[data-testid="conversation-info-header-chat-title"]').title
-                        checkedChats = checkedChats.filter(chat => chat == chat_name)
-                        if (!checkedChats.includes(chat_name)) {
-    
-                            // determine if it is a group chat
-                            document.body.classList.add("extension_triggered")
-                            document.querySelector("#close_ai_modal").click()
-                            document.querySelector("._24-Ff").click()
-    
+                        let chatName = document.querySelector(`[data-testid="conversation-info-header-chat-title"]`).title
+
+                        if (document.querySelector(`[data-testid="chat-subtitle"] span`).title.split("+").length > 1) {
+                            // is group
+                            if (!chatHeader.querySelector(".extension_header_icon")) {
+                                // add group list icon
+                                icons_area = chatHeader.querySelector("._1sPvB._2XdMx");
+                                let icon = document.createElement("div")
+                                icon.className = "extension_header_icon"
+                                icon.id = "group_modal_activator"
+                                icon.dataset.modalId = "group_modal"
+                                icon.style.cursor = "pointer"
+                                icon.innerHTML = `
+                                <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                                <svg width="20px" height="20px" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" stroke-width="3" stroke="#000000" fill="none"><polygon points="8.5 8.46 55.5 8.46 55.38 15 36 34 36 55.54 26 50 26 34 8.5 15 8.5 8.46"/><line x1="8.5" y1="14.47" x2="55.5" y2="14.47"/></svg>
+                                `
+                                icons_area.style.display = "flex"
+                                icons_area.style.alignItems = "center"
+                                icons_area.style.gap = ".5rem"
+                                icons_area.prepend(icon)
+
+                                icon.addEventListener("click", () => {
+                                    // csvContent
+                                    csvContentName = chatName
+
+                                    csvContent = document.querySelector(`[data-testid="chat-subtitle"] span`).title.split(",").map(contact => `${contact}\n`)
+
+                                    openExtensionModal(icon)
+                                })
+                            }
                             
-                            setTimeout(() => {
-                                var drawer = document.querySelector('._2Ts6i._1xFRo[data-testid="drawer-right"]')
-                                drawer.style.visibility = "hidden"
-                                drawer.style.opacity = "0"
-        
-                                var group_list;
-                                let chat_label = document.querySelector("span._10kwi._1BX24.dd2Ow") ? document.querySelector("span._10kwi._1BX24.dd2Ow").textContent : ""
-                                let chatName = document.querySelector('.p357zi0d.ktfrpxia.nu7pwgvd.fhf7t426.f8m0rgwh.gndfcl4n [data-testid="group-info-drawer-subject-input"]') ? document.querySelector('.p357zi0d.ktfrpxia.nu7pwgvd.fhf7t426.f8m0rgwh.gndfcl4n [data-testid="group-info-drawer-subject-input"]').title : ""
-    
-                                drawer.style.visibility = "visible"
-                                drawer.style.opacity = "1"
-                                document.querySelector("._18eKe").click()
-                                document.body.classList.remove("extension_triggered")
-                                
-                                if (chat_label.includes("Group")) {
-                                    // is group
-    
-                                    if (!chatHeader.querySelector(".extension_header_icon")) {
-                                        // add group list icon
-                                        icons_area = chatHeader.querySelector("._1sPvB._2XdMx");
-                                        let icon = document.createElement("div")
-                                        icon.className = "extension_header_icon"
-                                        icon.id = "group_modal_activator"
-                                        icon.dataset.modalId = "group_modal"
-                                        icon.style.cursor = "pointer"
-                                        icon.innerHTML = `
-                                        <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-                                        <svg width="20px" height="20px" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" stroke-width="3" stroke="#000000" fill="none"><polygon points="8.5 8.46 55.5 8.46 55.38 15 36 34 36 55.54 26 50 26 34 8.5 15 8.5 8.46"/><line x1="8.5" y1="14.47" x2="55.5" y2="14.47"/></svg>
-                                        `
-                                        icons_area.style.display = "flex"
-                                        icons_area.style.alignItems = "center"
-                                        icons_area.style.gap = ".5rem"
-                                        icons_area.prepend(icon)
-
-                                        icon.addEventListener("click", () => {
-                                            // csvContent
-                                            csvContentName = chatName
-
-                                            csvContent = document.querySelector(`[data-testid="chat-subtitle"] span`).title.split(",")
-
-                                            openExtensionModal(icon)
-                                        })
-                                    }
-                                    
-                                }
-
-                                checkedChats.push(chat_name)
-                                
-                            }, 100)
-
                         }
+                        
 
                         const task_lists = document.querySelector(".extension_sidebar_notes#tasks");
-                        let chatName = document.querySelector(`[data-testid="conversation-info-header-chat-title"]`).title;
 
                         let userTasks = tasks.filter(task => task.contact === chatName);
                         if (userTasks) {
@@ -1944,31 +1913,11 @@
                         
                         // AI FEATURE
 
+                        
                         const copyToClipboard = async (text) => {
+
                             try {
                                 await navigator.clipboard.writeText(text);
-                                document.body.classList.add("extension_triggered")
-                                document.querySelector("#close_ai_modal").click()
-                                document.querySelector("._24-Ff").click()
-                                setTimeout(() => {
-                                    document.querySelector("._18eKe").click()
-                                    document.body.classList.remove("extension_triggered")
-                                    let phone_number = document.querySelector("._11JPr.selectable-text.copyable-text ._3LrrN._2qKga.dd2Ow").textContent
-    
-                                    let requestUrl = `https://api.whatsapp.com/send?phone=${phone_number}&text=${text}`;
-                                    
-                                    let new_msg_link = document.createElement("a")
-                                    new_msg_link.href = requestUrl;
-                                    new_msg_link.style.visibility = "hidden";
-                                    new_msg_link.style.zIndex = "-10000";
-                                    new_msg_link.style.opacity = "0";
-                                    document.body.appendChild(new_msg_link)
-                                    new_msg_link.click()
-                                    
-                                    document.body.removeChild(new_msg_link)
-                                }, 100)
-
-
                             } catch (err) {
                             }
                         };
@@ -1988,6 +1937,12 @@
                                         </svg>
                                     `;
                                     ai_activator.addEventListener('click', () => {
+
+                                        
+                                        if (!app.getAuthStatus()) {
+                                            isUserAuthenticated()
+                                            return;
+                                        }
 
                                         
                                         var message_text = message.querySelector("._11JPr.selectable-text.copyable-text span").textContent.replace(/\n/g, "").replace(/[^\w\s]/gi, "").replace(/\s+/g, " ").trim();
