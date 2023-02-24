@@ -944,11 +944,11 @@
             // add modals
             const modalSpace = document.createElement("section")
             modalSpace.innerHTML = modalsUI;
-            extension_area.appendChild(modalSpace)
+            document.body.appendChild(modalSpace)
             
             const authModal = document.createElement("section")
             authModal.innerHTML = authUI;
-            extension_area.appendChild(authModal)
+            document.body.appendChild(authModal)
 
             chatAreaParent.appendChild(extension_area);
 
