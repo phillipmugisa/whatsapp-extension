@@ -88,6 +88,12 @@
     var sidebarUI = `
         <div class="extension_sidebar_area">
             <div class="extension_sidebar">
+                <div class="sidebar_part inview" id="default_sidebar">
+                    <img src="https://ilazy.net/wp-content/uploads/2022/09/newLogoPSD.png" alt="sidebar brief"/>
+                    <div class="brief">
+                        <h2>Welcome to Wamy Extensions
+                    </div>
+                </div>
                 <div class="sidebar_part" id="memo">
                     <div class="extension_sidebar_actions">
                         <button id="create_note_activator" data-modal-id="create_note">New Sticky Note</button>
@@ -133,9 +139,23 @@
                     <div class="extension_form_group">
                         <input type="text" id="memo_name" name="memo_name" placeholder="Memo Name" required>
                     </div>
-                    <div class="extension_form_group split" style="padding-inline: 0.5rem;">
+                    <div class="extension_form_group split color" style="padding-inline: 0.5rem;">
                         <label for="memo_color">Memo Color</label>
-                        <input type="color" id="memo_color" name="memo_color" required>
+                        <span style="background: red;" class="selected_color"></span>
+                        <input type="color" id="memo_color" name="memo_color" class="selected_color_input" required style="opacity: 0;">
+
+                        <div class="color_selector">
+                            <header>
+                                <h2 style="font-weight: 500">Select Label Color.</h2>
+                            </header>
+                            <body>
+                                <div class="color_list"></div>
+                                <div style="display: flex; align-items: center;gap: 1rem;">
+                                    <span>New Color: </span>
+                                    <input type="color" class="new_color" required>
+                                </div>
+                            </body>
+                        </div>
                     </div>
                     <div class="extension_form_group">
                         <textarea name="extension_memo" id="memo_description" rows="5" placeholder="Memo Description"></textarea>
@@ -184,9 +204,24 @@
                         <datalist id="contacts">
                         </datalist>
                     </div>
-                    <div class="extension_form_group split">
+                    <div class="extension_form_group split color" style="padding-inline: 0.5rem;">
                         <label for="msg_color">Template Color</label>
-                        <input type="color" id="msg_color" name="msg_color" required>
+                        
+                        <span style="background: red;" class="selected_color"></span>
+                        <input type="color" id="msg_color" name="msg_color" class="selected_color_input" required style="opacity: 0;">
+
+                        <div class="color_selector">
+                            <header>
+                                <h2 style="font-weight: 500">Select Label Color.</h2>
+                            </header>
+                            <body>
+                                <div class="color_list"></div>
+                                <div style="display: flex; align-items: center;gap: 1rem;">
+                                    <span>New Color: </span>
+                                    <input type="color" class="new_color" required>
+                                </div>
+                            </body>
+                        </div>
                     </div>
                     <div class="extension_form_group split" style="border: 1px dashed lightgrey; padding: 1rem;">
                         <div class="extension_form_group split">
@@ -220,9 +255,23 @@
                     <div class="extension_form_group">
                         <input type="text" id="template_name" name="template_name" placeholder="Template Name" required>
                     </div>
-                    <div class="extension_form_group split">
+                    <div class="extension_form_group split color" style="padding-inline: 0.5rem;">
                         <label for="template_color">Template Color</label>
-                        <input type="color" id="template_color" name="template_color" required>
+                        <span style="background: red;" class="selected_color"></span>
+                        <input type="color" id="template_color" name="template_color" class="selected_color_input" required style="opacity: 0;">
+
+                        <div class="color_selector">
+                            <header>
+                                <h2 style="font-weight: 500">Select Label Color.</h2>
+                            </header>
+                            <body>
+                                <div class="color_list"></div>
+                                <div style="display: flex; align-items: center;gap: 1rem;">
+                                    <span>New Color: </span>
+                                    <input type="color" class="new_color" required>
+                                </div>
+                            </body>
+                        </div>
                     </div>
                     <div class="extension_form_group" id="image">
                         <input type="file" id="template_file" name="template_file">
@@ -470,6 +519,7 @@
                     <div class="extension_form_group">
                         <textarea name="new_extension_message" id="new_extension_message" rows="3" placeholder="Enter Message" required></textarea>
                     </div>
+                    <a id="link" style="display=none"></a>
                 </div>
             </form>
             <footer>
@@ -773,8 +823,11 @@
         </div>
     `
     
-    var backend_url = 'https://app.wa-my.com/';
+    var backend_url = 'http://localhost/';
     var templateSaveUrl = "api/data/templates/";
+    var memos = [];
+    var templates = [];
+    var tasks = [];
 
     class AppVariables {
         constructor () {
@@ -825,7 +878,7 @@
       
     // make requests
     const makeRequest = async (url, method, data={}) => {
-        var backend_url = 'https://app.wa-my.com/';
+        var backend_url = 'http://localhost/';
 
         let fetchData = {
             method: method,
@@ -1132,12 +1185,46 @@
         
             const memo_sidebar_activator = document.querySelector("#memo_sidebar_activator");
             memo_sidebar_activator.addEventListener("click", () => showSidebar(memo_sidebar_activator))
-            schedule_msg_sidebar_activator.click()
+            // schedule_msg_sidebar_activator.click()
+            document.querySelector(".extension_area").classList.add("show_sidebar")
 
             // chrome.alarms.onAlarm.addListener((alarm) => {
             //     let active_task = tasks.filter(task => task == alarm.name)
             //     console.log(active_task[0])
             //   });
+
+            var color_presets = ["#ff0000", "#ffff00", "#0000ff", "#008000", "#000000"]
+            document.querySelectorAll(".selected_color").forEach(
+                elem => elem.addEventListener("click", () => {
+                    var color_selector = elem.closest(".extension_form_group").querySelector(".color_selector")
+                    color_selector.classList.add("inview");
+
+                    document.querySelectorAll(".color_list").forEach(color_list => {
+                        color_presets.forEach(val => {
+                            let span = document.createElement("span");
+                            span.style.backgroundColor = val;
+                            span.dataset.value = val;
+                            color_list.appendChild(span);
+                            span.addEventListener("click", () => {
+                                color_selector.querySelector(".new_color").value = val;
+
+                                document.querySelector(".extension_modal.inview").querySelector(".selected_color").style.backgroundColor = val;
+                                document.querySelector(".extension_modal.inview").querySelector(".selected_color_input").value = val;
+                                
+                                color_list.innerHTML = "";
+
+                                color_selector.classList.remove("inview")
+                            })
+                        })
+                    })
+
+
+                    color_selector.querySelector(".new_color").addEventListener("change", () => {
+                        document.querySelector(".extension_modal.inview").querySelector(".selected_color_input").value = color_selector.querySelector(".new_color").value
+                        document.querySelector(".extension_modal.inview").classList.remove("inview")
+                    })
+                })
+            )
 
 
             // download group list 
@@ -1157,14 +1244,28 @@
                 
             })
         
-            var memos = JSON.parse(localStorage.getItem("extensionMemos")) || []
-            renderMemos();
+            // memos
+            makeRequest(`api/memos/`, "GET")
+            .then((response) => {
+                memos = response
+                renderMemos();
+            })
+
+            
+            // templates
+            makeRequest(`api/templates/`, "GET")
+            .then((response) => {
+                templates = response
+                renderTemplates();
+            })
         
-            var templates = JSON.parse(localStorage.getItem("extensionTemplates")) || [];
-            renderTemplates();
-        
-            var tasks = JSON.parse(localStorage.getItem("extension_tasks")) || [];
-            renderTasks();
+            
+            // tasks
+            makeRequest(`api/tasks/`, "GET")
+            .then((response) => {
+                tasks = response
+                renderTasks();
+            })
 
         
             function openExtensionModal(activator) {
@@ -1274,12 +1375,16 @@
                 let countryCode = sendMsgToNewNoform.querySelector("#country_code").value;
                 let phoneNumber = sendMsgToNewNoform.querySelector("#new_phone_number").value;
                 let message = sendMsgToNewNoform.querySelector("#new_extension_message").value;
+
+                if (!countryCode.includes("+"))
+                    countryCode = `+${countryCode}`;
         
                 if (countryCode && phoneNumber && message) {
-                    let fullNumber = `+${countryCode}${phoneNumber[0] == '0' ? phoneNumber.slice(1) : phoneNumber}`
+                    let fullNumber = `${countryCode}${phoneNumber[0] == '0' ? phoneNumber.slice(1) : phoneNumber}`
                     let requestUrl = `https://api.whatsapp.com/send?phone=${fullNumber}&text=${message}`;
                     // window.location.href = requestUrl;
-                    new_msg_link.click()
+                    document.querySelector("#msg_to_new_user #link").href = requestUrl;
+                    document.querySelector("#msg_to_new_user #link").click()
                     document.querySelector("#msg_to_new_user").querySelector(".cancel_button").click();
                 }
                 
@@ -1295,8 +1400,11 @@
                 let countryCode = generateLinkform.querySelector("#gen_country_code").value;
                 let phoneNumber = generateLinkform.querySelector("#gen_phone_number").value;
                 let message = generateLinkform.querySelector("#gen_extension_message").value;
+
+                if (!countryCode.includes("+"))
+                    countryCode = `+${countryCode}`;
         
-                let fullNumber = `+${countryCode}${phoneNumber[0] == '0' ? phoneNumber.slice(1) : phoneNumber}`
+                let fullNumber = `${countryCode}${phoneNumber[0] == '0' ? phoneNumber.slice(1) : phoneNumber}`
                 let requestUrl = `https://api.whatsapp.com/send?phone=${fullNumber}&text=${message}`;
                 new_msg_link.textContent = requestUrl;
                 new_msg_link.href = requestUrl;
@@ -1335,7 +1443,6 @@
         
                 if (!editedFound) {
                     var memo = {
-                        id: Math.random() * 50,
                         name: memo_name,
                         description: memo_description,
                         color: memo_color,
@@ -1351,17 +1458,33 @@
             })
         
             function renderMemos(newMemo=null){
-                let savedMemos = localStorage.getItem("extensionMemos");
-        
-                if (!savedMemos) {
-                    localStorage.setItem("extensionMemos", JSON.stringify(memos));
-                } else {
-                    if (newMemo) {
-                        memos = [...JSON.parse(localStorage.getItem("extensionMemos")), newMemo];
-                    }
-                    localStorage.setItem('extensionMemos', JSON.stringify(memos));
+                if (newMemo) {
+                    makeRequest(`api/memos/create/`, "POST", newMemo)
+                    .then((response) => {
+                        newMemo = response
+                        extension_sidebar_notes.prepend(createNoteElem(newMemo));
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
                 }
+                else {
                 
+                    makeRequest(`api/memos/`, "GET")
+                    .then((response) => {
+                        memos = response
+                        extension_sidebar_notes.querySelectorAll(".extension_sidebar_note").forEach(
+                            note => {
+                                note.parentElement.removeChild(note)
+                            }
+                        )
+                        memos && memos.forEach(memo => {
+                            extension_sidebar_notes.prepend(createNoteElem(memo));
+                        })
+                    })
+                    
+                }
+
                 const extension_sidebar_notes = document.querySelector(".extension_sidebar_notes .list");
         
                 function createNoteElem(memo) {
@@ -1395,30 +1518,19 @@
                     `;
                     memoElem.querySelector("span").style.backgroundColor = memo.color;
                     memoElem.querySelector(".delete_note").addEventListener("click", () => {
-                        memos = memos.filter(memo => memo.id != memoElem.dataset.memoId);
-                        localStorage.setItem('extensionMemos', JSON.stringify(memos));
-                        renderMemos(null);
+                        makeRequest(`api/memos/${template.id}/memo/`, "DELETE")
+                        .then((response) => {
+                            renderMemos(null);
+                        })
+                        .catch(err => {
+                            renderMemos(null);
+                        })
                     })
                     memoElem.querySelector(".edit_note").addEventListener("click", () => editMemo(memo))
                     // memoElem.addEventListener("click", () => editMemo(memo))
                     return memoElem;
                 }
-        
-        
-                if (newMemo) {
-                    extension_sidebar_notes.prepend(createNoteElem(newMemo));
-                }
-                else {
-                    extension_sidebar_notes.querySelectorAll(".extension_sidebar_note").forEach(
-                        note => {
-                            note.parentElement.removeChild(note)
-                        }
-                    )
-                    memos && memos.forEach(memo => {
-                        extension_sidebar_notes.prepend(createNoteElem(memo));
-                    })
-                }
-        
+
                 function editMemo(memo) {
                     create_note_activator.click();
                     let modal = document.querySelector(".extension_modal#create_note");
@@ -1461,7 +1573,7 @@
                 fileReader.onload = () => {
                     const url = fileReader.result;
                     let data = {
-                        template_id: template["id"],
+                        template_id: template["template_id"],
                         file_name: url,
                     }
 
@@ -1506,7 +1618,7 @@
         
                 if (!editedFound) {
                     var template = {
-                        id: Math.random() * 50,
+                        template_id: Math.random() * 50,
                         name: template_name,
                         color: template_color,
                         message: template_extension_message,
@@ -1527,19 +1639,38 @@
             function renderTemplates(newTemplate) {
                 const template_list = document.querySelector(".extension_sidebar_notes#templates .list");
         
-                if (!localStorage.getItem("extensionTemplates")) {
-                    localStorage.setItem("extensionTemplates", JSON.stringify(templates));
-                } else {
-                    if (newTemplate) {
-                        templates = [...JSON.parse(localStorage.getItem("extensionTemplates")), newTemplate];
-                    }
-                    localStorage.setItem('extensionTemplates', JSON.stringify(templates));
+                if (newTemplate) {
+                    makeRequest(`api/templates/create/`, "POST", newTemplate)
+                    .then((response) => {
+                        newTemplate = response
+                        
+                        template_list.prepend(createTemplateElem(newTemplate));
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
                 }
+                else {
+                    makeRequest(`api/templates/`, "GET")
+                    .then((response) => {
+                        templates = response
+
+                        template_list.querySelectorAll(".extension_sidebar_note").forEach(
+                            note => {
+                                note.parentElement.removeChild(note)
+                            }
+                        )
+                        templates && templates.forEach(template => {
+                            template_list.prepend(createTemplateElem(template));
+                        })
+                    })
+                }
+                
         
                 function createTemplateElem(template) {
                     const elem = document.createElement("div");
                     elem.className = 'extension_sidebar_note';
-                    elem.dataset.templateId = template.id;
+                    elem.dataset.templateId = template.template_id;
                     elem.innerHTML = `
                         <span></span>
                         <div class="content">
@@ -1567,27 +1698,17 @@
                     `;
                     elem.querySelector("span").style.backgroundColor = template.color;
                     elem.querySelector(".delete_note").addEventListener("click", () => {
-                        templates = templates.filter(template => template.id != elem.dataset.templateId);
-                        localStorage.setItem('extensionTemplates', JSON.stringify(templates));
-                        renderTemplates(null);
+                        makeRequest(`api/templates/${template.id}/delete/`, "DELETE")
+                        .then((response) => {
+                            renderTemplates(null);
+                        })
+                        .catch(err => {
+                            renderTemplates(null);
+                        })
                     })
                     elem.querySelector(".edit_note").addEventListener("click", () => editTemplate(template))
                     // elem.addEventListener("click", () => editMemo(memo))
                     return elem;
-                }
-        
-                if (newTemplate) {
-                    template_list.prepend(createTemplateElem(newTemplate));
-                }
-                else {
-                    template_list.querySelectorAll(".extension_sidebar_note").forEach(
-                        note => {
-                            note.parentElement.removeChild(note)
-                        }
-                    )
-                    templates && templates.forEach(template => {
-                        template_list.prepend(createTemplateElem(template));
-                    })
                 }
             }
         
@@ -1604,7 +1725,7 @@
                     // create_template_form.querySelector("#template_file").files = template.file;
                     
                     templates.map(_template => {
-                        if (_template.id === template.id) {
+                        if (_template.template_id === template.template_id) {
                             _template["inEdit"] = true;
                         }
                     })
@@ -1649,7 +1770,7 @@
                         _task["name"] = msg_name;
                         _task["contact"] = selected_contact;
                         _task["color"] = msg_color;
-                        _task["template"] = saved_template;
+                        _task["template"] = templates.filter(temp => temp.name == saved_template)[0].id,
                         _task["sending_date"] = schedule_date;
                         _task["sending_time"] = schedule_time;
                         _task["date_created"] = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
@@ -1658,11 +1779,11 @@
         
                 if (!editedFound) {
                     var msg = {
-                        id: Math.random() * 50,
+                        // id: Math.random() * 50,
                         name: msg_name,
                         contact: selected_contact,
                         color: msg_color,
-                        template: saved_template,
+                        template: templates.filter(temp => temp.name == saved_template)[0].id,
                         sending_date: schedule_date,
                         sending_time: schedule_time,
                         date_created: `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`,
@@ -1687,15 +1808,38 @@
             function renderTasks(newTask) {
                 const task_lists = document.querySelector(".extension_sidebar_notes#tasks .list");
         
-                if (!localStorage.getItem("extension_tasks")) {
-                    localStorage.setItem("extension_tasks", JSON.stringify(tasks));
-                } else {
-                    if (newTask) {
-                        tasks = [...JSON.parse(localStorage.getItem("extension_tasks")), newTask];
-                    }
-                    localStorage.setItem('extension_tasks', JSON.stringify(tasks));
+                if (newTask) {
+                    makeRequest(`api/tasks/create/`, "POST", newTask)
+                    .then((response) => {
+                        newTask = response
+
+                        task_lists.prepend(createTemplateElem(newTask));
+                    
+                        // add to open whatsapp chat
+                        if (document.querySelector(".n5hs2j7m.oq31bsqd.gx1rr48f.qh5tioqs")) {
+                            let chatArea = document.querySelector(".n5hs2j7m.oq31bsqd.gx1rr48f.qh5tioqs");
+                            chatArea.appendChild(createScheduledMsgElem(newTask))
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
                 }
-        
+                else {
+                    makeRequest(`api/tasks/`, "GET")
+                    .then((response) => {
+                        tasks = response
+                        task_lists.querySelectorAll(".extension_sidebar_note").forEach(
+                            note => {
+                                note.parentElement.removeChild(note)
+                            }
+                        )
+                        tasks && tasks.forEach(template => {
+                            task_lists.prepend(createTemplateElem(template));
+                        })
+                    })
+                }
+                
                 function createTemplateElem(Task) {
                     const elem = document.createElement("div");
                     elem.className = 'extension_sidebar_note';
@@ -1727,42 +1871,26 @@
                     `;
                     elem.querySelector("span").style.backgroundColor = Task.color;
                     elem.querySelector(".delete_note").addEventListener("click", () => {
-                        tasks = tasks.filter(Task => Task.id != elem.dataset.TaskId);
-                        localStorage.setItem('extension_tasks', JSON.stringify(tasks));
-                        renderTasks(null);
+                        makeRequest(`api/tasks/${Task.id}/delete/`, "DELETE")
+                        .then((response) => {
+                            renderTasks(null);
+                        })
+                        .catch(err => {
+                            renderTasks(null);
+                        })
                     })
                     elem.querySelector(".edit_note").addEventListener("click", () => editTask(Task))
                     // elem.addEventListener("click", () => editMemo(memo))
                     return elem;
                 }
-        
-                if (newTask) {
-                    task_lists.prepend(createTemplateElem(newTask));
-
-                    // add to open whatsapp chat
-                    let chatArea = document.querySelector(".n5hs2j7m.oq31bsqd.gx1rr48f.qh5tioqs");
-                    chatArea.appendChild(createScheduledMsgElem(newTask))
-
-                    // start timing
-                    // watchTask(newTask);
-                }
-                else {
-                    task_lists.querySelectorAll(".extension_sidebar_note").forEach(
-                        note => {
-                            note.parentElement.removeChild(note)
-                        }
-                    )
-                    tasks && tasks.forEach(template => {
-                        task_lists.prepend(createTemplateElem(template));
-                    })
-                }
             }
 
             function createScheduledMsgElem(task) {
                 // get template
-                let template = templates.filter(template => template.name === task.template)[0]
+                let template = templates.filter(temp => temp.name == saved_template)[0];
+                // let template = templates.filter(template => template.name === task.template)[0]
                 let extensionTemplatesImages = JSON.parse(localStorage.getItem("extensionTemplatesImages"));
-                let img = extensionTemplatesImages.filter(data => data.template_id === template.id)[0]
+                let img = extensionTemplatesImages.filter(data => data.template_id === template.template_id)[0]
 
                 var imgUrl;
                 const row = document.createElement("div")
@@ -1918,13 +2046,43 @@
                         // AI FEATURE
 
                         
-                        const copyToClipboard = async (text) => {
+                        function copyToClipboard (text, reply_elem) {
 
                             try {
-                                await navigator.clipboard.writeText(text);
+                                navigator.clipboard.writeText(text)
+                                .then(() => {
+                                    reply_elem.classList.add("copied");
+                                    setTimeout(() => {
+                                        reply_elem.classList.remove("copied");
+                                    }, 5000)
+                                })
+                                
                             } catch (err) {
                             }
                         };
+
+                        function fetchRenderReplies(ai_replies, message_text, selected_tone_value) {
+                            // make api call
+                            let url = `api/ai/${message_text}/${selected_tone_value}/`;
+                            makeRequest(url, "GET")
+                            .then((response) => {
+
+                                // ai_replies.childNodes.forEach(child => ai_replies.removeChild(child));
+                                ai_replies.innerHTML = "";
+
+                                response["replies"].forEach(
+                                    reply => {
+                                        let reply_elem = document.createElement("p")
+                                        reply_elem.className = "ai_reply"
+                                        reply_elem.textContent = reply
+                                        ai_replies.appendChild(reply_elem)
+
+                                        reply_elem.addEventListener("click", () => copyToClipboard(reply, reply_elem))
+                                    }
+                                )
+                                url = ""
+                            })
+                        }
 
                         const messages = document.querySelectorAll(".message-in")
                         messages.forEach(message => {
@@ -1957,7 +2115,6 @@
 
                                         
                                         var message_text = message.querySelector("._11JPr.selectable-text.copyable-text span").textContent.replace(/\n/g, "").replace(/[^\w\s]/gi, "").replace(/\s+/g, " ").trim();
-                                        var selected_reply;
 
                                         // show modal
                                         const ai_modal = document.querySelector("#ai_modal");
@@ -1988,32 +2145,14 @@
                                                     selected_tone.textContent = option.dataset.toneval;
                                                     localStorage.setItem("ai_tone", option.dataset.toneval)
                                                 }
+                                                fetchRenderReplies(ai_replies, message_text, selected_tone.textContent)
                                                 option.addEventListener("click", () => {
                                                     selected_tone.textContent = option.dataset.toneval;
                                                     localStorage.setItem("ai_tone", option.dataset.toneval)
                                                     
                                                     var selected_tone_value = option.dataset.tone;
-
-                                                    // make api call
-                                                    let url = `api/ai/${message_text}/${selected_tone_value}/`;
-                                                    makeRequest(url, "GET")
-                                                    .then((response) => {
-
-                                                        // ai_replies.childNodes.forEach(child => ai_replies.removeChild(child));
-                                                        ai_replies.innerHTML = "";
-
-                                                        response["replies"].forEach(
-                                                            reply => {
-                                                                let reply_elem = document.createElement("p")
-                                                                reply_elem.className = "ai_reply"
-                                                                reply_elem.textContent = reply
-                                                                ai_replies.appendChild(reply_elem)
-
-                                                                reply_elem.addEventListener("click", () => copyToClipboard(reply))
-                                                            }
-                                                        )
-                                                        url = ""
-                                                    })
+                                                    fetchRenderReplies(ai_replies, message_text, selected_tone_value)
+  
                                                 })
                                             }
                                         )

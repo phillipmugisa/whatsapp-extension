@@ -19,5 +19,17 @@ class UserSerializer(serializers.ModelSerializer):
 
 class TemplateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ManagerModels.Templates
+        model = ManagerModels.Template
+        fields = "__all__"
+
+
+class TaskSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ManagerModels.Task
+        fields = "__all__"
+
+
+class MemoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ManagerModels.Memo
         fields = "__all__"

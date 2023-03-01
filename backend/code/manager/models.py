@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.text import slugify
 import datetime
 import uuid
+from app_auth import models as AuthModels
 
 def get_file_path(instance, filename):
     ext = filename.split(".")[-1]
@@ -11,25 +12,60 @@ def get_file_path(instance, filename):
     filename = f"{instance.slug}-{uuid.uuid4()}"[:50] + f".{ext}"
     return os.path.join(f"{instance.__class__.__name__}/images/", filename)
 
-class Templates(models.Model):
-    name = models.CharField(_("Name"), max_length=256, blank=False, null=False)
+
+# id: Math.random() * 50,
+# name: template_name,
+# color: template_color,
+# message: template_extension_message,
+# date_created: `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`,
+class Template(models.Model):
+    user = models.ForeignKey(to=AuthModels.User, on_delete=models.CASCADE, blank=True, null=True)
+    name = models.CharField(_("Name"), max_length=256, blank=True, null=True)
+    template_id = models.CharField(_("template_id"), max_length=256, blank=True, null=True)
+    color = models.CharField(_("Color"), max_length=256, blank=True, null=True)
     message = models.TextField(_("message"))
-    file_name = models.FileField(
-        verbose_name=_("Image"),
-        upload_to=get_file_path,
-        blank=True, null=True
-    )
-    created_on = models.DateField(_("Created on"), default=timezone.now)
-    slug = models.SlugField(
-        _("Safe Url"), unique=True, blank=True, null=True, max_length=200
-    )
+    date_created = models.CharField(_("date_created"), max_length=256, blank=True, null=True)
 
-    def save(self, *args, **kwargs):
-        self.slug = slugify(f"{self.name}{uuid.uuid4()}")[:200]
+    def __str__(self) -> str:
+        return f"{self.name}"
 
-        self.name = self.name
+# _task["inEdit"] = True;
+# _task["name"] = msg_name;
+# _task["contact"] = selected_contact;
+# _task["color"] = msg_color;
+# _task["template"] = saved_template;
+# _task["sending_date"] = schedule_date;
+# _task["sending_time"] = schedule_time;
+# _task["date_created"] = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
 
-        super().save(*args, **kwargs)
+
+class Task(models.Model):
+    user = models.ForeignKey(to=AuthModels.User, on_delete=models.CASCADE, blank=True, null=True)
+    name = models.CharField(_("Name"), max_length=256, blank=True, null=True)
+    color = models.CharField(_("Color"), max_length=256, blank=True, null=True)
+    contact = models.CharField(_("contact"), max_length=256, blank=True, null=True)
+    template = models.CharField(_("template_id"), max_length=256, blank=True, null=True)
+
+    sending_date = models.CharField(_("sending_date"), max_length=256, blank=True, null=True)
+    sending_time = models.CharField(_("sending_time"), max_length=256, blank=True, null=True)
+
+    date_created = models.CharField(_("date_created"), max_length=256, blank=True, null=True)
+
+    def __str__(self) -> str:
+        return f"{self.name}"
+
+# id: Math.random() * 50,
+# name: memo_name,
+# description: memo_description,
+# color: memo_color,
+# date_created: `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`,
+
+class Memo(models.Model):
+    user = models.ForeignKey(to=AuthModels.User, on_delete=models.CASCADE, blank=True, null=True)
+    name = models.CharField(_("Name"), max_length=256, blank=True, null=True)
+    color = models.CharField(_("Color"), max_length=256, blank=True, null=True)
+    description = models.TextField(_("description"))
+    date_created = models.CharField(_("date_created"), max_length=256, blank=True, null=True)
 
     def __str__(self) -> str:
         return f"{self.name}"
