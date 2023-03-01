@@ -823,7 +823,7 @@
         </div>
     `
     
-    var backend_url = 'http://localhost/';
+    var backend_url = 'https://app.wa-my.com/';
     var templateSaveUrl = "api/data/templates/";
     var memos = [];
     var templates = [];
@@ -878,7 +878,7 @@
       
     // make requests
     const makeRequest = async (url, method, data={}) => {
-        var backend_url = 'http://localhost/';
+        var backend_url = 'https://app.wa-my.com/';
 
         let fetchData = {
             method: method,
@@ -892,7 +892,7 @@
             }
         };
 
-        if (method == "POST") {
+        if (method == "POST" || method == "PUT") {
             fetchData["body"] = JSON.stringify(data);
             fetchData["headers"]["Content-Type"] = 'application/json'
         }
@@ -1127,7 +1127,7 @@
                     isUserAuthenticated();
                     signinbtn.disabled = false;
                     signinbtn.value = "Sign In";
-
+                    fetch_all_data()
                 })
                 .catch(error => {
                     formErrMsg.textContent = "Invalid Data";
@@ -1150,6 +1150,28 @@
             document.querySelector(".user_detail").style.display = "flex";
             document.querySelector("#username").textContent = `Signed in as ${app.getUserFeatures().user}`
             document.querySelector("#package").textContent = `${app.getUserFeatures().subscription}`
+        }
+
+        function fetch_all_data() {
+            // memos
+            makeRequest(`api/memos/`, "GET")
+            .then((response) => {
+                memos = response
+            })
+
+            
+            // templates
+            makeRequest(`api/templates/`, "GET")
+            .then((response) => {
+                templates = response
+            })
+        
+            
+            // tasks
+            makeRequest(`api/tasks/`, "GET")
+            .then((response) => {
+                tasks = response
+            })
         }
 
         function uIManagement() {
@@ -1201,27 +1223,29 @@
 
                     document.querySelectorAll(".color_list").forEach(color_list => {
                         color_presets.forEach(val => {
-                            let span = document.createElement("span");
-                            span.style.backgroundColor = val;
-                            span.dataset.value = val;
-                            color_list.appendChild(span);
-                            span.addEventListener("click", () => {
-                                color_selector.querySelector(".new_color").value = val;
+                            if (document.querySelectorAll(".color_list").length < color_presets.length) {
+                                let span = document.createElement("span");
+                                span.style.backgroundColor = val;
+                                span.dataset.value = val;
+                                color_list.appendChild(span);
+                                span.addEventListener("click", () => {
+                                    color_selector.querySelector(".new_color").value = val;
 
-                                document.querySelector(".extension_modal.inview").querySelector(".selected_color").style.backgroundColor = val;
-                                document.querySelector(".extension_modal.inview").querySelector(".selected_color_input").value = val;
-                                
-                                color_list.innerHTML = "";
+                                    document.querySelector(".extension_modal.inview").querySelector(".selected_color").style.backgroundColor = val;
+                                    document.querySelector(".extension_modal.inview").querySelector(".selected_color_input").value = val;
+                                    
+                                    color_list.innerHTML = "";
 
-                                color_selector.classList.remove("inview")
-                            })
+                                    color_selector.classList.remove("inview")
+                                })
+                            }
                         })
                     })
 
 
                     color_selector.querySelector(".new_color").addEventListener("change", () => {
                         document.querySelector(".extension_modal.inview").querySelector(".selected_color_input").value = color_selector.querySelector(".new_color").value
-                        document.querySelector(".extension_modal.inview").classList.remove("inview")
+                        color_selector.classList.remove("inview")
                     })
                 })
             )
@@ -1244,28 +1268,7 @@
                 
             })
         
-            // memos
-            makeRequest(`api/memos/`, "GET")
-            .then((response) => {
-                memos = response
-                renderMemos();
-            })
-
-            
-            // templates
-            makeRequest(`api/templates/`, "GET")
-            .then((response) => {
-                templates = response
-                renderTemplates();
-            })
-        
-            
-            // tasks
-            makeRequest(`api/tasks/`, "GET")
-            .then((response) => {
-                tasks = response
-                renderTasks();
-            })
+            fetch_all_data();
 
         
             function openExtensionModal(activator) {
@@ -1273,6 +1276,7 @@
                     isUserAuthenticated()
                     return;
                 }
+
                 let modalId = activator.dataset.modalId;
                 let modalToShow = document.querySelector(`#${modalId}`);
                 if (modalToShow.classList.contains("inview")) {
@@ -1307,32 +1311,38 @@
                     modalToShow.classList.add("inview")
                     document.body.classList.add("modal_open")
                     if (modalToShow.id === "schedule_msg") {
-                        let template_options = document.querySelector("#saved_templates");
-                        templates && templates.forEach(template => {
-                            let option = document.createElement("option");
-                            option.value = template.name
-                            option.textContent = template.name
-                            option.id = template.id
-                            template_options.appendChild(option);
+
+                        makeRequest(`api/templates/`, "GET")
+                        .then((response) => {
+                            templates = response
+                            
+                            let template_options = document.querySelector("#saved_templates");
+                            templates && templates.forEach(template => {
+                                let option = document.createElement("option");
+                                option.value = template.name
+                                option.textContent = template.name
+                                option.id = template.id
+                                template_options.appendChild(option);
+                            })
+    
+                            let contacts = document.querySelector("#contacts");
+                            
+                            const myDiv = document.querySelector("#pane-side")
+                            myDiv.scrollTop = myDiv.scrollHeight
+    
+                            let chatlist = document.querySelectorAll("#pane-side span[title].ggj6brxn.gfz4du6o.r7fjleex.g0rxnol2.lhj4utae.le5p0ye3.l7jjieqr._11JPr:not(.Hy9nV)")
+                            chatlist.forEach(chat => {
+                                let option = document.createElement("option");
+                                option.value = chat.title
+                                option.textContent = chat.title
+                                contacts.appendChild(option);
+                            })
+    
+                            myDiv.scrollTop = 0    
+    
+                            document.querySelector("#task_list_activator").click()
+
                         })
-
-                        let contacts = document.querySelector("#contacts");
-                        
-                        const myDiv = document.querySelector("#pane-side")
-                        myDiv.scrollTop = myDiv.scrollHeight
-
-                        let chatlist = document.querySelectorAll("#pane-side span[title].ggj6brxn.gfz4du6o.r7fjleex.g0rxnol2.lhj4utae.le5p0ye3.l7jjieqr._11JPr:not(.Hy9nV)")
-                        chatlist.forEach(chat => {
-                            let option = document.createElement("option");
-                            option.value = chat.title
-                            option.textContent = chat.title
-                            contacts.appendChild(option);
-                        })
-
-                        myDiv.scrollTop = 0
-
-
-                        document.querySelector("#task_list_activator").click()
                     }
                 }
             }
@@ -1438,6 +1448,17 @@
                         _memo["description"] = memo_description;
                         _memo["color"] = memo_color;
                         _memo["date_created"] = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+
+                        
+
+                        delete _memo["inEdit"];
+
+                        makeRequest(`api/memos/${_memo.id}/update/`, "PUT", _memo)
+                        .then((response) => {
+                            return;
+                        })
+                        .catch(err => {
+                        })
                     }
                 })
         
@@ -1518,7 +1539,7 @@
                     `;
                     memoElem.querySelector("span").style.backgroundColor = memo.color;
                     memoElem.querySelector(".delete_note").addEventListener("click", () => {
-                        makeRequest(`api/memos/${template.id}/memo/`, "DELETE")
+                        makeRequest(`api/memos/${memo.id}/delete/`, "DELETE")
                         .then((response) => {
                             renderMemos(null);
                         })
@@ -1539,6 +1560,7 @@
                         create_memo_form.querySelector("#memo_name").value = memo.name;
                         create_memo_form.querySelector("#memo_description").value = memo.description;
                         create_memo_form.querySelector("#memo_color").value = memo.color;
+                        create_memo_form.querySelector(".selected_color").style.backgroundColor = memo.color;
         
                         memos.map(_memo => {
                             if (_memo.id === memo.id) {
@@ -1552,6 +1574,14 @@
             function showSidebar(activator) {
                 
                 document.querySelector(".extension_area").classList.add("show_sidebar")
+
+                if (activator.id.includes("memo")) {
+                    renderMemos()
+                }
+                else if (activator.id.includes("schedule_msg_sidebar_activator")) {
+                    renderTemplates()
+                    renderTasks()
+                }
                 
                 let sidebarId = activator.dataset.sidebarId;
                 let sidebarToShow = document.querySelector(`#${sidebarId}`);
@@ -1573,7 +1603,7 @@
                 fileReader.onload = () => {
                     const url = fileReader.result;
                     let data = {
-                        template_id: template["template_id"],
+                        id: template["id"],
                         file_name: url,
                     }
 
@@ -1613,42 +1643,55 @@
                         if (template_file.files.length > 0) {
                             getfileUrl(_template, template_file)
                         }
+
+                        delete _template["inEdit"];
+
+                        makeRequest(`api/templates/${_template.id}/update/`, "PUT", _template)
+                        .then((response) => {
+                            // save template to backend, only render if post was successful
+                            renderTemplates();
+            
+                            // close modal
+                            create_template_form.reset()
+                            create_template_form.parentElement.querySelector(".cancel_button").click();
+                        })
+                        .catch(err => {
+                        })
                     }
                 })
         
                 if (!editedFound) {
+
                     var template = {
-                        template_id: Math.random() * 50,
                         name: template_name,
                         color: template_color,
                         message: template_extension_message,
                         date_created: `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`,
                     }
-                    if (template_file.files.length > 0) {
-                        getfileUrl(template, template_file)
-                    }
-                }
-                // save template to backend, only render if post was successful
-                renderTemplates(template);
+                    
+                    makeRequest(`api/templates/create/`, "POST", template)
+                    .then((response) => {
+                        if (template_file.files.length > 0) {
+                            getfileUrl(response, template_file)
+                        }
+                        // save template to backend, only render if post was successful
+                        renderTemplates(template);
+        
+                        // close modal
+                        create_template_form.reset()
+                        create_template_form.parentElement.querySelector(".cancel_button").click();
+                    })
+                    .catch(err => {
+                    })
 
-                // close modal
-                create_template_form.reset()
-                create_template_form.parentElement.querySelector(".cancel_button").click();
+                }
             })
         
             function renderTemplates(newTemplate) {
                 const template_list = document.querySelector(".extension_sidebar_notes#templates .list");
         
                 if (newTemplate) {
-                    makeRequest(`api/templates/create/`, "POST", newTemplate)
-                    .then((response) => {
-                        newTemplate = response
-                        
-                        template_list.prepend(createTemplateElem(newTemplate));
-                    })
-                    .catch(err => {
-                        console.log(err)
-                    })
+                    template_list.prepend(createTemplateElem(newTemplate));
                 }
                 else {
                     makeRequest(`api/templates/`, "GET")
@@ -1670,7 +1713,7 @@
                 function createTemplateElem(template) {
                     const elem = document.createElement("div");
                     elem.className = 'extension_sidebar_note';
-                    elem.dataset.templateId = template.template_id;
+                    elem.dataset.templateId = template.id;
                     elem.innerHTML = `
                         <span></span>
                         <div class="content">
@@ -1720,12 +1763,13 @@
                     create_template_form.querySelector("#template_name").value = template.name;
                     create_template_form.querySelector("#template_color").value = template.color;
                     create_template_form.querySelector("#template_extension_message").value = template.message;
+                    create_template_form.querySelector(".selected_color").style.backgroundColor = template.color;
         
                     // handle file edit 
                     // create_template_form.querySelector("#template_file").files = template.file;
                     
                     templates.map(_template => {
-                        if (_template.template_id === template.template_id) {
+                        if (_template.id === template.id) {
                             _template["inEdit"] = true;
                         }
                     })
@@ -1762,7 +1806,7 @@
                 if (!msg_name && !saved_template && !selected_contact) return;
         
                 var editedFound = false;
-                tasks && tasks.map(_task => {
+                tasks && tasks.forEach(_task => {
                     if (_task.inEdit) {
                         editedFound = true;
         
@@ -1774,6 +1818,16 @@
                         _task["sending_date"] = schedule_date;
                         _task["sending_time"] = schedule_time;
                         _task["date_created"] = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+
+                        delete _task["inEdit"]
+                        
+                        makeRequest(`api/tasks/${_task.id}/update/`, "PUT", _task)
+                        .then((response) => {
+                            return;
+                        })
+                        .catch(err => {
+                        })
+
                     }
                 })
         
@@ -1789,7 +1843,6 @@
                         date_created: `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`,
                     }
                 }
-
                 // const scheduledTime = new Date(`${schedule_date}T${schedule_time}`);
                 // const timeUntilScheduledMessage = scheduledTime.getTime() - now.getTime();
 
@@ -1801,7 +1854,7 @@
                 renderTasks(msg);
         
                 // close modal
-                // schedule_msg_form.reset()
+                schedule_msg_form.reset()
                 schedule_msg_form.parentElement.querySelector(".cancel_button").click();
             })
         
@@ -1887,10 +1940,10 @@
 
             function createScheduledMsgElem(task) {
                 // get template
-                let template = templates.filter(temp => temp.name == saved_template)[0];
+                let template = templates.filter(temp => temp.id == task.template)[0];
                 // let template = templates.filter(template => template.name === task.template)[0]
                 let extensionTemplatesImages = JSON.parse(localStorage.getItem("extensionTemplatesImages"));
-                let img = extensionTemplatesImages.filter(data => data.template_id === template.template_id)[0]
+                let img = extensionTemplatesImages.filter(data => data.id === template.id)[0]
 
                 var imgUrl;
                 const row = document.createElement("div")
@@ -1924,14 +1977,19 @@
                 schedule_msg_activator.click();
                 let modal = document.querySelector(".extension_modal#schedule_msg");
                 if (modal.classList.contains("inview")) {
+
+                    
+                    let template = templates.filter(temp => temp.id == Task.template)[0];
+
                     const create_task_form = modal.querySelector("form");
                     create_task_form.querySelector("#msg_name").value = Task.name;
                     create_task_form.querySelector("#selected_contact").value = Task.contact;
-                    create_task_form.querySelector("#saved_template").value = Task.template;
-                    create_task_form.querySelector("#msg_color").value = Task.color;
+                    create_task_form.querySelector("#saved_template").value = template.name;
                     create_task_form.querySelector("#schedule_date").value = Task.sending_date;
                     create_task_form.querySelector("#schedule_time").value = Task.sending_time;
+                    create_task_form.querySelector("#msg_color").value = Task.color;
         
+                    create_task_form.querySelector(".selected_color").style.backgroundColor = Task.color;
                     // handle file edit 
                     // create_template_form.querySelector("#template_file").files = template.file;
         
@@ -1981,6 +2039,17 @@
                             // simulate chat select
                             parentElem.click()
                         }
+                    })
+
+                    
+                    elem.querySelector(".delete_note").addEventListener("click", () => {
+                        makeRequest(`api/tasks/${task.id}/delete/`, "DELETE")
+                        .then((response) => {
+                            renderTasks(null);
+                        })
+                        .catch(err => {
+                            renderTasks(null);
+                        })
                     })
                 }
 

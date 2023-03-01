@@ -120,6 +120,16 @@ class TaskUpdate(generics.UpdateAPIView):
         user = self.request.user
         return ManagerModels.Task.objects.filter(user=user)
 
+    def put(self, request, *args, **kwargs):
+            instance = self.get_object()
+            serializer = self.get_serializer(instance, data=request.data, partial=True)
+            serializer.is_valid(raise_exception=True)
+            self.perform_update(serializer)
+            return Response(serializer.data)
+
+    def perform_update(self, serializer):
+        serializer.save()
+
 class TaskDeleteView(generics.DestroyAPIView):
     serializer_class = serializers.TaskSerializer
 
