@@ -2039,18 +2039,18 @@
                             // simulate chat select
                             parentElem.click()
                         }
+                        elem.querySelector(".delete_note").addEventListener("click", () => {
+                            makeRequest(`api/tasks/${task.id}/delete/`, "DELETE")
+                            .then((response) => {
+                                renderTasks(null);
+                            })
+                            .catch(err => {
+                                renderTasks(null);
+                            })
+                        })
                     })
 
                     
-                    elem.querySelector(".delete_note").addEventListener("click", () => {
-                        makeRequest(`api/tasks/${task.id}/delete/`, "DELETE")
-                        .then((response) => {
-                            renderTasks(null);
-                        })
-                        .catch(err => {
-                            renderTasks(null);
-                        })
-                    })
                 }
 
                 // check if chat open has a scheduled task
@@ -2194,19 +2194,16 @@
                                         })
 
                                         const selected_tone = document.querySelector("#selected_tone")
+                                        var ai_replies = document.querySelector(".ai_replies");
+                                        ai_replies.innerHTML = "";
+                                        for (let i = 0; i < 6; i++) {
+                                            let reply_elem = document.createElement("p")
+                                            reply_elem.classList.add("ai_reply")
+                                            reply_elem.classList.add("preload")
+                                            ai_replies.appendChild(reply_elem)
+                                        }
                                         document.querySelectorAll(".tone_option").forEach(
                                             option => {
-                                                
-                                                var ai_replies = document.querySelector(".ai_replies");
-                                                ai_replies.innerHTML = "";
-
-                                                for (let i = 0; i < 6; i++) {
-                                                    let reply_elem = document.createElement("p")
-                                                    reply_elem.classList.add("ai_reply")
-                                                    reply_elem.classList.add("preload")
-                                                    ai_replies.appendChild(reply_elem)
-                                                }
-
                                                 if (localStorage.getItem("ai_tone")) {
                                                     selected_tone.textContent = localStorage.getItem("ai_tone");
                                                 }
@@ -2214,7 +2211,6 @@
                                                     selected_tone.textContent = option.dataset.toneval;
                                                     localStorage.setItem("ai_tone", option.dataset.toneval)
                                                 }
-                                                fetchRenderReplies(ai_replies, message_text, selected_tone.textContent)
                                                 option.addEventListener("click", () => {
                                                     selected_tone.textContent = option.dataset.toneval;
                                                     localStorage.setItem("ai_tone", option.dataset.toneval)
@@ -2225,6 +2221,8 @@
                                                 })
                                             }
                                         )
+                                        
+                                        fetchRenderReplies(ai_replies, message_text, selected_tone.textContent)
                                     })
 
                                     reaction_area.appendChild(ai_activator);
