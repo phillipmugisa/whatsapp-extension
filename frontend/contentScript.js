@@ -138,13 +138,13 @@
                 </div>
                 <div class="sidebar_part" id="focus">
                     <div class="extension_sidebar_actions" style="display: grid; grid-auto-flow: row;">
-                        <div class="toggle_area" style="padding: .5rem;">
-                            <span>On</span>
+                        <div class="toggle_area" style="padding: .25rem .5rem;">
+                            <span>OFF</span>
                             <label class="toggle">
                                 <input type="checkbox">
                                 <span class="slider"></span>
                             </label>
-                            <span>Off</span>
+                            <span>ON</span>
                         </div>
                         <button id="create_focus_activator" data-modal-id="create_focus">Block Website</button>
                     </div>
@@ -1052,6 +1052,12 @@
                     renderExtensionUI();
                 }
             }
+        }
+        else if (obj.type === "SEND_MESSAGE_FROM_OUTSITE") {
+            document.querySelector("#msg_to_new_user_activator").click();
+            const sendMsgToNewNoform = document.querySelector("#sendMsgToNewNoform");
+    
+            sendMsgToNewNoform.querySelector("#new_phone_number").value = obj.number;
         }
         sendResponse()
     })

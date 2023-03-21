@@ -13,17 +13,17 @@
       "css": ["popup.css"],
       "run_at": "document_end",
       "matches": [
-        "https://web.whatsapp.com/",
-        "https://web.whatsapp.com/"
+        "https://*/*",
+        "http://*/*"
       ]
     }
   ],
   "background": {
     "service_worker": "background.js"
   },
-  "permissions": ["downloads", "tabs", "cookies", "storage","alarms"],
+  "permissions": ["downloads", "tabs", "cookies", "storage","alarms", "contextMenus"],
   "host_permissions": [
-    "https://web.whatsapp.com/",
-    "https://web.whatsapp.com/"
+    "https://*/*",
+    "http://*/*"
   ]
 }
