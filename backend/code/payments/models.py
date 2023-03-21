@@ -106,7 +106,6 @@ class PaypalProduct(models.Model):
         }
         return json.dumps(obj)
 
-
 class PaypalPlan(models.Model):
     paypal_id = models.CharField(_("Paypal ID"), max_length=256, null=True, blank=True)
     name = models.CharField(_("Plan Name"), max_length=256)

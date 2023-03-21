@@ -25,4 +25,14 @@ urlpatterns = [
     path('memos/create/', ApiViews.MemoCreate.as_view(), name='memo-create'),
     path('memos/<int:pk>/update/', ApiViews.MemoUpdate.as_view(), name='memo-update'),
     path('memos/<int:pk>/delete/', ApiViews.MemoDeleteView.as_view(), name='memo-delete'),
+
+    path('alarms/', ApiViews.AlarmList.as_view(), name='alarm-list'),
+    path('alarms/create/', ApiViews.AlarmCreate.as_view(), name='alarm-create'),
+    path('alarms/<int:pk>/update/', ApiViews.AlarmUpdate.as_view(), name='alarm-update'),
+    path('alarms/<int:pk>/delete/', ApiViews.AlarmDeleteView.as_view(), name='alarm-delete'),
+
+    path('blockedsite/', ApiViews.BlockedSiteList.as_view(), name='blockedsite-list'),
+    path('blockedsite/create/', ApiViews.BlockedSiteCreate.as_view(), name='blockedsite-create'),
+    path('blockedsite/<int:pk>/update/', ApiViews.BlockedSiteUpdate.as_view(), name='blockedsite-update'),
+    path('blockedsite/<int:pk>/delete/', ApiViews.BlockedSiteDeleteView.as_view(), name='blockedsite-delete'),
 ]

@@ -183,6 +183,86 @@ class MemoDeleteView(generics.DestroyAPIView):
 
     def perform_destroy(self, instance):
         instance.delete()
+
+class AlarmList(generics.ListAPIView):
+    serializer_class = serializers.AlarmSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return ManagerModels.Alarm.objects.filter(user=user)
+
+class AlarmCreate(generics.CreateAPIView):
+    serializer_class = serializers.AlarmSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return ManagerModels.Alarm.objects.filter(user=user)
+    
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+class AlarmUpdate(generics.UpdateAPIView):
+    serializer_class = serializers.AlarmSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return ManagerModels.Alarm.objects.filter(user=user)
+
+class AlarmDeleteView(generics.DestroyAPIView):
+    serializer_class = serializers.AlarmSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return ManagerModels.Alarm.objects.filter(user=user)
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def perform_destroy(self, instance):
+        instance.delete()
+
+
+class BlockedSiteList(generics.ListAPIView):
+    serializer_class = serializers.BlockedSiteSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return ManagerModels.BlockedSite.objects.filter(user=user)
+
+class BlockedSiteCreate(generics.CreateAPIView):
+    serializer_class = serializers.BlockedSiteSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return ManagerModels.BlockedSite.objects.filter(user=user)
+    
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+class BlockedSiteUpdate(generics.UpdateAPIView):
+    serializer_class = serializers.BlockedSiteSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return ManagerModels.BlockedSite.objects.filter(user=user)
+
+class BlockedSiteDeleteView(generics.DestroyAPIView):
+    serializer_class = serializers.BlockedSiteSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return ManagerModels.BlockedSite.objects.filter(user=user)
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def perform_destroy(self, instance):
+        instance.delete()
+
 class AIView(APIView):
     def get(self, request, user_message, reply_tone):
         response = dict()

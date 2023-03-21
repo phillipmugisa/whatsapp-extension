@@ -33,3 +33,13 @@ class MemoSerializer(serializers.ModelSerializer):
     class Meta:
         model = ManagerModels.Memo
         fields = "__all__"
+
+class AlarmSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ManagerModels.Alarm
+        fields = "__all__"
+
+class BlockedSiteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ManagerModels.BlockedSite
+        fields = "__all__"

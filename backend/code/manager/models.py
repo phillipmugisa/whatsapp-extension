@@ -69,3 +69,26 @@ class Memo(models.Model):
 
     def __str__(self) -> str:
         return f"{self.name}"
+
+class Alarm(models.Model):
+    user = models.ForeignKey(to=AuthModels.User, on_delete=models.CASCADE, blank=True, null=True)
+    name = models.CharField(_("Name"), max_length=256, blank=True, null=True)
+    color = models.CharField(_("Color"), max_length=256, blank=True, null=True)
+    display_area = models.CharField(_("Display Area"), max_length=256, blank=True, null=True)
+    template = models.CharField(_("template_id"), max_length=256, blank=True, null=True)
+
+    alarm_date = models.CharField(_("alarm_date"), max_length=256, blank=True, null=True)
+    alarm_time = models.CharField(_("alarm_time"), max_length=256, blank=True, null=True)
+
+    date_created = models.CharField(_("date_created"), max_length=256, blank=True, null=True)
+
+    def __str__(self) -> str:
+        return f"{self.name}"
+
+class BlockedSite(models.Model):
+    user = models.ForeignKey(to=AuthModels.User, on_delete=models.CASCADE, blank=True, null=True)
+    url = models.CharField(_("url"), max_length=256, blank=True, null=True)
+    date_created = models.CharField(_("date_created"), max_length=256, blank=True, null=True)
+
+    def __str__(self) -> str:
+        return f"{self.url}"

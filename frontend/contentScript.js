@@ -68,6 +68,28 @@
                     </button>
                     <p>Create Memo</p>
                 </div>
+                
+                <div class="tab-area" data-sidebar-id="alarm" id="alarm_sidebar_activator">
+                    <button class="extension_tab">
+                    <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                    <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.82474 13.934L5.09976 13.2452L5.82474 13.934ZM8 9C8 6.79086 9.79086 5 12 5V3C8.68629 3 6 5.68629 6 9H8ZM8 11.7564V9H6V11.7564H8ZM6 16C6 15.4658 6.20812 14.9823 6.54971 14.6228L5.09976 13.2452C4.41915 13.9616 4 14.9329 4 16H6ZM7 16H6V18H7V16ZM17 16H7V18H17V16ZM18 16H17V18H18V16ZM17.4503 14.6228C17.7919 14.9823 18 15.4658 18 16H20C20 14.9329 19.5809 13.9616 18.9002 13.2452L17.4503 14.6228ZM16 9V11.7564H18V9H16ZM12 5C14.2091 5 16 6.79086 16 9H18C18 5.68629 15.3137 3 12 3V5ZM18.9002 13.2452C18.2923 12.6054 18 12.1579 18 11.7564H16C16 13.05 16.8905 14.0336 17.4503 14.6228L18.9002 13.2452ZM4 16C4 17.1046 4.89543 18 6 18V16H4ZM18 18C19.1046 18 20 17.1046 20 16H18V18ZM6 11.7564C6 12.1579 5.70766 12.6054 5.09976 13.2452L6.54971 14.6228C7.10947 14.0336 8 13.05 8 11.7564H6Z" fill="#000000"/>
+                    <path d="M13.7976 19.8767C13.6312 20.2179 13.3712 20.5046 13.048 20.7035C12.7247 20.9023 12.3516 21.0051 11.9721 20.9998C11.5926 20.9945 11.2224 20.8813 10.9049 20.6735C10.5873 20.4657 10.3354 20.1718 10.1786 19.8262" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 3V4" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    </button>
+                    <p>Create Alarm</p>
+                </div>
+                
+                <div class="tab-area" data-sidebar-id="focus" id="focus_sidebar_activator">
+                    <button class="extension_tab">
+                    <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                    <svg fill="#000000" width="20px" height="20px" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1691.249 1016.47c-27.558 359.718-315.106 647.154-674.824 674.824v-223.059h-112.94v223.06c-359.718-27.671-647.154-315.107-674.711-674.824H451.72V903.529H228.774c27.557-359.717 314.993-647.153 674.71-674.823v223.059h112.941v-223.06c359.718 27.671 647.266 315.107 674.824 674.824H1468.19v112.942h223.059Zm112.941-112.94c-28.01-421.949-365.703-759.756-787.765-787.765V0h-112.94v115.765c-421.949 28.01-759.643 365.816-787.653 787.764H-.045v112.942h115.877c28.01 421.948 365.704 759.755 787.652 787.764V1920h112.941v-115.765c422.062-28.01 759.756-365.816 787.765-787.764h115.765V903.529H1804.19ZM960 1242.352c-155.633 0-282.353-126.72-282.353-282.353S804.367 677.647 960 677.647 1242.353 804.367 1242.353 960 1115.633 1242.353 960 1242.353m0-677.647c-217.976 0-395.294 177.318-395.294 395.294 0 217.976 177.318 395.294 395.294 395.294 217.976 0 395.294-177.318 395.294-395.294 0-217.976-177.318-395.294-395.294-395.294" fill-rule="evenodd"/>
+                    </svg>
+                    </button>
+                    <p>Focus Mode</p>
+                </div>
             </div>
             <div class="right">
                 <div class="user_detail">
@@ -101,6 +123,34 @@
                     <hr>
                     <div class="extension_sidebar_notes">
                         <h2 class="sub_headings">Your Notes</h2>
+                        <div class="list"></div>
+                    </div>
+                </div>
+                <div class="sidebar_part" id="alarm">
+                    <div class="extension_sidebar_actions">
+                        <button id="create_alarm_activator" data-modal-id="create_alarm">Create Buzzer</button>
+                    </div>
+                    <hr>
+                    <div class="extension_sidebar_notes">
+                        <h2 class="sub_headings">Your Buzzers</h2>
+                        <div class="list"></div>
+                    </div>
+                </div>
+                <div class="sidebar_part" id="focus">
+                    <div class="extension_sidebar_actions" style="display: grid; grid-auto-flow: row;">
+                        <div class="toggle_area" style="padding: .5rem;">
+                            <span>On</span>
+                            <label class="toggle">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <span>Off</span>
+                        </div>
+                        <button id="create_focus_activator" data-modal-id="create_focus">Block Website</button>
+                    </div>
+                    <hr>
+                    <div class="extension_sidebar_notes">
+                        <h2 class="sub_headings">Restricted Websites</h2>
                         <div class="list"></div>
                     </div>
                 </div>
@@ -284,6 +334,82 @@
             <footer>
                 <button class="cancel_button">Cancel</button>
                 <button class="text-link" id="create_template_activator" type="submit">Save</button>
+            </footer>
+        </div>
+
+        <div id="create_alarm" class="extension_modal tab_modal">
+            <header>
+                <h3 class="extension_modal_heading">Create New Buzzer.</h3>
+            </header>
+            <form action="" class="extension_modal_form">
+                <div class="fields">
+                    <div class="extension_form_group">
+                        <input type="text" id="alarm_name" name="alarm_name" placeholder="Buzzer Name" required>
+                    </div>
+                    <div class="extension_form_group toggle_area" style="border: 1px dashed lightgrey; padding: 1rem;">
+                        <span>Whatsapp only</span>
+                        <label class="toggle">
+                            <input type="checkbox"id="display_area" >
+                            <span class="slider"></span>
+                        </label>
+                        <span>All over browser</span>
+                    </div>
+                    <div class="extension_form_group split color" style="padding-inline: 0.5rem;">
+                        <label for="alarm_color">Buzzer Color</label>
+                        
+                        <span style="background: red;" class="selected_color"></span>
+                        <input type="color" id="alarm_color" name="alarm_color" class="selected_color_input" required style="opacity: 0;">
+
+                        <div class="color_selector">
+                            <header>
+                                <h2 style="font-weight: 500">Select Label Color.</h2>
+                            </header>
+                            <body>
+                                <div class="color_list"></div>
+                                <div style="display: flex; align-items: center;gap: 1rem;">
+                                    <span>New Color: </span>
+                                    <input type="color" class="new_color" required>
+                                </div>
+                            </body>
+                        </div>
+                    </div>
+                    <div class="extension_form_group split" style="border: 1px dashed lightgrey; padding: 1rem;">
+                        <div class="extension_form_group split">
+                            <label for="alarm_date">Select Date</label>
+                            <input type="date" id="alarm_date" name="alarm_date" required>
+                        </div>
+                        <div class="extension_form_group split">
+                            <label for="alarm_time">Select Time</label>
+                            <input type="time" id="alarm_time" name="alarm_time" required>
+                        </div>
+                    </div>
+                    <div class="extension_form_group">
+                        <input type="text" id="alarm_template" name="alarm_template" list="alarm_templates" placeholder="Select Temaplate" required>
+                        <datalist id="alarm_templates">
+                        </datalist>
+                    </div>
+                </div>
+            </form>
+            <footer>
+                <button class="cancel_button">Cancel</button>
+                <button class="text-link" id="save_alarm_activator" type="submit">Save</button>
+            </footer>
+        </div>
+
+        <div id="create_focus" class="extension_modal tab_modal">
+            <header>
+                <h3 class="extension_modal_heading">New Site.</h3>
+            </header>
+            <form action="" class="extension_modal_form">
+                <div class="fields">
+                    <div class="extension_form_group">
+                        <input type="text" id="site_url" name="site_url" placeholder="Website Url" required>
+                    </div>
+                </div>
+            </form>
+            <footer>
+                <button class="cancel_button">Cancel</button>
+                <button class="text-link" id="save_focus_activator" type="submit">Save</button>
             </footer>
         </div>
 
@@ -822,12 +948,12 @@
             </footer>
         </div>
     `
-    
-    var backend_url = 'https://app.wa-my.com/';
-    var templateSaveUrl = "api/data/templates/";
+
     var memos = [];
     var templates = [];
     var tasks = [];
+    var alarms = [];
+    var blocked_sites = [];
 
     class AppVariables {
         constructor () {
@@ -878,7 +1004,7 @@
       
     // make requests
     const makeRequest = async (url, method, data={}) => {
-        var backend_url = 'https://app.wa-my.com/';
+        var backend_url = 'http://localhost//';
 
         let fetchData = {
             method: method,
@@ -1172,6 +1298,16 @@
             .then((response) => {
                 tasks = response
             })
+
+            makeRequest(`api/alarms/`, "GET")
+            .then((response) => {
+                tasks = response
+            })
+
+            makeRequest(`api/blockedsite/`, "GET")
+            .then((response) => {
+                tasks = response
+            })
         }
 
         function uIManagement() {
@@ -1188,7 +1324,6 @@
             // tabs
             const msg_to_new_user_activator = document.querySelector("#msg_to_new_user_activator");
             msg_to_new_user_activator.addEventListener("click", () => openExtensionModal(msg_to_new_user_activator))
-
             
             const generate_link_activator = document.querySelector("#generate_link_activator");
             generate_link_activator.addEventListener("click", () => openExtensionModal(generate_link_activator))
@@ -1202,11 +1337,28 @@
             const template_modal_activator = document.querySelector("#template_modal_activator");
             template_modal_activator.addEventListener("click", () => openExtensionModal(template_modal_activator))
         
+
             const schedule_msg_sidebar_activator = document.querySelector("#schedule_msg_sidebar_activator");
             schedule_msg_sidebar_activator.addEventListener("click", () => showSidebar(schedule_msg_sidebar_activator))
         
             const memo_sidebar_activator = document.querySelector("#memo_sidebar_activator");
             memo_sidebar_activator.addEventListener("click", () => showSidebar(memo_sidebar_activator))
+
+            const alarm_sidebar_activator = document.querySelector("#alarm_sidebar_activator");
+            alarm_sidebar_activator.addEventListener("click", () => showSidebar(alarm_sidebar_activator))
+            
+            const focus_sidebar_activator = document.querySelector("#focus_sidebar_activator");
+            focus_sidebar_activator.addEventListener("click", () => showSidebar(focus_sidebar_activator))
+
+            
+            const create_alarm_activator = document.querySelector("#create_alarm_activator");
+            create_alarm_activator.addEventListener("click", () => openExtensionModal(create_alarm_activator))
+
+            
+            const create_focus_activator = document.querySelector("#create_focus_activator");
+            create_focus_activator.addEventListener("click", () => openExtensionModal(create_focus_activator))
+
+            
             // schedule_msg_sidebar_activator.click()
             document.querySelector(".extension_area").classList.add("show_sidebar")
 
@@ -1489,6 +1641,7 @@
                         console.log(err)
                     })
                 }
+
                 else {
                 
                     makeRequest(`api/memos/`, "GET")
@@ -1555,6 +1708,7 @@
                 function editMemo(memo) {
                     create_note_activator.click();
                     let modal = document.querySelector(".extension_modal#create_note");
+                    modal.querySelector("button[type='submit']").textContent = "Edit";
                     if (modal.classList.contains("inview")) {
                         const create_memo_form = document.querySelector("#create_memo_form");
                         create_memo_form.querySelector("#memo_name").value = memo.name;
@@ -1581,6 +1735,10 @@
                 else if (activator.id.includes("schedule_msg_sidebar_activator")) {
                     renderTemplates()
                     renderTasks()
+                } else if (activator.id.includes("focus")) {
+                    renderBlockedSites();
+                } else if (activator.id.includes("alarm")) {
+                    renderAlarms()
                 }
                 
                 let sidebarId = activator.dataset.sidebarId;
@@ -1594,6 +1752,318 @@
                     sidebarToShow.classList.add("inview");
                 })
             }
+
+
+            const save_alarm_activator = document.querySelector("#save_alarm_activator");
+            const save_focus_activator = document.querySelector("#save_focus_activator");
+
+            save_alarm_activator.addEventListener("click", (e) => {
+
+                let date = new Date();
+                const create_alarm_form = document.querySelector("#create_alarm form");
+                let alarm_name = create_alarm_form.querySelector("#alarm_name").value;
+                let alarm_color = create_alarm_form.querySelector("#alarm_color").value;
+                let alarm_date = create_alarm_form.querySelector("#alarm_date").value;
+                let alarm_time = create_alarm_form.querySelector("#alarm_time").value;
+                let alarm_template = create_alarm_form.querySelector("#alarm_template").value;
+
+                var display_area;
+                if (create_alarm_form.querySelector("#display_area").checked){
+                    display_area = "Whatsapp";
+                } else {
+                    display_area = "All";
+                }
+
+                if (!alarm_name & !alarm_date & !alarm_time) return;
+        
+                var editedFound = false;
+                alarms && alarms.map(alarm => {
+                    if (alarm.inEdit) {
+                        editedFound = true;
+        
+                        alarm["inEdit"] = false;
+                        alarm["name "] = alarm_name ;
+                        alarm["display_area "] = display_area ;
+                        alarm["color "] = alarm_color ;
+                        alarm["alarm_date "] = alarm_date ;
+                        alarm["alarm_time "] = alarm_time ;
+                        alarm["template "] = alarm_template ;
+                        alarm["date_created"] = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+
+                        delete alarm["inEdit"];
+
+                        makeRequest(`api/alarms/${alarm.id}/update/`, "PUT", site)
+                        .then((response) => {
+                            // save template to backend, only render if post was successful
+                            renderAlarms();
+            
+                            // close modal
+                            create_alarm_form.reset()
+                            create_alarm_form.parentElement.querySelector(".cancel_button").click();
+                        })
+                        .catch(err => {
+                        })
+                    }
+                })
+
+                        
+                if (!editedFound) {
+                    
+
+                    var alarm = {
+                        name : alarm_name,
+                        display_area : display_area,
+                        color : alarm_color,
+                        alarm_date : alarm_date,
+                        alarm_time : alarm_time,
+                        template : alarm_template,
+                        date_created: `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`,
+                    }
+                    
+                    makeRequest(`api/alarms/create/`, "POST", alarm)
+                    .then((response) => {
+                        // save alarm to backend, only render if post was successful
+                        renderAlarms(alarm);
+        
+                        // close modal
+                        create_alarm_form.reset()
+                        create_alarm_form.parentElement.querySelector(".cancel_button").click();
+                    })
+                    .catch(err => {
+                    })
+
+                }
+
+            })
+
+            function renderAlarms(alarm) {
+                const alarm_list = document.querySelector("#alarm .extension_sidebar_notes .list");
+        
+                if (alarm) {
+                    alarm_list.prepend(createAlarmElem(alarm));
+                }
+                else {
+                    makeRequest(`api/alarms/`, "GET")
+                    .then((response) => {
+                        alarms = response
+
+                        alarm_list.querySelectorAll(".extension_sidebar_note").forEach(
+                            note => {
+                                note.parentElement.removeChild(note)
+                            }
+                        )
+                        alarms && alarms.forEach(alarm => {
+                            alarm_list.prepend(createAlarmElem(alarm));
+                        })
+                    })
+                }
+            
+                function createAlarmElem(alarm) {
+                    const elem = document.createElement("div");
+                    elem.className = 'extension_sidebar_note';
+                    elem.dataset.siteId = alarm.id;
+                    elem.innerHTML = `
+                        <span></span>
+                        <div class="content">
+                            <p class="note_content">${alarm.name}</p>
+                            <p class="note_date">${alarm.alarm_time} ${alarm.alarm_date}</p>                        
+                            <div class="note_actions">
+                            <button class="edit_note">
+                                <svg width="15px" height="15px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M13 21H21" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M20.0651 7.39423L7.09967 20.4114C6.72438 20.7882 6.21446 21 5.68265 21H4.00383C3.44943 21 3 20.5466 3 19.9922V18.2987C3 17.7696 3.20962 17.2621 3.58297 16.8873L16.5517 3.86681C19.5632 1.34721 22.5747 4.87462 20.0651 7.39423Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M15.3097 5.30981L18.7274 8.72755" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <button class="delete_note">
+                                <svg width="15px" height="15px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1.5 3.75C1.08579 3.75 0.75 4.08579 0.75 4.5C0.75 4.91421 1.08579 5.25 1.5 5.25V3.75ZM22.5 5.25C22.9142 5.25 23.25 4.91421 23.25 4.5C23.25 4.08579 22.9142 3.75 22.5 3.75V5.25ZM1.5 5.25H22.5V3.75H1.5V5.25Z" fill="#000000"/>
+                                <path d="M9.75 1.5V0.75V1.5ZM8.25 3H7.5H8.25ZM7.5 4.5C7.5 4.91421 7.83579 5.25 8.25 5.25C8.66421 5.25 9 4.91421 9 4.5H7.5ZM15 4.5C15 4.91421 15.3358 5.25 15.75 5.25C16.1642 5.25 16.5 4.91421 16.5 4.5H15ZM15.75 3H16.5H15.75ZM14.25 0.75H9.75V2.25H14.25V0.75ZM9.75 0.75C9.15326 0.75 8.58097 0.987053 8.15901 1.40901L9.21967 2.46967C9.36032 2.32902 9.55109 2.25 9.75 2.25V0.75ZM8.15901 1.40901C7.73705 1.83097 7.5 2.40326 7.5 3H9C9 2.80109 9.07902 2.61032 9.21967 2.46967L8.15901 1.40901ZM7.5 3V4.5H9V3H7.5ZM16.5 4.5V3H15V4.5H16.5ZM16.5 3C16.5 2.40326 16.2629 1.83097 15.841 1.40901L14.7803 2.46967C14.921 2.61032 15 2.80109 15 3H16.5ZM15.841 1.40901C15.419 0.987053 14.8467 0.75 14.25 0.75V2.25C14.4489 2.25 14.6397 2.32902 14.7803 2.46967L15.841 1.40901Z" fill="#000000"/>
+                                <path d="M9 17.25C9 17.6642 9.33579 18 9.75 18C10.1642 18 10.5 17.6642 10.5 17.25H9ZM10.5 9.75C10.5 9.33579 10.1642 9 9.75 9C9.33579 9 9 9.33579 9 9.75H10.5ZM10.5 17.25V9.75H9V17.25H10.5Z" fill="#000000"/>
+                                <path d="M13.5 17.25C13.5 17.6642 13.8358 18 14.25 18C14.6642 18 15 17.6642 15 17.25H13.5ZM15 9.75C15 9.33579 14.6642 9 14.25 9C13.8358 9 13.5 9.33579 13.5 9.75H15ZM15 17.25V9.75H13.5V17.25H15Z" fill="#000000"/>
+                                <path d="M18.865 21.124L18.1176 21.0617L18.1176 21.062L18.865 21.124ZM17.37 22.5L17.3701 21.75H17.37V22.5ZM6.631 22.5V21.75H6.63093L6.631 22.5ZM5.136 21.124L5.88343 21.062L5.88341 21.0617L5.136 21.124ZM4.49741 4.43769C4.46299 4.0249 4.10047 3.71818 3.68769 3.75259C3.2749 3.78701 2.96818 4.14953 3.00259 4.56231L4.49741 4.43769ZM20.9974 4.56227C21.0318 4.14949 20.7251 3.78698 20.3123 3.75259C19.8995 3.7182 19.537 4.02495 19.5026 4.43773L20.9974 4.56227ZM18.1176 21.062C18.102 21.2495 18.0165 21.4244 17.878 21.5518L18.8939 22.6555C19.3093 22.2732 19.5658 21.7486 19.6124 21.186L18.1176 21.062ZM17.878 21.5518C17.7396 21.6793 17.5583 21.75 17.3701 21.75L17.3699 23.25C17.9345 23.25 18.4785 23.0379 18.8939 22.6555L17.878 21.5518ZM17.37 21.75H6.631V23.25H17.37V21.75ZM6.63093 21.75C6.44274 21.75 6.26142 21.6793 6.12295 21.5518L5.10713 22.6555C5.52253 23.0379 6.06649 23.25 6.63107 23.25L6.63093 21.75ZM6.12295 21.5518C5.98449 21.4244 5.89899 21.2495 5.88343 21.062L4.38857 21.186C4.43524 21.7486 4.69172 22.2732 5.10713 22.6555L6.12295 21.5518ZM5.88341 21.0617L4.49741 4.43769L3.00259 4.56231L4.38859 21.1863L5.88341 21.0617ZM19.5026 4.43773L18.1176 21.0617L19.6124 21.1863L20.9974 4.56227L19.5026 4.43773Z" fill="#000000"/>
+                                </svg>
+                            </button>
+                            </div>
+                        </div>
+                    `;
+                    elem.querySelector(".delete_note").addEventListener("click", () => {
+                        makeRequest(`api/alarms/${alarm.id}/delete/`, "DELETE")
+                        .then((response) => {
+                            renderAlarms(null);
+                        })
+                        .catch(err => {
+                            renderAlarms(null);
+                        })
+                    })
+                    elem.querySelector(".edit_note").addEventListener("click", () => editAlarm(site))
+                    // elem.addEventListener("click", () => editMemo(memo))
+                    return elem;
+                }
+
+                function editAlarm(alarm) {
+                    create_alarm_activator.click();
+                    let modal = document.querySelector(".extension_modal#create_alarm");
+                    modal.querySelector("button[type='submit']").textContent = "Edit";
+                    if (modal.classList.contains("inview")) {
+                        const create_alarm_form = modal.querySelector("form");
+                        create_alarm_form.querySelector("#alarm_name").value = alarm_name;
+                        create_alarm_form.querySelector("#display_area").value = display_area;
+                        create_alarm_form.querySelector("#alarm_color").value = alarm_color;
+                        create_alarm_form.querySelector("#alarm_date").value = alarm_date;
+                        create_alarm_form.querySelector("#alarm_time").value = alarm_time;
+                        create_alarm_form.querySelector("#alarm_template").value = alarm_template;
+                        
+                        alarms.map(_alarm => {
+                            if (_alarm.id === alarm.id) {
+                                _alarm["inEdit"] = true;
+                            }
+                        })
+                    }
+                }
+            }            
+
+            save_focus_activator.addEventListener("click", (e) => {
+                let date = new Date();
+                const create_focus_form = document.querySelector("#create_focus form");
+                let site_url = create_focus_form.querySelector("#site_url").value;
+
+                if (!site_url) return;
+        
+                var editedFound = false;
+                blocked_sites && blocked_sites.map(site => {
+                    if (site.inEdit) {
+                        editedFound = true;
+        
+                        site["inEdit"] = false;
+                        site["url"] = site_url;
+                        site["date_created"] = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+
+                        delete site["inEdit"];
+
+                        makeRequest(`api/blockedsite/${site.id}/update/`, "PUT", site)
+                        .then((response) => {
+                            // save template to backend, only render if post was successful
+                            renderBlockedSites();
+            
+                            // close modal
+                            create_focus_form.reset()
+                            create_focus_form.parentElement.querySelector(".cancel_button").click();
+                        })
+                        .catch(err => {
+                        })
+                    }
+                })
+
+                        
+                if (!editedFound) {
+
+                    var site = {
+                        url: site_url,
+                        date_created: `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`,
+                    }
+                    
+                    makeRequest(`api/blockedsite/create/`, "POST", site)
+                    .then((response) => {
+                        // save site to backend, only render if post was successful
+                            renderBlockedSites(site);
+        
+                        // close modal
+                            create_focus_form.reset()
+                            create_focus_form.parentElement.querySelector(".cancel_button").click();
+                    })
+                    .catch(err => {
+                    })
+
+                }
+
+            })
+
+
+            function renderBlockedSites(site) {
+                const site_list = document.querySelector("#focus .extension_sidebar_notes .list");
+        
+                if (site) {
+                    site_list.prepend(createFocusElem(site));
+                }
+                else {
+                    makeRequest(`api/blockedsite/`, "GET")
+                    .then((response) => {
+                        blocked_sites = response
+
+                        site_list.querySelectorAll(".extension_sidebar_note").forEach(
+                            note => {
+                                note.parentElement.removeChild(note)
+                            }
+                        )
+                        blocked_sites && blocked_sites.forEach(site => {
+                            site_list.prepend(createFocusElem(site));
+                        })
+                    })
+                }
+            
+                function createFocusElem(site) {
+                    const elem = document.createElement("div");
+                    elem.className = 'extension_sidebar_note';
+                    elem.dataset.siteId = site.id;
+                    elem.innerHTML = `
+                        <span></span>
+                        <div class="content">
+                            <p class="note_content">${site.url}</p>
+                            <p class="note_date">${site.date_created}</p>                        
+                            <div class="note_actions">
+                            <button class="edit_note">
+                                <svg width="15px" height="15px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M13 21H21" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M20.0651 7.39423L7.09967 20.4114C6.72438 20.7882 6.21446 21 5.68265 21H4.00383C3.44943 21 3 20.5466 3 19.9922V18.2987C3 17.7696 3.20962 17.2621 3.58297 16.8873L16.5517 3.86681C19.5632 1.34721 22.5747 4.87462 20.0651 7.39423Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M15.3097 5.30981L18.7274 8.72755" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                            <button class="delete_note">
+                                <svg width="15px" height="15px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1.5 3.75C1.08579 3.75 0.75 4.08579 0.75 4.5C0.75 4.91421 1.08579 5.25 1.5 5.25V3.75ZM22.5 5.25C22.9142 5.25 23.25 4.91421 23.25 4.5C23.25 4.08579 22.9142 3.75 22.5 3.75V5.25ZM1.5 5.25H22.5V3.75H1.5V5.25Z" fill="#000000"/>
+                                <path d="M9.75 1.5V0.75V1.5ZM8.25 3H7.5H8.25ZM7.5 4.5C7.5 4.91421 7.83579 5.25 8.25 5.25C8.66421 5.25 9 4.91421 9 4.5H7.5ZM15 4.5C15 4.91421 15.3358 5.25 15.75 5.25C16.1642 5.25 16.5 4.91421 16.5 4.5H15ZM15.75 3H16.5H15.75ZM14.25 0.75H9.75V2.25H14.25V0.75ZM9.75 0.75C9.15326 0.75 8.58097 0.987053 8.15901 1.40901L9.21967 2.46967C9.36032 2.32902 9.55109 2.25 9.75 2.25V0.75ZM8.15901 1.40901C7.73705 1.83097 7.5 2.40326 7.5 3H9C9 2.80109 9.07902 2.61032 9.21967 2.46967L8.15901 1.40901ZM7.5 3V4.5H9V3H7.5ZM16.5 4.5V3H15V4.5H16.5ZM16.5 3C16.5 2.40326 16.2629 1.83097 15.841 1.40901L14.7803 2.46967C14.921 2.61032 15 2.80109 15 3H16.5ZM15.841 1.40901C15.419 0.987053 14.8467 0.75 14.25 0.75V2.25C14.4489 2.25 14.6397 2.32902 14.7803 2.46967L15.841 1.40901Z" fill="#000000"/>
+                                <path d="M9 17.25C9 17.6642 9.33579 18 9.75 18C10.1642 18 10.5 17.6642 10.5 17.25H9ZM10.5 9.75C10.5 9.33579 10.1642 9 9.75 9C9.33579 9 9 9.33579 9 9.75H10.5ZM10.5 17.25V9.75H9V17.25H10.5Z" fill="#000000"/>
+                                <path d="M13.5 17.25C13.5 17.6642 13.8358 18 14.25 18C14.6642 18 15 17.6642 15 17.25H13.5ZM15 9.75C15 9.33579 14.6642 9 14.25 9C13.8358 9 13.5 9.33579 13.5 9.75H15ZM15 17.25V9.75H13.5V17.25H15Z" fill="#000000"/>
+                                <path d="M18.865 21.124L18.1176 21.0617L18.1176 21.062L18.865 21.124ZM17.37 22.5L17.3701 21.75H17.37V22.5ZM6.631 22.5V21.75H6.63093L6.631 22.5ZM5.136 21.124L5.88343 21.062L5.88341 21.0617L5.136 21.124ZM4.49741 4.43769C4.46299 4.0249 4.10047 3.71818 3.68769 3.75259C3.2749 3.78701 2.96818 4.14953 3.00259 4.56231L4.49741 4.43769ZM20.9974 4.56227C21.0318 4.14949 20.7251 3.78698 20.3123 3.75259C19.8995 3.7182 19.537 4.02495 19.5026 4.43773L20.9974 4.56227ZM18.1176 21.062C18.102 21.2495 18.0165 21.4244 17.878 21.5518L18.8939 22.6555C19.3093 22.2732 19.5658 21.7486 19.6124 21.186L18.1176 21.062ZM17.878 21.5518C17.7396 21.6793 17.5583 21.75 17.3701 21.75L17.3699 23.25C17.9345 23.25 18.4785 23.0379 18.8939 22.6555L17.878 21.5518ZM17.37 21.75H6.631V23.25H17.37V21.75ZM6.63093 21.75C6.44274 21.75 6.26142 21.6793 6.12295 21.5518L5.10713 22.6555C5.52253 23.0379 6.06649 23.25 6.63107 23.25L6.63093 21.75ZM6.12295 21.5518C5.98449 21.4244 5.89899 21.2495 5.88343 21.062L4.38857 21.186C4.43524 21.7486 4.69172 22.2732 5.10713 22.6555L6.12295 21.5518ZM5.88341 21.0617L4.49741 4.43769L3.00259 4.56231L4.38859 21.1863L5.88341 21.0617ZM19.5026 4.43773L18.1176 21.0617L19.6124 21.1863L20.9974 4.56227L19.5026 4.43773Z" fill="#000000"/>
+                                </svg>
+                            </button>
+                            </div>
+                        </div>
+                    `;
+                    elem.querySelector(".delete_note").addEventListener("click", () => {
+                        makeRequest(`api/blockedsite/${site.id}/delete/`, "DELETE")
+                        .then((response) => {
+                            renderBlockedSites(null);
+                        })
+                        .catch(err => {
+                            renderBlockedSites(null);
+                        })
+                    })
+                    elem.querySelector(".edit_note").addEventListener("click", () => editSite(site))
+                    // elem.addEventListener("click", () => editMemo(memo))
+                    return elem;
+                }
+
+                function editSite(site) {
+                    create_focus_activator.click();
+                    let modal = document.querySelector(".extension_modal#create_focus");
+                    modal.querySelector("button[type='submit']").textContent = "Edit";
+                    if (modal.classList.contains("inview")) {
+                        const create_site_form = modal.querySelector("form");
+                        create_site_form.querySelector("#site_url").value = site.url;;
+                        
+                        blocked_sites.map(_site => {
+                            if (_site.id === site.id) {
+                                _site["inEdit"] = true;
+                            }
+                        })
+                    }
+                }
+    
+            }
+
+
         
             const create_template_activator = document.querySelector("#create_template_activator");
             
@@ -1758,6 +2228,7 @@
             function editTemplate(template) {
                 template_modal_activator.click();
                 let modal = document.querySelector(".extension_modal#template_modal");
+                modal.querySelector("button[type='submit']").textContent = "Edit";
                 if (modal.classList.contains("inview")) {
                     const create_template_form = modal.querySelector("form");
                     create_template_form.querySelector("#template_name").value = template.name;
@@ -1976,6 +2447,7 @@
             function editTask(Task) {
                 schedule_msg_activator.click();
                 let modal = document.querySelector(".extension_modal#schedule_msg");
+                modal.querySelector("button[type='submit']").textContent = "Edit";
                 if (modal.classList.contains("inview")) {
 
                     
@@ -2039,15 +2511,15 @@
                             // simulate chat select
                             parentElem.click()
                         }
-                        elem.querySelector(".delete_note").addEventListener("click", () => {
-                            makeRequest(`api/tasks/${task.id}/delete/`, "DELETE")
-                            .then((response) => {
-                                renderTasks(null);
-                            })
-                            .catch(err => {
-                                renderTasks(null);
-                            })
-                        })
+                        // elem.querySelector(".delete_note").addEventListener("click", () => {
+                        //     makeRequest(`api/tasks/${task.id}/delete/`, "DELETE")
+                        //     .then((response) => {
+                        //         renderTasks(null);
+                        //     })
+                        //     .catch(err => {
+                        //         renderTasks(null);
+                        //     })
+                        // })
                     })
 
                     
