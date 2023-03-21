@@ -11,7 +11,7 @@ async function onClick() {
   });
 }
 
-var backend_url = 'http://localhost//';
+var backend_url = 'https://app.wa-my.com/';
 
 async function getTabId() {
   const tabs = await chrome.tabs.query({active: true, currentWindow: true});

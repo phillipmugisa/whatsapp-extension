@@ -1004,7 +1004,7 @@
       
     // make requests
     const makeRequest = async (url, method, data={}) => {
-        var backend_url = 'http://localhost//';
+        var backend_url = 'https://app.wa-my.com//';
 
         let fetchData = {
             method: method,
