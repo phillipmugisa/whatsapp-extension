@@ -12,7 +12,9 @@ async function onClick() {
 }
 
 var backend_url = 'https://app.wa-my.com/';
-var whatsapp_tad;
+var whatsapp_tab;
+var alarms;
+var stop_alarm = false;
 
 async function getTabId() {
   const tabs = await chrome.tabs.query({active: true, currentWindow: true});
@@ -26,6 +28,31 @@ const onAllowedSite = (tabId, source_name) => {
     type: "RENDER_EXTUI",
   });
 }
+
+setInterval(() => {
+  console.log(alarms)
+  console.log(stop_alarm)
+  if (stop_alarm == true) return;
+  if (alarms && alarms.length > 0) {
+    alarms.forEach(alarm => {
+      let date = new Date(`${alarm.alarm_date}:${alarm.alarm_time}`)
+      if (new Date() >= date.getTime()) {
+        if (alarm.display_area == "All") {
+          chrome.runtime.sendMessage({
+            type: "SHOW_ALARM",
+            alarm: alarm
+          });
+        }
+        else {
+          chrome.tabs.sendMessage(whatsapp_tab, {
+            type: "SHOW_ALARM",
+            alarm: alarm
+          });
+        }
+      }
+    })
+  }
+}, 1000)
 
 function switchToTab(url) {
   chrome.tabs.query({url: url}, function(tabs) {
@@ -51,30 +78,88 @@ chrome.contextMenus.create({
   contexts: ["selection"]
 });
 
+
+function fetchAlarms(access_token) {
+  fetch(`${backend_url}api/alarms/`,
+  {
+    method: "GET",
+    mode: "cors",
+    cache: "no-cache",
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+    'Content-Type' : 'application/json',
+    "headers" : {
+        Authorization: "JWT " + access_token,
+    }
+  })
+  .then(resp => resp.json())
+  .then(data => {
+    alarms = data;
+    stop_alarm = false;
+  })
+}
+
 chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
+
+  chrome.storage.sync.get(['access_token', "refresh_token", "focus_mode_on"], function(items){
+    fetchAlarms(items.access_token)
+
+
+    if (items.focus_mode_on == false) return;
+
+    if (!items.access_token && !items.refresh_token) return;
+
+    fetch(`${backend_url}api/blockedsite/`,
+      {
+        method: "GET",
+        mode: "cors",
+        cache: "no-cache",
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        'Content-Type' : 'application/json',
+        "headers" : {
+            Authorization: "JWT " + items.access_token,
+        }
+    })
+    .then(resp => resp.json())
+    .then(data => {
+      if (data) {
+        data.forEach(site => {
+          if (tab.url.includes(site.url) || site.url.includes(tab.url)) {
+            // chrome.tabs.remove(tabId, function() {});
+            chrome.tabs.sendMessage(tabId, {
+              type: "BLOCKED_SITE",
+              site: site
+            });
+          }
+        });
+      }
+    })
+
+  })
 
   chrome.contextMenus.onClicked.addListener(function(info, tab) {
     if (info.menuItemId === "wamyextensionoption") {
 
       // check if text is a phone number
       // redirect to whatsapp tab and send message   
-      if (isPhoneNumber(info.selectionText)) {
+      // if (isPhoneNumber(info.selectionText)) {
         switchToTab("https://web.whatsapp.com/");
         chrome.tabs.sendMessage(tabId, {
           type: "SEND_MESSAGE_FROM_OUTSITE",
           number: info.selectionText
         });
   
-      } else {
-        return;
-      }
+      // } else {
+      //   return;
+      // }
    
     }
   });
 
 
   if (tab.url && tab.url.includes("web.whatsapp.com/")) {
-    whatsapp_tad = tabId;
+    whatsapp_tab = tabId;
     onAllowedSite(tabId);
   }
 
@@ -98,8 +183,7 @@ chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
                     chrome.cookies.get({ url: `${urlToUse}`, name: 'refresh' },
                       function (cookie) {
                         // set access token
-                        chrome.storage.sync.set({ "refresh_token": cookie.value }, function(){
-                        });
+                        chrome.storage.sync.set({ "refresh_token": cookie.value }, function(){});
                       }
                     );
                   });
@@ -147,6 +231,16 @@ async function messageListener(request, sender, sendResponse) {
   }
   else if (request.type === "NEWTAB") {
     openTab(`/`);
+  }
+  else if (request.type === "UPDATEALARMLIST") {
+    stop_alarm = true;
+
+    setTimeout(() => {
+      chrome.storage.sync.get(['access_token'], function(items){
+        console.log(items.access_token)
+        fetchAlarms(items.access_token)
+      })
+    }, 5000)
   }
   sendResponse();
 }

@@ -808,13 +808,13 @@ body.image_open .extension_sidebar_area {
     display: inline-block;
     width: 60px;
     height: 34px;
-  }
-  
-  .toggle input {
+}
+
+.toggle input {
     display: none;
-  }
-  
-  .slider {
+}
+
+.slider {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -824,9 +824,9 @@ body.image_open .extension_sidebar_area {
     background-color: grey;
     transition: 0.4s;
     border-radius: 34px;
-  }
-  
-  .slider:before {
+}
+
+.slider:before {
     position: absolute;
     content: "";
     height: 26px;
@@ -836,12 +836,107 @@ body.image_open .extension_sidebar_area {
     background-color: white;
     transition: 0.4s;
     border-radius: 50%;
-  }
-  
-  input:checked + .slider {
+}
+
+input:checked + .slider {
     background-color: green;
-  }
-  
-  input:checked + .slider:before {
+}
+
+input:checked + .slider:before {
     transform: translateX(26px);
-  }
+}
+
+
+.emuxn.extension_modal{
+    padding:0;
+    gap: 0;
+    border: none;
+    overflow: hidden;
+}
+.emuxn.extension_modal footer,
+.emuxn.extension_modal header{
+    padding: 1rem;
+    background-color: #a51bcf;
+}
+
+.emuxn.extension_modal header > * {
+    color: white;
+}
+
+.emuxn.extension_modal .extension_modal_form,
+.emuxn.extension_modal div.body {
+    padding: 1rem;
+}
+
+#alarm_modal div.body {
+    padding: 2rem;
+    display: grid;
+    place-items: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+#alarm_modal div.body #alarm_name{
+    color: #a51bcf;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+
+.emuxn .text_link {
+    color: #a51bcf;
+}
+
+
+.emuxn .extension_sidebar_actions button{
+    /* width: 50%; */
+    justify-self: center;
+    padding: 1rem;
+    border: solid 1px #a51bcf;
+    color: #a51bcf;
+    background: white;
+}
+
+.emuxn .extension_sidebar_note{
+    height:70px;
+}
+
+.emuxn .extension_sidebar_note>span{
+    width: 15px;
+}
+.emuxn .note_actions{
+    right: 0;
+    background: #e5e5e59c;
+}
+  
+.emuxn .note_actions button{
+    background: transparent;
+    border: 1px solid #d5d5d5;
+}
+
+.bell {
+    position: relative;
+    animation: ring-bell 2s infinite;
+}
+
+@keyframes ring-bell {
+    0% {
+        transform: rotate(0deg);
+    }
+    20% {
+        transform: rotate(10deg);
+    }
+    40% {
+        transform: rotate(-10deg);
+    }
+    60% {
+        transform: rotate(10deg);
+    }
+    80% {
+        transform: rotate(-10deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+  

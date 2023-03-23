@@ -78,7 +78,7 @@
                     <path d="M12 3V4" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     </button>
-                    <p>Create Alarm</p>
+                    <p>Buzzer</p>
                 </div>
                 
                 <div class="tab-area" data-sidebar-id="focus" id="focus_sidebar_activator">
@@ -88,7 +88,7 @@
                         <path d="M1691.249 1016.47c-27.558 359.718-315.106 647.154-674.824 674.824v-223.059h-112.94v223.06c-359.718-27.671-647.154-315.107-674.711-674.824H451.72V903.529H228.774c27.557-359.717 314.993-647.153 674.71-674.823v223.059h112.941v-223.06c359.718 27.671 647.266 315.107 674.824 674.824H1468.19v112.942h223.059Zm112.941-112.94c-28.01-421.949-365.703-759.756-787.765-787.765V0h-112.94v115.765c-421.949 28.01-759.643 365.816-787.653 787.764H-.045v112.942h115.877c28.01 421.948 365.704 759.755 787.652 787.764V1920h112.941v-115.765c422.062-28.01 759.756-365.816 787.765-787.764h115.765V903.529H1804.19ZM960 1242.352c-155.633 0-282.353-126.72-282.353-282.353S804.367 677.647 960 677.647 1242.353 804.367 1242.353 960 1115.633 1242.353 960 1242.353m0-677.647c-217.976 0-395.294 177.318-395.294 395.294 0 217.976 177.318 395.294 395.294 395.294 217.976 0 395.294-177.318 395.294-395.294 0-217.976-177.318-395.294-395.294-395.294" fill-rule="evenodd"/>
                     </svg>
                     </button>
-                    <p>Focus Mode</p>
+                    <p>Focus</p>
                 </div>
             </div>
             <div class="right">
@@ -141,7 +141,7 @@
                         <div class="toggle_area" style="padding: .25rem .5rem;">
                             <span>OFF</span>
                             <label class="toggle">
-                                <input type="checkbox">
+                                <input type="checkbox" id="focus_toggle">
                                 <span class="slider"></span>
                             </label>
                             <span>ON</span>
@@ -180,7 +180,28 @@
     `
 
     var modalsUI = `
-        <div id="create_note" class="extension_modal tab_modal">
+        <div id="alarm_modal" class="emuxn extension_modal tab_modal">
+            <header>
+                <h3 class="extension_modal_heading">You Have An Alarm.</h3>
+            </header>
+            <div class="body">
+                <div class="bell">
+                    <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                    <svg width="80px" height="80px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.82474 13.934L5.09976 13.2452L5.82474 13.934ZM8 9C8 6.79086 9.79086 5 12 5V3C8.68629 3 6 5.68629 6 9H8ZM8 11.7564V9H6V11.7564H8ZM6 16C6 15.4658 6.20812 14.9823 6.54971 14.6228L5.09976 13.2452C4.41915 13.9616 4 14.9329 4 16H6ZM7 16H6V18H7V16ZM17 16H7V18H17V16ZM18 16H17V18H18V16ZM17.4503 14.6228C17.7919 14.9823 18 15.4658 18 16H20C20 14.9329 19.5809 13.9616 18.9002 13.2452L17.4503 14.6228ZM16 9V11.7564H18V9H16ZM12 5C14.2091 5 16 6.79086 16 9H18C18 5.68629 15.3137 3 12 3V5ZM18.9002 13.2452C18.2923 12.6054 18 12.1579 18 11.7564H16C16 13.05 16.8905 14.0336 17.4503 14.6228L18.9002 13.2452ZM4 16C4 17.1046 4.89543 18 6 18V16H4ZM18 18C19.1046 18 20 17.1046 20 16H18V18ZM6 11.7564C6 12.1579 5.70766 12.6054 5.09976 13.2452L6.54971 14.6228C7.10947 14.0336 8 13.05 8 11.7564H6Z" fill="#000000"/>
+                    <path d="M13.7976 19.8767C13.6312 20.2179 13.3712 20.5046 13.048 20.7035C12.7247 20.9023 12.3516 21.0051 11.9721 20.9998C11.5926 20.9945 11.2224 20.8813 10.9049 20.6735C10.5873 20.4657 10.3354 20.1718 10.1786 19.8262" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 3V4" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <p id="alarm_name"></p>
+                <p id="alarm_date"></p>
+            </div>
+            <footer>
+                <button class="cancel_button">Dismiss</button>
+            </footer>
+        </div>
+
+        <div id="create_note" class="emuxn extension_modal tab_modal">
             <header>
                 <h3 class="extension_modal_heading">Create New Memo.</h3>
             </header>
@@ -218,7 +239,7 @@
             </footer>
         </div>
         
-        <div id="group_modal" class="extension_modal tab_modal">
+        <div id="group_modal" class="emuxn extension_modal tab_modal">
             <header>
                 <h2 class="extension_modal_heading">Select Desired Values</h2>
             </header>
@@ -240,7 +261,7 @@
             </footer>
         </div>
 
-        <div id="schedule_msg" class="extension_modal tab_modal">
+        <div id="schedule_msg" class="emuxn extension_modal tab_modal">
             <header>
                 <h3 class="extension_modal_heading">Schedule A Message.</h3>
             </header>
@@ -296,7 +317,7 @@
             </footer>
         </div>
 
-        <div id="template_modal" class="extension_modal tab_modal">
+        <div id="template_modal" class="emuxn extension_modal tab_modal">
             <header>
                 <h3 class="extension_modal_heading">Create Message Template.</h3>
             </header>
@@ -337,7 +358,7 @@
             </footer>
         </div>
 
-        <div id="create_alarm" class="extension_modal tab_modal">
+        <div id="create_alarm" class="emuxn extension_modal tab_modal">
             <header>
                 <h3 class="extension_modal_heading">Create New Buzzer.</h3>
             </header>
@@ -396,7 +417,7 @@
             </footer>
         </div>
 
-        <div id="create_focus" class="extension_modal tab_modal">
+        <div id="create_focus" class="emuxn extension_modal tab_modal">
             <header>
                 <h3 class="extension_modal_heading">New Site.</h3>
             </header>
@@ -413,7 +434,7 @@
             </footer>
         </div>
 
-        <div id="msg_to_new_user" class="extension_modal tab_modal">
+        <div id="msg_to_new_user" class="emuxn extension_modal tab_modal">
             <header>
                 <h3 class="extension_modal_heading">Send Message to New Number.</h3>
             </header>
@@ -655,7 +676,7 @@
         </div>
         
 
-        <div id="generate_link" class="extension_modal tab_modal">
+        <div id="generate_link" class="emuxn extension_modal tab_modal">
             <header>
                 <h3 class="extension_modal_heading">Generate Message Link.</h3>
             </header>
@@ -1059,9 +1080,54 @@
     
             sendMsgToNewNoform.querySelector("#new_phone_number").value = obj.number;
         }
+        else if (obj.type === "SHOW_ALARM") {
+            showAlarmModal(obj.alarm)
+        }
+        else if (obj.type === "BLOCKED_SITE") {
+            showBlockedSiteModal(obj.site)
+        }
         sendResponse()
     })
+
+
+    function showAlarmModal(alarm) {
+        if (!document.querySelector("._1jJ70.two")) return;
+        if (!document.querySelector("#alarm_modal").classList.contains("inview")) {
+            document.querySelectorAll(".extension_modal").forEach(modal => {
+                alarm_modal = document.querySelector("#alarm_modal");
+                if (modal.classList.contains("inview")) {
+                    modal.classList.remove("inview")
+                }
+                document.body.classList.add("modal_open")
+                alarm_modal.classList.add("inview")
+                console.log(alarm_modal)
+                alarm_modal.querySelector("#alarm_name").textContent = alarm.name;
+                alarm_modal.querySelector("#alarm_date").textContent = `${alarm.alarm_date} ${alarm.alarm_time}`;
+                
+
+                alarm_modal
+                    .querySelector(".cancel_button")
+                    .addEventListener("click", () => {
+                        alarm_modal.classList.remove("inview")
+                        document.body.classList.remove("modal_open")
+                        
+                        chrome.runtime.sendMessage({
+                            type:  'UPDATEALARMLIST'
+                        });
+
+                        alarm_modal.querySelector(".cancel_button").disabled = true;
+                        makeRequest(`api/alarms/${alarm.id}/delete/`, "DELETE")
+                        .then(() => {
+                            alarm_modal.querySelector(".cancel_button").disabled = true;
+                        })
+                    })
+            })
+        }
+    }
     
+    function showBlockedSiteModal(site) {
+        
+    }
 
     function closeUI() {
         let extensionArea = document.querySelector(".extension-area");
@@ -1091,6 +1157,7 @@
             
             const extension_area = document.createElement("div");
             extension_area.className = "extension_area";
+            extension_area.classList.add("emuxn")
     
             // adding taskbar
             const extension_taskbar_area = document.createElement("div");
@@ -1176,6 +1243,10 @@
                         
                         localStorage.setItem("ext_access_token", response.access)
                         localStorage.setItem("ext_refresh_token", refresh_token)
+                        
+                        chrome.runtime.sendMessage({
+                            type:  'UPDATEALARMLIST'
+                        });
                                     
                         // rerun check to fetch features;
                         checkAuth();
@@ -1260,6 +1331,10 @@
                     signinbtn.disabled = false;
                     signinbtn.value = "Sign In";
                     fetch_all_data()
+                    
+                    chrome.runtime.sendMessage({
+                        type:  'UPDATEALARMLIST'
+                    });
                 })
                 .catch(error => {
                     formErrMsg.textContent = "Invalid Data";
@@ -1307,12 +1382,12 @@
 
             makeRequest(`api/alarms/`, "GET")
             .then((response) => {
-                tasks = response
+                alarms = response
             })
 
             makeRequest(`api/blockedsite/`, "GET")
             .then((response) => {
-                tasks = response
+                blocked_sites = response
             })
         }
 
@@ -1364,6 +1439,16 @@
             const create_focus_activator = document.querySelector("#create_focus_activator");
             create_focus_activator.addEventListener("click", () => openExtensionModal(create_focus_activator))
 
+
+            let focus_toggle = document.querySelector("#focus_toggle");
+            focus_toggle.addEventListener("change", () => {
+                if (focus_toggle.checked) {
+                    chrome.storage.sync.set({ "focus_mode_on": true}, function(){});
+                }
+                else {
+                    chrome.storage.sync.set({ "focus_mode_on": false}, function(){});
+                }
+            })
             
             // schedule_msg_sidebar_activator.click()
             document.querySelector(".extension_area").classList.add("show_sidebar")
@@ -1373,7 +1458,7 @@
             //     console.log(active_task[0])
             //   });
 
-            var color_presets = ["#ff0000", "#ffff00", "#0000ff", "#008000", "#000000"]
+            var color_presets = ["#64c3ff", "#ffd527", "#ff9383", "#e2b0f5", "#53cdb5", "#97d57a", "#f9a811", "#e6e6e6"]
             document.querySelectorAll(".selected_color").forEach(
                 elem => elem.addEventListener("click", () => {
                     var color_selector = elem.closest(".extension_form_group").querySelector(".color_selector")
@@ -1732,6 +1817,10 @@
             }
         
             function showSidebar(activator) {
+                if (!app.getAuthStatus()) {
+                    isUserAuthenticated()
+                    return;
+                }
                 
                 document.querySelector(".extension_area").classList.add("show_sidebar")
 
@@ -1743,6 +1832,13 @@
                     renderTasks()
                 } else if (activator.id.includes("focus")) {
                     renderBlockedSites();
+                    chrome.storage.sync.get(["focus_mode_on"], function(items){
+                        if (items.focus_mode_on == false) {
+                            focus_toggle.checked = false;
+                        } else {
+                            focus_toggle.checked = true;
+                        }
+                    })
                 } else if (activator.id.includes("alarm")) {
                     renderAlarms()
                 }
@@ -1774,7 +1870,7 @@
                 let alarm_template = create_alarm_form.querySelector("#alarm_template").value;
 
                 var display_area;
-                if (create_alarm_form.querySelector("#display_area").checked){
+                if (!create_alarm_form.querySelector("#display_area").checked){
                     display_area = "Whatsapp";
                 } else {
                     display_area = "All";
@@ -1830,6 +1926,10 @@
                     .then((response) => {
                         // save alarm to backend, only render if post was successful
                         renderAlarms(alarm);
+                        
+                        chrome.runtime.sendMessage({
+                            type:  'UPDATEALARMLIST'
+                        });
         
                         // close modal
                         create_alarm_form.reset()
@@ -1869,7 +1969,7 @@
                     elem.className = 'extension_sidebar_note';
                     elem.dataset.siteId = alarm.id;
                     elem.innerHTML = `
-                        <span></span>
+                        <span style="background-color: ${alarm.color}"></span>
                         <div class="content">
                             <p class="note_content">${alarm.name}</p>
                             <p class="note_date">${alarm.alarm_time} ${alarm.alarm_date}</p>                        
@@ -1902,7 +2002,7 @@
                             renderAlarms(null);
                         })
                     })
-                    elem.querySelector(".edit_note").addEventListener("click", () => editAlarm(site))
+                    elem.querySelector(".edit_note").addEventListener("click", () => editAlarm(alarm))
                     // elem.addEventListener("click", () => editMemo(memo))
                     return elem;
                 }
@@ -1913,12 +2013,13 @@
                     modal.querySelector("button[type='submit']").textContent = "Edit";
                     if (modal.classList.contains("inview")) {
                         const create_alarm_form = modal.querySelector("form");
-                        create_alarm_form.querySelector("#alarm_name").value = alarm_name;
-                        create_alarm_form.querySelector("#display_area").value = display_area;
-                        create_alarm_form.querySelector("#alarm_color").value = alarm_color;
-                        create_alarm_form.querySelector("#alarm_date").value = alarm_date;
-                        create_alarm_form.querySelector("#alarm_time").value = alarm_time;
+                        create_alarm_form.querySelector("#alarm_name").value = alarm.name;
+                        create_alarm_form.querySelector("#display_area").value = alarm.display_area;
+                        create_alarm_form.querySelector("#alarm_color").value = alarm.color;
+                        create_alarm_form.querySelector("#alarm_date").value = alarm.alarm_date;
+                        create_alarm_form.querySelector("#alarm_time").value = alarm.alarm_time;
                         create_alarm_form.querySelector("#alarm_template").value = alarm_template;
+                        
                         
                         alarms.map(_alarm => {
                             if (_alarm.id === alarm.id) {
@@ -2191,7 +2292,7 @@
                     elem.className = 'extension_sidebar_note';
                     elem.dataset.templateId = template.id;
                     elem.innerHTML = `
-                        <span></span>
+                        <span style="background-color: ${template.color}"></span>
                         <div class="content">
                             <p class="note_content">${template.name}</p>
                             <p class="note_date">${template.date_created}</p>                        
@@ -2482,7 +2583,6 @@
             function watchTask() {
                 let pendingTask = [];
                 let completeTask = [];
-
 
                 document.querySelectorAll(".lhggkp7q.jnl3jror.p357zi0d.gndfcl4n.ac2vgrno.ln8gz9je.ppled2lx").forEach(elem => elem.addEventListener("click", () => {
                     

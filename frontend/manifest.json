@@ -21,7 +21,7 @@
   "background": {
     "service_worker": "background.js"
   },
-  "permissions": ["downloads", "tabs", "cookies", "storage","alarms", "contextMenus"],
+  "permissions": ["downloads", "tabs", "cookies", "storage", "alarms", "contextMenus"],
   "host_permissions": [
     "https://*/*",
     "http://*/*"
