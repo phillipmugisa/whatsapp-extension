@@ -1127,7 +1127,6 @@
 
     function updateAlarmlist() {
         makingApiCall = true
-        console.log("called")
         chrome.storage.sync.get(['access_token', "refresh_token"], function(items){
             fetch(`${backend_url}api/alarms/`,
             {
@@ -1178,14 +1177,11 @@
         if (!(alarms.length > 0) && !window.location.href.includes("web.whatsapp") && !makingApiCall) {
             updateAlarmlist();
         } else {
-            console.log("watching")
-            console.log(alarms)
             if (stop_alarm == true) return;
             if (alarms && alarms.length > 0) {
               alarms.forEach(alarm => {
                 let date = new Date(`${alarm.alarm_date}:${alarm.alarm_time}`)
                 if (new Date() >= date.getTime()) {
-                    console.log(alarm)
                   if (alarm.display_area == "All") {
                     showAlarmModal(alarm)
                   }
