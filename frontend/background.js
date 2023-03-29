@@ -1,4 +1,4 @@
-// event to run execute.js content when extension's button is clicked
+// event to run execute.js content when emuxn's button is clicked
 // chrome.action.onClicked.addListener(execScript);
 chrome.action.onClicked.addListener(onClick);
 
@@ -15,7 +15,6 @@ async function onClick() {
 var backend_url = 'https://app.wa-my.com/';
 var whatsapp_tab;
 var alarms;
-var stop_alarm = false;
 
 async function getTabId() {
   const tabs = await chrome.tabs.query({active: true, currentWindow: true});
@@ -23,37 +22,12 @@ async function getTabId() {
 }
 
 const onAllowedSite = (tabId, source_name) => {
-  chrome.storage.sync.set({ "extensionPage": tabId }, function(){});
+  chrome.storage.sync.set({ "emuxnPage": tabId }, function(){});
 
   chrome.tabs.sendMessage(tabId, {
     type: "RENDER_EXTUI",
   });
 }
-
-setInterval(() => {
-  console.log(alarms)
-  console.log(stop_alarm)
-  if (stop_alarm == true) return;
-  if (alarms && alarms.length > 0) {
-    alarms.forEach(alarm => {
-      let date = new Date(`${alarm.alarm_date}:${alarm.alarm_time}`)
-      if (new Date() >= date.getTime()) {
-        if (alarm.display_area == "All") {
-          chrome.runtime.sendMessage({
-            type: "SHOW_ALARM",
-            alarm: alarm
-          });
-        }
-        else {
-          chrome.tabs.sendMessage(whatsapp_tab, {
-            type: "SHOW_ALARM",
-            alarm: alarm
-          });
-        }
-      }
-    })
-  }
-}, 1000)
 
 function switchToTab(url) {
   chrome.tabs.query({url: url}, function(tabs) {
@@ -75,37 +49,16 @@ function isPhoneNumber(text) {
 
 chrome.contextMenus.create({
   title: "Wamy Send Message",
-  id: "wamyextensionoption",
+  id: "wamyemuxnoption",
   contexts: ["selection"]
 });
 
 
-function fetchAlarms(access_token) {
-  fetch(`${backend_url}api/alarms/`,
-  {
-    method: "GET",
-    mode: "cors",
-    cache: "no-cache",
-    redirect: 'follow',
-    referrerPolicy: 'no-referrer',
-    'Content-Type' : 'application/json',
-    "headers" : {
-        Authorization: "JWT " + access_token,
-    }
-  })
-  .then(resp => resp.json())
-  .then(data => {
-    alarms = data;
-    stop_alarm = false;
-  })
-}
 
 chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
   current_tab_id = tabId;
 
   chrome.storage.sync.get(['access_token', "refresh_token", "focus_mode_on"], function(items){
-    fetchAlarms(items.access_token)
-
 
     if (items.focus_mode_on == false) return;
 
@@ -141,7 +94,7 @@ chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
   })
 
   chrome.contextMenus.onClicked.addListener(function(info, tab) {
-    if (info.menuItemId === "wamyextensionoption") {
+    if (info.menuItemId === "wamyemuxnoption") {
 
       // check if text is a phone number
       // redirect to whatsapp tab and send message   
@@ -233,16 +186,6 @@ async function messageListener(request, sender, sendResponse) {
   }
   else if (request.type === "NEWTAB") {
     openTab(`/`);
-  }
-  else if (request.type === "UPDATEALARMLIST") {
-    stop_alarm = true;
-
-    setTimeout(() => {
-      chrome.storage.sync.get(['access_token'], function(items){
-        console.log(items.access_token)
-        fetchAlarms(items.access_token)
-      })
-    }, 5000)
   }
   else if(request.type === "CLOSE_TAB"){
     chrome.tabs.remove(current_tab_id, function() {});

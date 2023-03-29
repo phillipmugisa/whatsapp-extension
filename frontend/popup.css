@@ -49,7 +49,7 @@ button {
     border: none;
 }
 
-.extension_area {
+.emuxn_area {
     display: grid;
     margin: .25rem;
     gap: 0;
@@ -59,31 +59,31 @@ button {
     
 }
 
-.extension_taskbar_area {
+.emuxn_taskbar_area {
     /* border: 1px solid #000; */
     /* z-index: 10000; */
     position: relative;
 }
 
-.extension_taskbar .right,
-.extension_taskbar .left {
+.emuxn_taskbar .right,
+.emuxn_taskbar .left {
     display: inherit;
     grid-auto-flow: column;
     gap: 1rem;
 }
 
-.extension_taskbar .left {
+.emuxn_taskbar .left {
     justify-content: flex-start;
 }
 
-.extension_taskbar .right .user_detail {
+.emuxn_taskbar .right .user_detail {
     display: none;
     gap: .5rem;
     align-content: center;
     font-size: 1rem;
 }
-.extension_taskbar .right .user_detail #package,
-.extension_taskbar .right .user_detail #username {
+.emuxn_taskbar .right .user_detail #package,
+.emuxn_taskbar .right .user_detail #username {
     background-color: var(--accent-color);
     color: #ffffff;
     font-weight: normal;
@@ -92,12 +92,12 @@ button {
     place-items: center;
     align-content: center;
 }
-.extension_taskbar .right .user_detail #username {
+.emuxn_taskbar .right .user_detail #username {
     background-color: transparent;
     color: var(--accent-color);
     font-weight: 500;
 }
-.extension_taskbar {
+.emuxn_taskbar {
     display: grid;
     grid-template-columns: 1.5fr 1fr;
     justify-content: space-between;
@@ -107,7 +107,7 @@ button {
     border-radius: var(--border-radius-inner);
 }
 
-.extension_taskbar .extension_tab {
+.emuxn_taskbar .emuxn_tab {
     display: grid;
     display: grid;
     place-items: center;
@@ -119,15 +119,15 @@ button {
     background: transparent;
 }
 
-.extension_taskbar .left .extension_tab {
+.emuxn_taskbar .left .emuxn_tab {
     aspect-ratio: 1/1;
 }
 
-.extension_taskbar .tab-area button {
+.emuxn_taskbar .tab-area button {
     padding: .5rem 0;
 }
 
-.extension_taskbar .tab-area {
+.emuxn_taskbar .tab-area {
     display: grid;
     align-items: center;
     gap: .5rem;
@@ -140,15 +140,15 @@ button {
     transition: var(--transition-1);
     cursor: pointer;
 }
-.extension_taskbar .tab-area:hover {
+.emuxn_taskbar .tab-area:hover {
     border-color: rgb(194, 201, 201);
 }
 
-.extension_taskbar .extension_tab:hover {
+.emuxn_taskbar .emuxn_tab:hover {
     background: var(--hover-color);
 }
 
-.extension_taskbar .auth-tabs {
+.emuxn_taskbar .auth-tabs {
     background-color: var(--accent-color);
     padding: 0.25rem 1.5rem;
     display: grid;
@@ -161,11 +161,11 @@ button {
     transition: var(--transition-1);
 }
 
-.extension_taskbar .auth-tabs:hover {
+.emuxn_taskbar .auth-tabs:hover {
     background-color: var(--accent-hover-color);
 }
 
-.extension_taskbar #sidebar_toggle {
+.emuxn_taskbar #sidebar_toggle {
     display: grid;
     place-items: center;
     align-items: center;
@@ -174,12 +174,12 @@ button {
     font-size: 12px;
 }
 
-.extension_taskbar .right {
+.emuxn_taskbar .right {
     justify-content: flex-end;
     justify-self: flex-end;
 }
 
-.extension_lower_area {
+.emuxn_lower_area {
     display: grid;
     gap: 0;
     grid-template-columns: 1fr;
@@ -191,28 +191,28 @@ button {
     margin-block-end: .5rem;
 }
 
-.extension_area.show_sidebar .extension_lower_area {
+.emuxn_area.show_sidebar .emuxn_lower_area {
     grid-template-columns: var(--ui-ratio);
 }
 
-.extension_area .extension_sidebar {
+.emuxn_area .emuxn_sidebar {
     /* inline-size: 0; */
     overflow: hidden;
     align-self: stretch;
     display: none;
 }
-.extension_area.show_sidebar .extension_sidebar {
+.emuxn_area.show_sidebar .emuxn_sidebar {
     /* inline-size: 100%; */
     transition: var(--transition-1);
     display: grid;
 }
 
-.extension_sidebar_area,
+.emuxn_sidebar_area,
 .chat_handler {
     overflow: auto;
     block-size: 90vh;
 }
-.extension_sidebar_area {
+.emuxn_sidebar_area {
     position: relative;
     /* z-index: 1000; */
     /* block-size: 90vh; */
@@ -226,7 +226,7 @@ button {
     z-index: 10000 !important;
 } */
 
-.extension_lower_area .extension_sidebar .sidebar_part {
+.emuxn_lower_area .emuxn_sidebar .sidebar_part {
     background-color: var(--taskbar-color);
     padding: 0;
     box-shadow: 1px 1px 1px 1px hsla(0, 6%, 90%, 0.61);
@@ -237,7 +237,7 @@ button {
     display: none;
 }
 
-.extension_lower_area .extension_sidebar .sidebar_part.inview {
+.emuxn_lower_area .emuxn_sidebar .sidebar_part.inview {
     display: grid;
 }
 
@@ -260,18 +260,18 @@ button {
     color: var(--accent-color);
 }
 
-.extension_sidebar_actions {
+.emuxn_sidebar_actions {
     display: grid;
     grid-auto-flow: column;
     gap: 1rem;
     padding: 1rem 1rem;
 }
-.extension_sidebar_actions.no-slipt {
+.emuxn_sidebar_actions.no-slipt {
     grid-auto-flow: row;
     gap: .5rem;
 }
 
-.extension_sidebar_actions button {
+.emuxn_sidebar_actions button {
     display: grid;
     border: 1px solid var(--border-color);
     padding: 0.5rem 1rem;
@@ -280,37 +280,37 @@ button {
     transition: var(--transition-1);
 }
 
-.extension_sidebar_actions button:hover {
+.emuxn_sidebar_actions button:hover {
     background: var(--hover-color);
 }
 
-.extension_sidebar_notes {
+.emuxn_sidebar_notes {
     display: grid;
     padding: 0.5rem 1rem;
     gap: .5rem;
 }
 
-.extension_sidebar_notes.highlight {
+.emuxn_sidebar_notes.highlight {
     background-color: hsl(287, 100%, 95%);
 }
 
-.extension_sidebar_notes#templates,
-.extension_sidebar_notes#tasks {
+.emuxn_sidebar_notes#templates,
+.emuxn_sidebar_notes#tasks {
     padding: 0.5rem 0;
 }
-.extension_sidebar_notes .list {
+.emuxn_sidebar_notes .list {
     display: grid;
     gap: .5rem;
     overflow-y: auto;
     max-height: 55vh;
 }
 
-.extension_sidebar hr {
+.emuxn_sidebar hr {
     border: none;
     border-top: 1px solid var(--border-color);
 }
 
-.extension_sidebar_note {
+.emuxn_sidebar_note {
     border: 1px solid var(--border-color);
     color: hsl(0, 0%, 30%);
     position: relative;
@@ -322,7 +322,7 @@ button {
     grid-template-columns: .2fr 4fr;
     align-items: stretch;
 }
-.extension_sidebar_note span {
+.emuxn_sidebar_note span {
     /* position: absolute;
     inset: 0;
     content: "";
@@ -330,19 +330,19 @@ button {
     inline-size: 5px; */
     background-color: var(--accent-color);
 }
-.extension_sidebar_note .note_content {
+.emuxn_sidebar_note .note_content {
     padding: 0.5rem 1rem;
 }
-.extension_sidebar_note .content {
+.emuxn_sidebar_note .content {
     display: grid;
 }
-.extension_sidebar_note .note_date {
+.emuxn_sidebar_note .note_date {
     font-size: .8rem;
     justify-self: flex-end;
     color: hsl(0, 0%, 51%);
     padding-inline: .25rem;
 }
-.extension_sidebar_note .note_actions {
+.emuxn_sidebar_note .note_actions {
     position: absolute;
     inset-block-end: 0px;
     inset-inline-end: -100%;
@@ -357,7 +357,7 @@ button {
     background-color: hsla(0, 2%, 45%, 0.116);
     transition: var(--transition-1);
 }
-.extension_sidebar_note:hover .note_actions {
+.emuxn_sidebar_note:hover .note_actions {
     inset-inline-end: 2%
 }
 
@@ -373,10 +373,10 @@ button {
     background-color: hsla(0, 2%, 19%, 0.541);
 }
 
-#scheduling_msg .extension_sidebar_notes {
+#scheduling_msg .emuxn_sidebar_notes {
     padding: .5rem;
 }
-#scheduling_msg .lists .extension_sidebar_actions{
+#scheduling_msg .lists .emuxn_sidebar_actions{
     margin: .25rem 0;
     padding: 0;
     gap: .25rem;
@@ -388,8 +388,8 @@ button {
     display: grid;
 }
 
-.extension_modal {
-    position: absolute;
+.emuxn_modal {
+    position: fixed;
     background-color: var(--taskbar-color);
     box-shadow: 1px 1px 1px 2px rgba(138, 138, 138, 0.1);
     padding: 1rem;
@@ -404,29 +404,29 @@ button {
     transform: translate(-50%, -40%);
 }
 @media (max-width: 1200px) {
-    .extension_modal {
+    .emuxn_modal {
         inline-size: 50vw;
     }
 }
-.extension_modal.inview {
+.emuxn_modal.inview {
     display: grid;
 }
 
-.extension_modal .extension_modal_heading {
+.emuxn_modal .emuxn_modal_heading {
     font-weight: 500;
     color: #0C0C0F;
 }
-.extension_modal body {
+.emuxn_modal body {
     color: var(--text-color);
 }
-.extension_modal footer {
+.emuxn_modal footer {
     display: grid;
     grid-auto-flow: column;
     justify-content: flex-end;
     gap: 1rem;
 }
 
-.extension_modal footer button {
+.emuxn_modal footer button {
     display: grid;
     place-items: center;
     background-color: transparent;
@@ -434,18 +434,18 @@ button {
 }
 
 
-.extension_modal_form  {
+.emuxn_modal_form  {
     display: grid;
     gap: 2rem;
 }
-.extension_modal_form label {
+.emuxn_modal_form label {
     font-size: .9rem;
 }
-.extension_modal_form .fields{
+.emuxn_modal_form .fields{
     display: grid;
     gap: 1rem;
 }
-.extension_form_group.split {
+.emuxn_form_group.split {
     display: grid;
     grid-auto-flow: column;
     gap: 0.5rem;
@@ -454,13 +454,13 @@ button {
     font-size: .9rem;
     justify-items: flex-start;
 }
-.extension_form_group.number{
+.emuxn_form_group.number{
     display: grid;
     grid-auto-flow: column;
     gap: 0.5rem;
     grid-template-columns: 1fr 3fr;
 }
-.extension_form_group .split-fields {
+.emuxn_form_group .split-fields {
     position: relative;
     display: grid;
     grid-auto-flow: column;
@@ -471,28 +471,28 @@ button {
     justify-items: flex-start;
 }
 
-.extension_modal_form textarea {
+.emuxn_modal_form textarea {
     inline-size: 100%;
 }
 
-.extension_modal_form input,
-.extension_modal_form textarea {
+.emuxn_modal_form input,
+.emuxn_modal_form textarea {
     border: 1px solid var(--border-color);
     padding: 0.5rem;
     inline-size: 100%;
     font-size: .9rem;
     outline: none;  
 }
-.extension_modal_form input[type="file"] {
+.emuxn_modal_form input[type="file"] {
     border-style: dashed;
 }
-.extension_modal_form input[type="color"] {
+.emuxn_modal_form input[type="color"] {
     padding: 0;
     border: none;
     inline-size: 100px;
 }
 
-.extension_form_group.color .color_selector {
+.emuxn_form_group.color .color_selector {
     position: absolute;
     inset-block-start: 0;
     inset-inline-end: 0;
@@ -507,11 +507,11 @@ button {
     color: #000000
 }
 
-.extension_form_group.color .color_selector.inview {
+.emuxn_form_group.color .color_selector.inview {
     display: grid;
 }
 
-.extension_form_group.color .color_selector .body {
+.emuxn_form_group.color .color_selector .body {
 
     display: grid;
     place-content: center;
@@ -520,28 +520,28 @@ button {
 
 }
 
-.extension_form_group.color .color_selector .color_list {
+.emuxn_form_group.color .color_selector .color_list {
     display: grid;
     gap: 1rem;
     grid-template-columns: repeat(4, 1fr);
 }
 
-.extension_form_group .selected_color,
-.extension_form_group.color .color_list span {
+.emuxn_form_group .selected_color,
+.emuxn_form_group.color .color_list span {
     inline-size: 30px;
     aspect-ratio: 1;
     border-radius: 50%;
     cursor: pointer;
 }
 /* 
-.extension_form_group.color .color_selector input {
+.emuxn_form_group.color .color_selector input {
     justify-self: center;
 } */
 
-.extension_modal_form input:focus,
-.extension_modal_form input:focus-within,
-.extension_modal_form textarea:focus,
-.extension_modal_form textarea:focus-within {
+.emuxn_modal_form input:focus,
+.emuxn_modal_form input:focus-within,
+.emuxn_modal_form textarea:focus,
+.emuxn_modal_form textarea:focus-within {
     outline: 1px solid var(--accent-color);
 }
 .cancel_button {
@@ -555,7 +555,7 @@ button {
     color: rgb(189, 4, 4);
 }
 
-/* .extension_modal.tab_modal {
+/* .emuxn_modal.tab_modal {
     inset-block-start: 40%;
     inset-inline-start: 50%;
     transform: translate(-50%, -40%);
@@ -574,11 +574,11 @@ body {
 }
 body::after {
     content: "";
-    position: absolute;
+    position: fixed;
     inset: 0 0;
     inline-size: 100%;
     block-size: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.9);
     display: none;
     transition: var(--transition-1);
     z-index: 99999;
@@ -586,8 +586,11 @@ body::after {
 body.modal_open::after {
     display: block;
 }
+body.modal_open {
+    overflow: hidden;
+}
 
-.extension_area  .scheduled_msg_area {
+.emuxn_area  .scheduled_msg_area {
     display: grid;
     justify-content: flex-end;
     margin-block: 2.5%;
@@ -595,30 +598,30 @@ body.modal_open::after {
 }
 
 @media (max-width: 1000px) {
-    .extension_area  .scheduled_msg_area {
+    .emuxn_area  .scheduled_msg_area {
         padding-inline-end: 10%;
     }
 }
 
-.extension_area .img_holder {
+.emuxn_area .img_holder {
     inline-size: 20vw;
     block-size: 10vw;
     overflow: hidden;
     object-fit: contain;
     display: none;
 }
-.extension_area .scheduled_msg_area.with_image .img_holder {
+.emuxn_area .scheduled_msg_area.with_image .img_holder {
     display: grid;
     place-items: center;
     align-content: center;
 }
-.extension_area .img_holder {
+.emuxn_area .img_holder {
     inline-size: 20vw;
     block-size: 10vw;
     object-fit: contain;
 }
 
-.extension_area .scheduled_msg {
+.emuxn_area .scheduled_msg {
     background-color: var(--accent-color);
     color: white;
     display: grid;
@@ -627,7 +630,7 @@ body.modal_open::after {
     border-radius: 5px;
 }
 
-.extension_area .scheduled_msg .brief {
+.emuxn_area .scheduled_msg .brief {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     font-size: .7rem;
@@ -789,7 +792,7 @@ body.modal_open::after {
   }
 
 /* whatsapp edits */
-/* body.extension_triggered ._2Ts6i._1xFRo[data-testid="drawer-right"] {
+/* body.emuxn_triggered ._2Ts6i._1xFRo[data-testid="drawer-right"] {
     visibility: hidden;
     inline-size: 0px !important;
     opacity: 0;
@@ -800,8 +803,8 @@ body.modal_open::after {
     z-index: 10000 !important;
 }
 
-body.image_open .extension_taskbar_area,
-body.image_open .extension_sidebar_area {
+body.image_open .emuxn_taskbar_area,
+body.image_open .emuxn_sidebar_area {
     z-index: 90 !important;
 } */
 
@@ -858,22 +861,22 @@ input:checked + .slider:before {
 }
 
 
-.emuxn.extension_modal{
+.emuxn.emuxn_modal{
     padding:0;
     gap: 0;
     border: none;
     overflow: hidden;
 }
-.emuxn.extension_modal footer,
-.emuxn.extension_modal header{
+.emuxn.emuxn_modal footer,
+.emuxn.emuxn_modal header{
     padding: 1rem;
 }
 
-.emuxn.extension_modal > header{
+.emuxn.emuxn_modal > header{
     background-color: #a51bcf;
 }
 
-.emuxn.extension_modal > header > * {
+.emuxn.emuxn_modal > header > * {
     color: white;
 }
 .color_selector header {
@@ -882,8 +885,8 @@ input:checked + .slider:before {
 
 
 
-.emuxn.extension_modal .extension_modal_form,
-.emuxn.extension_modal div.body {
+.emuxn.emuxn_modal .emuxn_modal_form,
+.emuxn.emuxn_modal div.body {
     padding: 1rem;
 }
 
@@ -899,7 +902,7 @@ input:checked + .slider:before {
     gap: 2rem;
 }
 
-#alarm_modal div.body #alarm_name{
+.emuxn_modal div.body #emp{
     color: #a51bcf;
     font-size: 1.2rem;
     font-weight: bold;
@@ -911,7 +914,7 @@ input:checked + .slider:before {
 }
 
 
-.emuxn .extension_sidebar_actions button{
+.emuxn .emuxn_sidebar_actions button{
     display: grid;
     display: grid;
     place-items: center;
@@ -928,11 +931,11 @@ input:checked + .slider:before {
     color: #ffffff;
 }
 
-.emuxn .extension_sidebar_note{
+.emuxn .emuxn_sidebar_note{
     height:70px;
 }
 
-.emuxn .extension_sidebar_note>span{
+.emuxn .emuxn_sidebar_note>span{
     width: 15px;
 }
 .emuxn .note_actions{

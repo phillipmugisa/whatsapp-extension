@@ -1,30 +1,30 @@
 (function() {
 
     var authUI = `
-        <div class="extension_modal" id="auth_modal">
+        <div class="emuxn_modal" id="auth_modal">
             <header>
-                <h1 class="extension_modal_heading">Welcome to Whatsapp Assistant.</h1>
+                <h1 class="emuxn_modal_heading">Welcome to Whatsapp Assistant.</h1>
             </header>
-            <form class="extension_modal_form" id="auth_form">
+            <form class="emuxn_modal_form" id="auth_form">
                 <p class="pro-link" id="popup-error-msg" style="display: none;"></p>
                 <div class="fields" style="gap: 1rem">
-                    <div class="extension_form_group">
+                    <div class="emuxn_form_group">
                         <input type="text" placeholder="Email" id="extAuth-username" required>
                     </div>
-                    <div class="extension_form_group">
+                    <div class="emuxn_form_group">
                         <input type="password" name="password" id="extAuth-password" placeholder="Password" required>
                     </div>
-                    <div class="extension_form_group">
+                    <div class="emuxn_form_group">
                         <input type="submit" value="Sign In" id="signin" style="cursor: pointer;">
                     </div>
-                    <div class="extension_form_group split" style="gap: 1rem;display: flex;justify-content: flex-start;">
-                        <a style="cursor: pointer;border: 1px solid lightgray;padding: .5rem 1rem;font-size: .9rem;border-radius: 5px;color: gray;text-align: center;" class="signup-social-extension" >Continue with Google</a>
-                        <a style="cursor: pointer;border: 1px solid lightgray;padding: .5rem 1rem;font-size: .9rem;border-radius: 5px;color: rgb(255, 255, 255);text-align: center;white-space: nowrap;background-color: #3A63BE;" class="signup-social-extension" >Continue with Facebook</a>
+                    <div class="emuxn_form_group split" style="gap: 1rem;display: flex;justify-content: flex-start;">
+                        <a style="cursor: pointer;border: 1px solid lightgray;padding: .5rem 1rem;font-size: .9rem;border-radius: 5px;color: gray;text-align: center;" class="signup-social-emuxn" >Continue with Google</a>
+                        <a style="cursor: pointer;border: 1px solid lightgray;padding: .5rem 1rem;font-size: .9rem;border-radius: 5px;color: rgb(255, 255, 255);text-align: center;white-space: nowrap;background-color: #3A63BE;" class="signup-social-emuxn" >Continue with Facebook</a>
                     </div>
                 </div>
                 <p class="centered">
                 Don't Have An Account
-                    <a class="text-link" id="signup-extension" >Sign Up</a>
+                    <a class="text-link" id="signup-emuxn" >Sign Up</a>
                 </p>
             </form>
             <footer>
@@ -34,24 +34,24 @@
     `
 
     var taskbarUI = `
-        <div class="extension_taskbar">
+        <div class="emuxn_taskbar">
             <div class="left">
                 <div class="tab-area"  data-modal-id="msg_to_new_user" id="msg_to_new_user_activator">
-                    <button class="extension_tab"
+                    <button class="emuxn_tab"
                     <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
                     <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M10.975 14.51a1.05 1.05 0 0 0 0-1.485 2.95 2.95 0 0 1 0-4.172l3.536-3.535a2.95 2.95 0 1 1 4.172 4.172l-1.093 1.092a1.05 1.05 0 0 0 1.485 1.485l1.093-1.092a5.05 5.05 0 0 0-7.142-7.142L9.49 7.368a5.05 5.05 0 0 0 0 7.142c.41.41 1.075.41 1.485 0zm2.05-5.02a1.05 1.05 0 0 0 0 1.485 2.95 2.95 0 0 1 0 4.172l-3.5 3.5a2.95 2.95 0 1 1-4.171-4.172l1.025-1.025a1.05 1.05 0 0 0-1.485-1.485L3.87 12.99a5.05 5.05 0 0 0 7.142 7.142l3.5-3.5a5.05 5.05 0 0 0 0-7.142 1.05 1.05 0 0 0-1.485 0z" fill="#000000"/></svg>
                     </button>
                     <p>New Message</p>
                 </div>
                 <div class="tab-area" data-modal-id="generate_link" id="generate_link_activator">
-                    <button class="extension_tab"
+                    <button class="emuxn_tab"
                     <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
                     <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M10.975 14.51a1.05 1.05 0 0 0 0-1.485 2.95 2.95 0 0 1 0-4.172l3.536-3.535a2.95 2.95 0 1 1 4.172 4.172l-1.093 1.092a1.05 1.05 0 0 0 1.485 1.485l1.093-1.092a5.05 5.05 0 0 0-7.142-7.142L9.49 7.368a5.05 5.05 0 0 0 0 7.142c.41.41 1.075.41 1.485 0zm2.05-5.02a1.05 1.05 0 0 0 0 1.485 2.95 2.95 0 0 1 0 4.172l-3.5 3.5a2.95 2.95 0 1 1-4.171-4.172l1.025-1.025a1.05 1.05 0 0 0-1.485-1.485L3.87 12.99a5.05 5.05 0 0 0 7.142 7.142l3.5-3.5a5.05 5.05 0 0 0 0-7.142 1.05 1.05 0 0 0-1.485 0z" fill="#000000"/></svg>
                     </button>
                     <p>Generate Link</p>
                 </div>
                 <div class="tab-area" data-sidebar-id="scheduling_msg" id="schedule_msg_sidebar_activator">
-                    <button class="extension_tab">
+                    <button class="emuxn_tab">
                     <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
                     <svg fill="#000000" width="20px" height="20px" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
                         <path d="M960 112.941c-467.125 0-847.059 379.934-847.059 847.059 0 467.125 379.934 847.059 847.059 847.059 467.125 0 847.059-379.934 847.059-847.059 0-467.125-379.934-847.059-847.059-847.059M960 1920C430.645 1920 0 1489.355 0 960S430.645 0 960 0s960 430.645 960 960-430.645 960-960 960m417.905-575.955L903.552 988.28V395.34h112.941v536.47l429.177 321.77-67.765 90.465Z" fill-rule="evenodd"/>
@@ -60,7 +60,7 @@
                     <p>Schedule Message</p>
                 </div>
                 <div class="tab-area" data-sidebar-id="memo" id="memo_sidebar_activator">
-                    <button class="extension_tab">
+                    <button class="emuxn_tab">
                     <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
                     <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M20 14V7C20 5.34315 18.6569 4 17 4H7C5.34315 4 4 5.34315 4 7V17C4 18.6569 5.34315 20 7 20H13.5M20 14L13.5 20M20 14H15.5C14.3954 14 13.5 14.8954 13.5 16V20" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -70,7 +70,7 @@
                 </div>
                 
                 <div class="tab-area" data-sidebar-id="alarm" id="alarm_sidebar_activator">
-                    <button class="extension_tab">
+                    <button class="emuxn_tab">
                     <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
                     <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5.82474 13.934L5.09976 13.2452L5.82474 13.934ZM8 9C8 6.79086 9.79086 5 12 5V3C8.68629 3 6 5.68629 6 9H8ZM8 11.7564V9H6V11.7564H8ZM6 16C6 15.4658 6.20812 14.9823 6.54971 14.6228L5.09976 13.2452C4.41915 13.9616 4 14.9329 4 16H6ZM7 16H6V18H7V16ZM17 16H7V18H17V16ZM18 16H17V18H18V16ZM17.4503 14.6228C17.7919 14.9823 18 15.4658 18 16H20C20 14.9329 19.5809 13.9616 18.9002 13.2452L17.4503 14.6228ZM16 9V11.7564H18V9H16ZM12 5C14.2091 5 16 6.79086 16 9H18C18 5.68629 15.3137 3 12 3V5ZM18.9002 13.2452C18.2923 12.6054 18 12.1579 18 11.7564H16C16 13.05 16.8905 14.0336 17.4503 14.6228L18.9002 13.2452ZM4 16C4 17.1046 4.89543 18 6 18V16H4ZM18 18C19.1046 18 20 17.1046 20 16H18V18ZM6 11.7564C6 12.1579 5.70766 12.6054 5.09976 13.2452L6.54971 14.6228C7.10947 14.0336 8 13.05 8 11.7564H6Z" fill="#000000"/>
@@ -82,7 +82,7 @@
                 </div>
                 
                 <div class="tab-area" data-sidebar-id="focus" id="focus_sidebar_activator">
-                    <button class="extension_tab">
+                    <button class="emuxn_tab">
                     <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
                     <svg fill="#000000" width="20px" height="20px" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
                         <path d="M1691.249 1016.47c-27.558 359.718-315.106 647.154-674.824 674.824v-223.059h-112.94v223.06c-359.718-27.671-647.154-315.107-674.711-674.824H451.72V903.529H228.774c27.557-359.717 314.993-647.153 674.71-674.823v223.059h112.941v-223.06c359.718 27.671 647.266 315.107 674.824 674.824H1468.19v112.942h223.059Zm112.941-112.94c-28.01-421.949-365.703-759.756-787.765-787.765V0h-112.94v115.765c-421.949 28.01-759.643 365.816-787.653 787.764H-.045v112.942h115.877c28.01 421.948 365.704 759.755 787.652 787.764V1920h112.941v-115.765c422.062-28.01 759.756-365.816 787.765-787.764h115.765V903.529H1804.19ZM960 1242.352c-155.633 0-282.353-126.72-282.353-282.353S804.367 677.647 960 677.647 1242.353 804.367 1242.353 960 1115.633 1242.353 960 1242.353m0-677.647c-217.976 0-395.294 177.318-395.294 395.294 0 217.976 177.318 395.294 395.294 395.294 217.976 0 395.294-177.318 395.294-395.294 0-217.976-177.318-395.294-395.294-395.294" fill-rule="evenodd"/>
@@ -108,8 +108,8 @@
     `
 
     var sidebarUI = `
-        <div class="extension_sidebar_area">
-            <div class="extension_sidebar">
+        <div class="emuxn_sidebar_area">
+            <div class="emuxn_sidebar">
                 <div class="sidebar_part inview" id="default_sidebar">
                     <img src="https://ilazy.net/wp-content/uploads/2022/09/newLogoPSD.png" alt="sidebar brief"/>
                     <div class="brief">
@@ -118,28 +118,28 @@
                 </div>
                 <div class="sidebar_part" id="memo">
                     <p style="margin: .25rem 0 0 1rem;font-weight: bold;">Actions</p>
-                    <div class="extension_sidebar_actions">
+                    <div class="emuxn_sidebar_actions">
                         <button id="create_note_activator" data-modal-id="create_note">New Sticky Note</button>
                     </div>
                     <hr>
-                    <div class="extension_sidebar_notes">
+                    <div class="emuxn_sidebar_notes">
                         <h2 class="sub_headings">Your Notes</h2>
                         <div class="list"></div>
                     </div>
                 </div>
                 <div class="sidebar_part" id="alarm">
                     <p style="margin: .25rem 0 0 1rem;font-weight: bold;">Actions</p>
-                    <div class="extension_sidebar_actions">
+                    <div class="emuxn_sidebar_actions">
                         <button id="create_alarm_activator" data-modal-id="create_alarm">Create Buzzer</button>
                     </div>
                     <hr>
-                    <div class="extension_sidebar_notes">
+                    <div class="emuxn_sidebar_notes">
                         <h2 class="sub_headings">Your Buzzers</h2>
                         <div class="list"></div>
                     </div>
                 </div>
                 <div class="sidebar_part" id="focus">
-                    <div class="extension_sidebar_actions" style="display: grid; grid-auto-flow: row;">
+                    <div class="emuxn_sidebar_actions" style="display: grid; grid-auto-flow: row;">
                         <div class="toggle_area" style="padding: .25rem .5rem;">
                             <span>OFF</span>
                             <label class="toggle">
@@ -151,28 +151,28 @@
                         <button id="create_focus_activator" data-modal-id="create_focus">Block Website</button>
                     </div>
                     <hr>
-                    <div class="extension_sidebar_notes">
+                    <div class="emuxn_sidebar_notes">
                         <h2 class="sub_headings">Restricted Websites</h2>
                         <div class="list"></div>
                     </div>
                 </div>
                 <div class="sidebar_part" id="scheduling_msg">
                     <p style="margin: .25rem 0 0 1rem;font-weight: bold;">Actions</p>
-                    <div class="extension_sidebar_actions no-slipt">
+                    <div class="emuxn_sidebar_actions no-slipt">
                         <button data-modal-id="template_modal" id="template_modal_activator">New Template</button>
                         <button data-modal-id="schedule_msg" id="schedule_msg_activator">New Task</button>
                     </div>
                     <hr>
-                    <div class="extension_sidebar_notes lists">
-                        <div class="extension_sidebar_actions">
+                    <div class="emuxn_sidebar_notes lists">
+                        <div class="emuxn_sidebar_actions">
                             <button id="template_list_activator">Templates</button>
                             <button id="task_list_activator" data-modal-id="">Tasks</button>
                         </div>
-                        <div class="area_lists extension_sidebar_notes inview" id="templates">
+                        <div class="area_lists emuxn_sidebar_notes inview" id="templates">
                             <h2 class="sub_headings">Your Templates</h2>
                             <div class="list"></div>
                         </div>
-                        <div class="area_lists extension_sidebar_notes" id="tasks">
+                        <div class="area_lists emuxn_sidebar_notes" id="tasks">
                             <h2 class="sub_headings">Your Tasks</h2>
                             <div class="list"></div>
                         </div>
@@ -183,7 +183,7 @@
     `
 
     var blockSiteModal = `
-        <div id="site_blocked_modal" class="emuxn extension_modal tab_modal">
+        <div id="site_blocked_modal" class="emuxn emuxn_modal tab_modal">
             <div class="body">
                 <div class="bell">
                     <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
@@ -193,7 +193,7 @@
                     <path d="M12 3V4" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
-                <p>Site Blocked Using Wamy</p>
+                <p id="emp">Site Blocked Using Wamy</p>
             </div>
             <footer>
                 <button id="close_site_button">Close Site</button>
@@ -201,10 +201,10 @@
         </div>
     `
 
-    var modalsUI = `        
-        <div id="alarm_modal" class="emuxn extension_modal tab_modal">
+    var alarmModal = `
+        <div id="alarm_modal" class="emuxn emuxn_modal tab_modal">
             <header>
-                <h3 class="extension_modal_heading">You Have An Alarm.</h3>
+                <h3 class="emuxn_modal_heading">You Have An Alarm.</h3>
             </header>
             <div class="body">
                 <div class="bell">
@@ -215,24 +215,37 @@
                     <path d="M12 3V4" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
-                <p id="alarm_name"></p>
+                <p id="emp"></p>
                 <p id="alarm_date"></p>
+                <audio src="" style="display: none"></audio>
             </div>
             <footer>
                 <button class="cancel_button">Dismiss</button>
             </footer>
         </div>
+    `
 
-        <div id="create_note" class="emuxn extension_modal tab_modal">
+    var modalsUI = `
+        <div id="confirm_action" class="emuxn emuxn_modal tab_modal">
+            <div class="body">
+                <p id="emp">Please Confirm your operation</p>
+            </div>
+            <footer>
+                <button id="cancel_op" style="color: red;">Cancel</button>
+                <button id="confirm_op" style="color: green;">Confirm</button>
+            </footer>
+        </div>
+        
+        <div id="create_note" class="emuxn emuxn_modal tab_modal">
             <header>
-                <h3 class="extension_modal_heading">Create New Memo.</h3>
+                <h3 class="emuxn_modal_heading">Create New Memo.</h3>
             </header>
-            <form action="" id="create_memo_form" class="extension_modal_form">
+            <form action="" id="create_memo_form" class="emuxn_modal_form">
                 <div class="fields">
-                    <div class="extension_form_group">
+                    <div class="emuxn_form_group">
                         <input type="text" id="memo_name" name="memo_name" placeholder="Memo Name" required>
                     </div>
-                    <div class="extension_form_group split color" style="padding-inline: 0.5rem;">
+                    <div class="emuxn_form_group split color" style="padding-inline: 0.5rem;">
                         <label for="memo_color">Memo Color</label>
                         <span style="background: red;" class="selected_color"></span>
                         <input type="color" id="memo_color" name="memo_color" class="selected_color_input" required style="opacity: 0;">
@@ -250,8 +263,8 @@
                             </body>
                         </div>
                     </div>
-                    <div class="extension_form_group">
-                        <textarea name="extension_memo" id="memo_description" rows="5" placeholder="Memo Description"></textarea>
+                    <div class="emuxn_form_group">
+                        <textarea name="emuxn_memo" id="memo_description" rows="5" placeholder="Memo Description"></textarea>
                     </div>
                 </div>
             </form>
@@ -261,17 +274,17 @@
             </footer>
         </div>
         
-        <div id="group_modal" class="emuxn extension_modal tab_modal">
+        <div id="group_modal" class="emuxn emuxn_modal tab_modal">
             <header>
-                <h2 class="extension_modal_heading">Select Desired Values</h2>
+                <h2 class="emuxn_modal_heading">Select Desired Values</h2>
             </header>
-            <form action="" id="group_modal_form" class="extension_modal_form">
+            <form action="" id="group_modal_form" class="emuxn_modal_form">
                 <div class="fields">
-                    <div class="extension_form_group split-fields" style="padding-inline: 0.5rem;">
+                    <div class="emuxn_form_group split-fields" style="padding-inline: 0.5rem;">
                         <input type="checkbox" id="names" name="names" required>
                         <label for="names">Names</label>
                     </div>
-                    <div class="extension_form_group split-fields" style="padding-inline: 0.5rem;">
+                    <div class="emuxn_form_group split-fields" style="padding-inline: 0.5rem;">
                         <input type="checkbox" id="numbers" name="numbers" required>
                         <label for="numbers">Numbers</label>
                     </div>
@@ -283,21 +296,21 @@
             </footer>
         </div>
 
-        <div id="schedule_msg" class="emuxn extension_modal tab_modal">
+        <div id="schedule_msg" class="emuxn emuxn_modal tab_modal">
             <header>
-                <h3 class="extension_modal_heading">Schedule A Message.</h3>
+                <h3 class="emuxn_modal_heading">Schedule A Message.</h3>
             </header>
-            <form action="" class="extension_modal_form">
+            <form action="" class="emuxn_modal_form">
                 <div class="fields">
-                    <div class="extension_form_group">
+                    <div class="emuxn_form_group">
                         <input type="text" id="msg_name" name="msg_name" placeholder="Message Name" required>
                     </div>
-                    <div class="extension_form_group">
+                    <div class="emuxn_form_group">
                         <input type="text" id="selected_contact" name="selected_contact" list="contacts" placeholder="Select Contact" required>
                         <datalist id="contacts">
                         </datalist>
                     </div>
-                    <div class="extension_form_group split color" style="padding-inline: 0.5rem;">
+                    <div class="emuxn_form_group split color" style="padding-inline: 0.5rem;">
                         <label for="msg_color">Template Color</label>
                         
                         <span style="background: red;" class="selected_color"></span>
@@ -316,17 +329,17 @@
                             </body>
                         </div>
                     </div>
-                    <div class="extension_form_group split" style="border: 1px dashed lightgrey; padding: 1rem;">
-                        <div class="extension_form_group split">
+                    <div class="emuxn_form_group split" style="border: 1px dashed lightgrey; padding: 1rem;">
+                        <div class="emuxn_form_group split">
                             <label for="schedule_date">Select Date</label>
                             <input type="date" id="schedule_date" name="schedule_date" required>
                         </div>
-                        <div class="extension_form_group split">
+                        <div class="emuxn_form_group split">
                             <label for="schedule_time">Select Time</label>
                             <input type="time" id="schedule_time" name="schedule_time" required>
                         </div>
                     </div>
-                    <div class="extension_form_group">
+                    <div class="emuxn_form_group">
                         <input type="text" id="saved_template" name="saved_template" list="saved_templates" placeholder="Select Temaplate" required>
                         <datalist id="saved_templates">
                         </datalist>
@@ -339,16 +352,16 @@
             </footer>
         </div>
 
-        <div id="template_modal" class="emuxn extension_modal tab_modal">
+        <div id="template_modal" class="emuxn emuxn_modal tab_modal">
             <header>
-                <h3 class="extension_modal_heading">Create Message Template.</h3>
+                <h3 class="emuxn_modal_heading">Create Message Template.</h3>
             </header>
-            <form action="" class="extension_modal_form" enctype="multipart/form-data">
+            <form action="" class="emuxn_modal_form" enctype="multipart/form-data">
                 <div class="fields">
-                    <div class="extension_form_group">
+                    <div class="emuxn_form_group">
                         <input type="text" id="template_name" name="template_name" placeholder="Template Name" required>
                     </div>
-                    <div class="extension_form_group split color" style="padding-inline: 0.5rem;">
+                    <div class="emuxn_form_group split color" style="padding-inline: 0.5rem;">
                         <label for="template_color">Template Color</label>
                         <span style="background: red;" class="selected_color"></span>
                         <input type="color" id="template_color" name="template_color" class="selected_color_input" required style="opacity: 0;">
@@ -366,11 +379,11 @@
                             </body>
                         </div>
                     </div>
-                    <div class="extension_form_group" id="image">
+                    <div class="emuxn_form_group" id="image">
                         <input type="file" id="template_file" name="template_file">
                     </div>
-                    <div class="extension_form_group">
-                        <textarea name="template_extension_message" id="template_extension_message" rows="3" placeholder="Enter Message" required></textarea>
+                    <div class="emuxn_form_group">
+                        <textarea name="template_emuxn_message" id="template_emuxn_message" rows="3" placeholder="Enter Message" required></textarea>
                     </div>
                 </div>
             </form>
@@ -380,16 +393,16 @@
             </footer>
         </div>
 
-        <div id="create_alarm" class="emuxn extension_modal tab_modal">
+        <div id="create_alarm" class="emuxn emuxn_modal tab_modal">
             <header>
-                <h3 class="extension_modal_heading">Create New Buzzer.</h3>
+                <h3 class="emuxn_modal_heading">Create New Buzzer.</h3>
             </header>
-            <form action="" class="extension_modal_form">
+            <form action="" class="emuxn_modal_form">
                 <div class="fields">
-                    <div class="extension_form_group">
+                    <div class="emuxn_form_group">
                         <input type="text" id="alarm_name" name="alarm_name" placeholder="Buzzer Name" required>
                     </div>
-                    <div class="extension_form_group toggle_area" style="border: 1px dashed lightgrey; padding: 1rem;">
+                    <div class="emuxn_form_group toggle_area" style="border: 1px dashed lightgrey; padding: 1rem;">
                         <span>Whatsapp only</span>
                         <label class="toggle">
                             <input type="checkbox"id="display_area" >
@@ -397,7 +410,7 @@
                         </label>
                         <span>All over browser</span>
                     </div>
-                    <div class="extension_form_group split color" style="padding-inline: 0.5rem;">
+                    <div class="emuxn_form_group split color" style="padding-inline: 0.5rem;">
                         <label for="alarm_color">Buzzer Color</label>
                         
                         <span style="background: red;" class="selected_color"></span>
@@ -416,17 +429,17 @@
                             </body>
                         </div>
                     </div>
-                    <div class="extension_form_group split" style="border: 1px dashed lightgrey; padding: 1rem;">
-                        <div class="extension_form_group split">
+                    <div class="emuxn_form_group split" style="border: 1px dashed lightgrey; padding: 1rem;">
+                        <div class="emuxn_form_group split">
                             <label for="alarm_date">Select Date</label>
                             <input type="date" id="alarm_date" name="alarm_date" required>
                         </div>
-                        <div class="extension_form_group split">
+                        <div class="emuxn_form_group split">
                             <label for="alarm_time">Select Time</label>
                             <input type="time" id="alarm_time" name="alarm_time" required>
                         </div>
                     </div>
-                    <div class="extension_form_group">
+                    <div class="emuxn_form_group">
                         <input type="text" id="alarm_template" name="alarm_template" list="alarm_templates" placeholder="Select Temaplate" required>
                         <datalist id="alarm_templates">
                         </datalist>
@@ -439,13 +452,13 @@
             </footer>
         </div>
 
-        <div id="create_focus" class="emuxn extension_modal tab_modal">
+        <div id="create_focus" class="emuxn emuxn_modal tab_modal">
             <header>
-                <h3 class="extension_modal_heading">New Site.</h3>
+                <h3 class="emuxn_modal_heading">New Site.</h3>
             </header>
-            <form action="" class="extension_modal_form">
+            <form action="" class="emuxn_modal_form">
                 <div class="fields">
-                    <div class="extension_form_group">
+                    <div class="emuxn_form_group">
                         <input type="text" id="site_url" name="site_url" placeholder="Website Url" required>
                     </div>
                 </div>
@@ -456,13 +469,13 @@
             </footer>
         </div>
 
-        <div id="msg_to_new_user" class="emuxn extension_modal tab_modal">
+        <div id="msg_to_new_user" class="emuxn emuxn_modal tab_modal">
             <header>
-                <h3 class="extension_modal_heading">Send Message to New Number.</h3>
+                <h3 class="emuxn_modal_heading">Send Message to New Number.</h3>
             </header>
-            <form action="" class="extension_modal_form" id="sendMsgToNewNoform">
+            <form action="" class="emuxn_modal_form" id="sendMsgToNewNoform">
                 <div class="fields">
-                    <div class="extension_form_group number">
+                    <div class="emuxn_form_group number">
                         <div>
                             <input style="width: 100%;" type="text" id="country_code" name="country_code" list="tel-codes" placeholder="Code" required>
                             <datalist id="tel-codes">
@@ -685,8 +698,8 @@
 
                         <input type="text" id="new_phone_number" name="new_phone_number" placeholder="Phone Number" required>
                     </div>
-                    <div class="extension_form_group">
-                        <textarea name="new_extension_message" id="new_extension_message" rows="3" placeholder="Enter Message" required></textarea>
+                    <div class="emuxn_form_group">
+                        <textarea name="new_emuxn_message" id="new_emuxn_message" rows="3" placeholder="Enter Message" required></textarea>
                     </div>
                     <a id="link" style="display=none"></a>
                 </div>
@@ -698,13 +711,13 @@
         </div>
         
 
-        <div id="generate_link" class="emuxn extension_modal tab_modal">
+        <div id="generate_link" class="emuxn emuxn_modal tab_modal">
             <header>
-                <h3 class="extension_modal_heading">Generate Message Link.</h3>
+                <h3 class="emuxn_modal_heading">Generate Message Link.</h3>
             </header>
-            <form action="" class="extension_modal_form" id="generateLinkform">
+            <form action="" class="emuxn_modal_form" id="generateLinkform">
                 <div class="fields">
-                    <div class="extension_form_group number">
+                    <div class="emuxn_form_group number">
                         <div>
                             <input style="width: 100%;" type="text" id="gen_country_code" name="country_code" list="tel-codes" placeholder="Code" required>
                             <datalist id="tel-codes">
@@ -927,10 +940,10 @@
 
                         <input type="text" id="gen_phone_number" name="gen_phone_number" placeholder="Phone Number" required>
                     </div>
-                    <div class="extension_form_group">
-                        <textarea name="gen_extension_message" id="gen_extension_message" rows="3" placeholder="Enter Message" required></textarea>
+                    <div class="emuxn_form_group">
+                        <textarea name="gen_emuxn_message" id="gen_emuxn_message" rows="3" placeholder="Enter Message" required></textarea>
                     </div>
-                    <div class="extension_form_group" id="new_msg_link_area" style="display: none;">
+                    <div class="emuxn_form_group" id="new_msg_link_area" style="display: none;">
                        <span style="font-size: .9rem;">Link:</span>
                        <a style="color: teal;font-size: .9rem;" id="new_msg_link" href=""></a>
                     </div>
@@ -942,9 +955,9 @@
             </footer>
         </div>
 
-        <div id="ai_modal" class="extension_modal">
+        <div id="ai_modal" class="emuxn_modal">
             <header class="split">
-                <h3 class="extension_modal_heading">Best Match Replies.</h3>
+                <h3 class="emuxn_modal_heading">Best Match Replies.</h3>
                 <div class="ai_tone">
                     <span class="cta">
                         <span class="icon">&#9885;</span>
@@ -997,6 +1010,8 @@
     var tasks = [];
     var alarms = [];
     var blocked_sites = [];
+    var backend_url = 'https://app.wa-my.com/';
+    var makingApiCall = false;
 
     class AppVariables {
         constructor () {
@@ -1046,8 +1061,7 @@
     }      
       
     // make requests
-    const makeRequest = async (url, method, data={}) => {
-        var backend_url = 'https://app.wa-my.com//';
+    const makeRequest = async (url, method, data={}, access_token=null) => {
 
         let fetchData = {
             method: method,
@@ -1088,7 +1102,7 @@
                 }
             })
             if (document.querySelector("._1jJ70.two")) {
-                if (document.querySelector(".extension-area")) {
+                if (document.querySelector(".emuxn-area")) {
                     removeUI();
                 }
                 else {
@@ -1111,18 +1125,96 @@
         sendResponse()
     })
 
+    function updateAlarmlist() {
+        makingApiCall = true
+        console.log("called")
+        chrome.storage.sync.get(['access_token', "refresh_token"], function(items){
+            fetch(`${backend_url}api/alarms/`,
+            {
+                method: "GET",
+                mode: "cors",
+                cache: "no-cache",
+                redirect: 'follow',
+                referrerPolicy: 'no-referrer',
+                'Content-Type' : 'application/json',
+                "headers" : {
+                    Authorization: "JWT " + items.access_token,
+                }
+            })
+            .then(resp => resp.json())
+            .then(data => {
+                console.log(alarms)
+                alarms = data;
+                makingApiCall = false
+            })
+        })
+    }
+
+
+    function deleteAlarm(alarm) {
+        chrome.storage.sync.get(['access_token', "refresh_token"], function(items){
+            fetch(`${backend_url}api/alarms/${alarm.id}/delete/`,
+            {
+                method: "DELETE",
+                mode: "cors",
+                cache: "no-cache",
+                redirect: 'follow',
+                referrerPolicy: 'no-referrer',
+                'Content-Type' : 'application/json',
+                "headers" : {
+                    Authorization: "JWT " + items.access_token,
+                }
+            })
+            .then(resp => resp.json())
+            .then(data => {
+                updateAlarmlist()
+            })
+        })
+    }
+    
+
+    var stop_alarm = false;
+    setInterval(() => {
+        if (!(alarms.length > 0) && !window.location.href.includes("web.whatsapp") && !makingApiCall) {
+            updateAlarmlist();
+        } else {
+            console.log("watching")
+            console.log(alarms)
+            if (stop_alarm == true) return;
+            if (alarms && alarms.length > 0) {
+              alarms.forEach(alarm => {
+                let date = new Date(`${alarm.alarm_date}:${alarm.alarm_time}`)
+                if (new Date() >= date.getTime()) {
+                    console.log(alarm)
+                  if (alarm.display_area == "All") {
+                    showAlarmModal(alarm)
+                  }
+                  else if (window.location.href.includes("web.whatsapp")) {
+                    showAlarmModal(alarm)
+                  }
+                }
+              })
+            }
+        }
+        
+    }, 1000)
+      
+
 
     function showAlarmModal(alarm) {
-        if (!document.querySelector("._1jJ70.two")) return;
+        let modal = document.createElement("section");
+        modal.innerHTML = alarmModal;
+        document.body.appendChild(modal)
+        
         if (!document.querySelector("#alarm_modal").classList.contains("inview")) {
-            document.querySelectorAll(".extension_modal").forEach(modal => {
-                alarm_modal = document.querySelector("#alarm_modal");
+            document.querySelectorAll(".emuxn_modal").forEach(modal => {
+                let alarm_modal = document.querySelector("#alarm_modal");
                 if (modal.classList.contains("inview")) {
                     modal.classList.remove("inview")
                 }
                 document.body.classList.add("modal_open")
                 alarm_modal.classList.add("inview")
-                alarm_modal.querySelector("#alarm_name").textContent = alarm.name;
+                alarm_modal.querySelector("#emp").textContent = alarm.name;
                 alarm_modal.querySelector("#alarm_date").textContent = `${alarm.alarm_date} ${alarm.alarm_time}`;
                 
 
@@ -1131,16 +1223,15 @@
                     .addEventListener("click", () => {
                         alarm_modal.classList.remove("inview")
                         document.body.classList.remove("modal_open")
-                        
-                        chrome.runtime.sendMessage({
-                            type:  'UPDATEALARMLIST'
-                        });
 
-                        alarm_modal.querySelector(".cancel_button").disabled = true;
-                        makeRequest(`api/alarms/${alarm.id}/delete/`, "DELETE")
-                        .then(() => {
+                        stop_alarm = true;
+                        setTimeout(() => {
+                            updateAlarmlist()
                             alarm_modal.querySelector(".cancel_button").disabled = true;
-                        })
+                        }, 5000)
+
+                        deleteAlarm(alarm)
+                        alarm_modal.querySelector(".cancel_button").disabled = true;
                     })
             })
         }
@@ -1166,47 +1257,47 @@
     }
 
     function closeUI() {
-        let extensionArea = document.querySelector(".extension-area");
-        document.body.removeChild(extensionArea)
+        let emuxnArea = document.querySelector(".emuxn-area");
+        document.body.removeChild(emuxnArea)
     }
 
     function removeUI() {
-        if (document.querySelector(".extension_area")) {
+        if (document.querySelector(".emuxn_area")) {
             var chatArea = document.querySelector("div#app");
             var chatAreaParent = document.querySelector("body.web");
             
             // var hard_expire_time = document.querySelector("#hard_expire_time");
-            const extension_area = document.querySelector(".extension_area");
-            extension_area.querySelector(".chat_handler").childNodes.forEach(
+            const emuxn_area = document.querySelector(".emuxn_area");
+            emuxn_area.querySelector(".chat_handler").childNodes.forEach(
                 elem => {
                     chatAreaParent.appendChild(elem);
                 }
             )
-            chatAreaParent.removeChild(extension_area);
+            chatAreaParent.removeChild(emuxn_area);
         }
     }
 
     function renderExtensionUI() {
-        if (!document.querySelector(".extension_area")) {
+        if (!document.querySelector(".emuxn_area")) {
             var chatArea = document.querySelector(".two._1jJ70");
             var chatAreaParent = document.querySelector("._1Fm4m._1h2dM.app-wrapper-web");
             
-            const extension_area = document.createElement("div");
-            extension_area.className = "extension_area";
-            extension_area.classList.add("emuxn")
+            const emuxn_area = document.createElement("div");
+            emuxn_area.className = "emuxn_area";
+            emuxn_area.classList.add("emuxn")
     
             // adding taskbar
-            const extension_taskbar_area = document.createElement("div");
-            extension_taskbar_area.className = "extension_taskbar_area";
-            extension_taskbar_area.innerHTML = taskbarUI;
-            extension_area.appendChild(extension_taskbar_area)
+            const emuxn_taskbar_area = document.createElement("div");
+            emuxn_taskbar_area.className = "emuxn_taskbar_area";
+            emuxn_taskbar_area.innerHTML = taskbarUI;
+            emuxn_area.appendChild(emuxn_taskbar_area)
     
-            const extension_lower_area = document.createElement("div");
-            extension_lower_area.className = "extension_lower_area";
-            extension_area.appendChild(extension_lower_area)
+            const emuxn_lower_area = document.createElement("div");
+            emuxn_lower_area.className = "emuxn_lower_area";
+            emuxn_area.appendChild(emuxn_lower_area)
 
             let handler = document.createElement("div");
-            extension_lower_area.appendChild(handler)
+            emuxn_lower_area.appendChild(handler)
             handler.className = "chat_handler"
 
             // // addd chat area to ui
@@ -1227,10 +1318,10 @@
             chatArea.style.top = "0";
                    
             // adding sidebar
-            const extension_sidebar_area = document.createElement("div");
-            extension_sidebar_area.className = "extension_sidebar_area";
-            extension_sidebar_area.innerHTML = sidebarUI;
-            extension_lower_area.appendChild(extension_sidebar_area);
+            const emuxn_sidebar_area = document.createElement("div");
+            emuxn_sidebar_area.className = "emuxn_sidebar_area";
+            emuxn_sidebar_area.innerHTML = sidebarUI;
+            emuxn_lower_area.appendChild(emuxn_sidebar_area);
 
             // add modals
             const modalSpace = document.createElement("section")
@@ -1241,7 +1332,7 @@
             authModal.innerHTML = authUI;
             document.body.appendChild(authModal)
 
-            chatAreaParent.appendChild(extension_area);
+            chatAreaParent.appendChild(emuxn_area);
     
             UIRendering()
         }
@@ -1250,8 +1341,8 @@
 
     function UIRendering () {
         isUserAuthenticated();
-        var signupSocialExtension = document.querySelectorAll(".signup-social-extension");
-        var signUpCta = document.querySelector("#signup-extension");
+        var signupSocialExtension = document.querySelectorAll(".signup-social-emuxn");
+        var signUpCta = document.querySelector("#signup-emuxn");
 
         signupSocialExtension.forEach(btn => btn.addEventListener("click", () => {
             chrome.runtime.sendMessage({
@@ -1263,7 +1354,26 @@
                 type:  'REGISTER'
             });
         })
+        
+        function confirmOperation() {
+            let modal = document.querySelector(".emuxn_modal#confirm_action");
+            modal.classList.add("inview");
+            document.body.classList.add("modal_open")
 
+            return new Promise((resolve, reject) => {
+                modal.querySelector("#cancel_op").addEventListener("click", () => {
+                    modal.classList.remove("inview");
+                    document.body.classList.remove("modal_open")
+                    reject();
+                })
+                modal.querySelector("#confirm_op").addEventListener("click", () => {
+                    modal.classList.remove("inview");
+                    document.body.classList.remove("modal_open")
+                    resolve();
+                })
+
+            })
+        }
 
         async function checkAuth() {
             // attempt login using access key
@@ -1279,10 +1389,6 @@
                         
                         localStorage.setItem("ext_access_token", response.access)
                         localStorage.setItem("ext_refresh_token", refresh_token)
-                        
-                        chrome.runtime.sendMessage({
-                            type:  'UPDATEALARMLIST'
-                        });
                                     
                         // rerun check to fetch features;
                         checkAuth();
@@ -1318,7 +1424,7 @@
             if (modalToShow.classList.contains("inview")) {
                 modalToShow.classList.remove("inview")
             } else {
-                document.querySelectorAll(".extension_modal").forEach(modal => {
+                document.querySelectorAll(".emuxn_modal").forEach(modal => {
                     if (modal.classList.contains("inview")) {
                         modal.classList.remove("inview")
                     }
@@ -1368,9 +1474,7 @@
                     signinbtn.value = "Sign In";
                     fetch_all_data()
                     
-                    chrome.runtime.sendMessage({
-                        type:  'UPDATEALARMLIST'
-                    });
+                    updateAlarmlist()
                 })
                 .catch(error => {
                     formErrMsg.textContent = "Invalid Data";
@@ -1432,7 +1536,7 @@
             setInterval(() => watchTask(), 1000);
 
             document.querySelector("#sidebar_toggle").addEventListener("click", () => {
-                document.querySelector(".extension_area").classList.toggle("show_sidebar")
+                document.querySelector(".emuxn_area").classList.toggle("show_sidebar")
             })
 
             const auth_activator = document.querySelector("#auth_activator");
@@ -1487,7 +1591,7 @@
             })
             
             // schedule_msg_sidebar_activator.click()
-            document.querySelector(".extension_area").classList.add("show_sidebar")
+            document.querySelector(".emuxn_area").classList.add("show_sidebar")
 
             // chrome.alarms.onAlarm.addListener((alarm) => {
             //     let active_task = tasks.filter(task => task == alarm.name)
@@ -1497,7 +1601,7 @@
             var color_presets = ["#64c3ff", "#ffd527", "#ff9383", "#e2b0f5", "#53cdb5", "#97d57a", "#f9a811", "#e6e6e6"]
             document.querySelectorAll(".selected_color").forEach(
                 elem => elem.addEventListener("click", () => {
-                    var color_selector = elem.closest(".extension_form_group").querySelector(".color_selector")
+                    var color_selector = elem.closest(".emuxn_form_group").querySelector(".color_selector")
                     color_selector.classList.add("inview");
 
                     document.querySelectorAll(".color_list").forEach(color_list => {
@@ -1511,8 +1615,8 @@
                                 span.addEventListener("click", () => {
                                     color_selector.querySelector(".new_color").value = val;
 
-                                    document.querySelector(".extension_modal.inview").querySelector(".selected_color").style.backgroundColor = val;
-                                    document.querySelector(".extension_modal.inview").querySelector(".selected_color_input").value = val;
+                                    document.querySelector(".emuxn_modal.inview").querySelector(".selected_color").style.backgroundColor = val;
+                                    document.querySelector(".emuxn_modal.inview").querySelector(".selected_color_input").value = val;
                                     
                                     color_list.innerHTML = "";
 
@@ -1524,8 +1628,8 @@
 
 
                     color_selector.querySelector(".new_color").addEventListener("input", () => {
-                        document.querySelector(".extension_modal.inview").querySelector(".selected_color").style.backgroundColor = color_selector.querySelector(".new_color").value;
-                        document.querySelector(".extension_modal.inview").querySelector(".selected_color_input").value = color_selector.querySelector(".new_color").value
+                        document.querySelector(".emuxn_modal.inview").querySelector(".selected_color").style.backgroundColor = color_selector.querySelector(".new_color").value;
+                        document.querySelector(".emuxn_modal.inview").querySelector(".selected_color_input").value = color_selector.querySelector(".new_color").value
                         color_selector.classList.remove("inview")
                     })
                 })
@@ -1564,7 +1668,7 @@
                     modalToShow.classList.remove("inview")
                 } else {
                     // close all open modals
-                    document.querySelectorAll(".extension_modal").forEach(modal => {
+                    document.querySelectorAll(".emuxn_modal").forEach(modal => {
                         if (modal.classList.contains("inview")) {
                             modal.classList.remove("inview")
                         }
@@ -1583,7 +1687,7 @@
 
                                     modal.querySelector("form").reset()
 
-                                    cancel_cta.closest(".extension_modal").classList.remove("inview");
+                                    cancel_cta.closest(".emuxn_modal").classList.remove("inview");
                                     document.body.classList.remove("modal_open")
                                 })
                             }
@@ -1629,14 +1733,14 @@
             }
 
 
-            // document.querySelector("#new_extension_message").addEventListener("keyup", () => {
+            // document.querySelector("#new_emuxn_message").addEventListener("keyup", () => {
             //     document.querySelector("#new_msg_link_area").style.display = "flex";
             //     document.querySelector("#new_msg_link_area").style.gap = "2rem";
             //     new_msg_link = document.querySelector("#new_msg_link");
 
             //     let countryCode = sendMsgToNewNoform.querySelector("#country_code").value;
             //     let phoneNumber = sendMsgToNewNoform.querySelector("#new_phone_number").value;
-            //     let message = sendMsgToNewNoform.querySelector("#new_extension_message").value;
+            //     let message = sendMsgToNewNoform.querySelector("#new_emuxn_message").value;
         
             //     let fullNumber = `+${countryCode}${phoneNumber[0] == '0' ? phoneNumber.slice(1) : phoneNumber}`
             //     let requestUrl = `https://api.whatsapp.com/send?phone=${fullNumber}&text=${message}`;
@@ -1665,7 +1769,7 @@
         
                 let countryCode = sendMsgToNewNoform.querySelector("#country_code").value;
                 let phoneNumber = sendMsgToNewNoform.querySelector("#new_phone_number").value;
-                let message = sendMsgToNewNoform.querySelector("#new_extension_message").value;
+                let message = sendMsgToNewNoform.querySelector("#new_emuxn_message").value;
 
                 if (!countryCode.includes("+"))
                     countryCode = `+${countryCode}`;
@@ -1690,7 +1794,7 @@
 
                 let countryCode = generateLinkform.querySelector("#gen_country_code").value;
                 let phoneNumber = generateLinkform.querySelector("#gen_phone_number").value;
-                let message = generateLinkform.querySelector("#gen_extension_message").value;
+                let message = generateLinkform.querySelector("#gen_emuxn_message").value;
 
                 if (!countryCode.includes("+"))
                     countryCode = `+${countryCode}`;
@@ -1764,7 +1868,7 @@
                     makeRequest(`api/memos/create/`, "POST", newMemo)
                     .then((response) => {
                         newMemo = response
-                        extension_sidebar_notes.prepend(createNoteElem(newMemo));
+                        emuxn_sidebar_notes.prepend(createNoteElem(newMemo));
                     })
                     .catch(err => {
                         console.log(err)
@@ -1776,23 +1880,23 @@
                     makeRequest(`api/memos/`, "GET")
                     .then((response) => {
                         memos = response
-                        extension_sidebar_notes.querySelectorAll(".extension_sidebar_note").forEach(
+                        emuxn_sidebar_notes.querySelectorAll(".emuxn_sidebar_note").forEach(
                             note => {
                                 note.parentElement.removeChild(note)
                             }
                         )
                         memos && memos.forEach(memo => {
-                            extension_sidebar_notes.prepend(createNoteElem(memo));
+                            emuxn_sidebar_notes.prepend(createNoteElem(memo));
                         })
                     })
                     
                 }
 
-                const extension_sidebar_notes = document.querySelector(".extension_sidebar_notes .list");
+                const emuxn_sidebar_notes = document.querySelector(".emuxn_sidebar_notes .list");
         
                 function createNoteElem(memo) {
                     const memoElem = document.createElement("div");
-                    memoElem.className = 'extension_sidebar_note';
+                    memoElem.className = 'emuxn_sidebar_note';
                     memoElem.dataset.memoId = memo.id;
                     memoElem.innerHTML = `
                         <span></span>
@@ -1821,13 +1925,20 @@
                     `;
                     memoElem.querySelector("span").style.backgroundColor = memo.color;
                     memoElem.querySelector(".delete_note").addEventListener("click", () => {
-                        makeRequest(`api/memos/${memo.id}/delete/`, "DELETE")
-                        .then((response) => {
-                            renderMemos(null);
+                        confirmOperation()
+                        .then(() => {
+                            makeRequest(`api/memos/${memo.id}/delete/`, "DELETE")
+                            .then((response) => {
+                                renderMemos(null);
+                            })
+                            .catch(err => {
+                                renderMemos(null);
+                            })
                         })
-                        .catch(err => {
-                            renderMemos(null);
+                        .catch(() => {
+                            // console.log("rejected")
                         })
+
                     })
                     memoElem.querySelector(".edit_note").addEventListener("click", () => editMemo(memo))
                     // memoElem.addEventListener("click", () => editMemo(memo))
@@ -1836,7 +1947,7 @@
 
                 function editMemo(memo) {
                     create_note_activator.click();
-                    let modal = document.querySelector(".extension_modal#create_note");
+                    let modal = document.querySelector(".emuxn_modal#create_note");
                     modal.querySelector("button[type='submit']").textContent = "Edit";
                     if (modal.classList.contains("inview")) {
                         const create_memo_form = document.querySelector("#create_memo_form");
@@ -1863,7 +1974,7 @@
                     return;
                 }
                 
-                document.querySelector(".extension_area").classList.add("show_sidebar")
+                document.querySelector(".emuxn_area").classList.add("show_sidebar")
 
                 if (activator.id.includes("memo")) {
                     renderMemos()
@@ -1910,6 +2021,17 @@
                 let alarm_time = create_alarm_form.querySelector("#alarm_time").value;
                 let alarm_template = create_alarm_form.querySelector("#alarm_template").value;
 
+                if (!alarm_date || !alarm_time) {
+                    create_alarm_form.querySelector("#alarm_date").style.border = "1px solid red";
+                    create_alarm_form.querySelector("#alarm_time").style.border = "1px solid red";
+
+                    setTimeout(() => {
+                        create_alarm_form.querySelector("#alarm_date").style.border = "1px solid hsl(0, 0%, 90%)";
+                        create_alarm_form.querySelector("#alarm_time").style.border = "1px solid hsl(0, 0%, 90%)";
+                    }, 5000)
+                    return;
+                }
+
                 var display_area;
                 if (!create_alarm_form.querySelector("#display_area").checked){
                     display_area = "Whatsapp";
@@ -1924,12 +2046,12 @@
                     if (_alarm.inEdit) {
                         editedFound = true;
                         _alarm["inEdit"] = false;
-                        _alarm["name "] = alarm_name ;
-                        _alarm["display_area "] = display_area ;
+                        _alarm["name"] = alarm_name ;
+                        _alarm["display_area"] = display_area ;
                         _alarm["color"] = alarm_color;
-                        _alarm["alarm_date "] = alarm_date ;
-                        _alarm["alarm_time "] = alarm_time ;
-                        _alarm["template "] = alarm_template ;
+                        _alarm["alarm_date"] = alarm_date ;
+                        _alarm["alarm_time"] = alarm_time ;
+                        _alarm["template"] = alarm_template ;
                         _alarm["date_created"] = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
 
                         delete _alarm["inEdit"];
@@ -1969,9 +2091,7 @@
                         // save alarm to backend, only render if post was successful
                         renderAlarms(alarm);
                         
-                        chrome.runtime.sendMessage({
-                            type:  'UPDATEALARMLIST'
-                        });
+                        updateAlarmlist()
         
                         // close modal
                         create_alarm_form.reset()
@@ -1985,7 +2105,7 @@
             })
 
             function renderAlarms(alarm) {
-                const alarm_list = document.querySelector("#alarm .extension_sidebar_notes .list");
+                const alarm_list = document.querySelector("#alarm .emuxn_sidebar_notes .list");
         
                 if (alarm) {
                     alarm_list.prepend(createAlarmElem(alarm));
@@ -1995,7 +2115,7 @@
                     .then((response) => {
                         alarms = response
 
-                        alarm_list.querySelectorAll(".extension_sidebar_note").forEach(
+                        alarm_list.querySelectorAll(".emuxn_sidebar_note").forEach(
                             note => {
                                 note.parentElement.removeChild(note)
                             }
@@ -2008,7 +2128,7 @@
             
                 function createAlarmElem(alarm) {
                     const elem = document.createElement("div");
-                    elem.className = 'extension_sidebar_note';
+                    elem.className = 'emuxn_sidebar_note';
                     elem.dataset.siteId = alarm.id;
                     elem.innerHTML = `
                         <span style="background-color: ${alarm.color}"></span>
@@ -2036,13 +2156,20 @@
                         </div>
                     `;
                     elem.querySelector(".delete_note").addEventListener("click", () => {
-                        makeRequest(`api/alarms/${alarm.id}/delete/`, "DELETE")
-                        .then((response) => {
-                            renderAlarms(null);
+                        confirmOperation()
+                        .then(() => {
+                            makeRequest(`api/alarms/${alarm.id}/delete/`, "DELETE")
+                            .then((response) => {
+                                renderAlarms(null);
+                            })
+                            .catch(err => {
+                                renderAlarms(null);
+                            })
                         })
-                        .catch(err => {
-                            renderAlarms(null);
+                        .catch(() => {
+                            // console.log("rejected")
                         })
+
                     })
                     elem.querySelector(".edit_note").addEventListener("click", () => editAlarm(alarm))
                     // elem.addEventListener("click", () => editMemo(memo))
@@ -2051,7 +2178,7 @@
 
                 function editAlarm(alarm) {
                     create_alarm_activator.click();
-                    let modal = document.querySelector(".extension_modal#create_alarm");
+                    let modal = document.querySelector(".emuxn_modal#create_alarm");
                     modal.querySelector("button[type='submit']").textContent = "Edit";
                     if (modal.classList.contains("inview")) {
                         const create_alarm_form = modal.querySelector("form");
@@ -2133,7 +2260,7 @@
 
 
             function renderBlockedSites(site) {
-                const site_list = document.querySelector("#focus .extension_sidebar_notes .list");
+                const site_list = document.querySelector("#focus .emuxn_sidebar_notes .list");
         
                 if (site) {
                     site_list.prepend(createFocusElem(site));
@@ -2143,7 +2270,7 @@
                     .then((response) => {
                         blocked_sites = response
 
-                        site_list.querySelectorAll(".extension_sidebar_note").forEach(
+                        site_list.querySelectorAll(".emuxn_sidebar_note").forEach(
                             note => {
                                 note.parentElement.removeChild(note)
                             }
@@ -2156,7 +2283,7 @@
             
                 function createFocusElem(site) {
                     const elem = document.createElement("div");
-                    elem.className = 'extension_sidebar_note';
+                    elem.className = 'emuxn_sidebar_note';
                     elem.dataset.siteId = site.id;
                     elem.innerHTML = `
                         <span></span>
@@ -2184,13 +2311,20 @@
                         </div>
                     `;
                     elem.querySelector(".delete_note").addEventListener("click", () => {
-                        makeRequest(`api/blockedsite/${site.id}/delete/`, "DELETE")
-                        .then((response) => {
-                            renderBlockedSites(null);
+                        confirmOperation()
+                        .then(() => {
+                            makeRequest(`api/blockedsite/${site.id}/delete/`, "DELETE")
+                            .then((response) => {
+                                renderBlockedSites(null);
+                            })
+                            .catch(err => {
+                                renderBlockedSites(null);
+                            })
                         })
-                        .catch(err => {
-                            renderBlockedSites(null);
+                        .catch(() => {
+                            // console.log("rejected")
                         })
+
                     })
                     elem.querySelector(".edit_note").addEventListener("click", () => editSite(site))
                     // elem.addEventListener("click", () => editMemo(memo))
@@ -2199,7 +2333,7 @@
 
                 function editSite(site) {
                     create_focus_activator.click();
-                    let modal = document.querySelector(".extension_modal#create_focus");
+                    let modal = document.querySelector(".emuxn_modal#create_focus");
                     modal.querySelector("button[type='submit']").textContent = "Edit";
                     if (modal.classList.contains("inview")) {
                         const create_site_form = modal.querySelector("form");
@@ -2232,13 +2366,13 @@
                         file_name: url,
                     }
 
-                    if (!localStorage.getItem("extensionTemplatesImages")) {
-                        localStorage.setItem('extensionTemplatesImages', JSON.stringify([]));
+                    if (!localStorage.getItem("emuxnTemplatesImages")) {
+                        localStorage.setItem('emuxnTemplatesImages', JSON.stringify([]));
                     }
                     
-                    let extensionTemplatesImages = [...JSON.parse(localStorage.getItem("extensionTemplatesImages")), data];
+                    let emuxnTemplatesImages = [...JSON.parse(localStorage.getItem("emuxnTemplatesImages")), data];
                     
-                    localStorage.setItem('extensionTemplatesImages', JSON.stringify(extensionTemplatesImages));
+                    localStorage.setItem('emuxnTemplatesImages', JSON.stringify(emuxnTemplatesImages));
                 };
         
                 return fileReader.readAsDataURL(img.files[0]);
@@ -2249,10 +2383,10 @@
                 const create_template_form = document.querySelector("#template_modal form");
                 let template_name = create_template_form.querySelector("#template_name").value;
                 let template_color = create_template_form.querySelector("#template_color").value;
-                let template_extension_message = create_template_form.querySelector("#template_extension_message").value;
+                let template_emuxn_message = create_template_form.querySelector("#template_emuxn_message").value;
                 let template_file = create_template_form.querySelector("#template_file");
         
-                if (!template_name && !template_extension_message) return;
+                if (!template_name && !template_emuxn_message) return;
         
                 var editedFound = false;
                 templates && templates.map(_template => {
@@ -2262,7 +2396,7 @@
                         _template["inEdit"] = false;
                         _template["name"] = template_name;
                         _template["color"] = template_color;
-                        _template["message"] = template_extension_message;
+                        _template["message"] = template_emuxn_message;
                         _template["date_created"] = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
 
                         if (template_file.files.length > 0) {
@@ -2290,7 +2424,7 @@
                     var template = {
                         name: template_name,
                         color: template_color,
-                        message: template_extension_message,
+                        message: template_emuxn_message,
                         date_created: `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`,
                     }
                     
@@ -2313,7 +2447,7 @@
             })
         
             function renderTemplates(newTemplate) {
-                const template_list = document.querySelector(".extension_sidebar_notes#templates .list");
+                const template_list = document.querySelector(".emuxn_sidebar_notes#templates .list");
         
                 if (newTemplate) {
                     template_list.prepend(createTemplateElem(newTemplate));
@@ -2323,7 +2457,7 @@
                     .then((response) => {
                         templates = response
 
-                        template_list.querySelectorAll(".extension_sidebar_note").forEach(
+                        template_list.querySelectorAll(".emuxn_sidebar_note").forEach(
                             note => {
                                 note.parentElement.removeChild(note)
                             }
@@ -2337,7 +2471,7 @@
         
                 function createTemplateElem(template) {
                     const elem = document.createElement("div");
-                    elem.className = 'extension_sidebar_note';
+                    elem.className = 'emuxn_sidebar_note';
                     elem.dataset.templateId = template.id;
                     elem.innerHTML = `
                         <span style="background-color: ${template.color}"></span>
@@ -2366,13 +2500,20 @@
                     `;
                     elem.querySelector("span").style.backgroundColor = template.color;
                     elem.querySelector(".delete_note").addEventListener("click", () => {
-                        makeRequest(`api/templates/${template.id}/delete/`, "DELETE")
-                        .then((response) => {
-                            renderTemplates(null);
+                        confirmOperation()
+                        .then(() => {
+                            makeRequest(`api/templates/${template.id}/delete/`, "DELETE")
+                            .then((response) => {
+                                renderTemplates(null);
+                            })
+                            .catch(err => {
+                                renderTemplates(null);
+                            })
                         })
-                        .catch(err => {
-                            renderTemplates(null);
+                        .catch(() => {
+                            // console.log("rejected")
                         })
+
                     })
                     elem.querySelector(".edit_note").addEventListener("click", () => editTemplate(template))
                     // elem.addEventListener("click", () => editMemo(memo))
@@ -2382,13 +2523,13 @@
         
             function editTemplate(template) {
                 template_modal_activator.click();
-                let modal = document.querySelector(".extension_modal#template_modal");
+                let modal = document.querySelector(".emuxn_modal#template_modal");
                 modal.querySelector("button[type='submit']").textContent = "Edit";
                 if (modal.classList.contains("inview")) {
                     const create_template_form = modal.querySelector("form");
                     create_template_form.querySelector("#template_name").value = template.name;
                     create_template_form.querySelector("#template_color").value = template.color;
-                    create_template_form.querySelector("#template_extension_message").value = template.message;
+                    create_template_form.querySelector("#template_emuxn_message").value = template.message;
                     create_template_form.querySelector(".selected_color").style.backgroundColor = template.color;
         
                     // handle file edit 
@@ -2498,7 +2639,7 @@
             })
         
             function renderTasks(newTask) {
-                const task_lists = document.querySelector(".extension_sidebar_notes#tasks .list");
+                const task_lists = document.querySelector(".emuxn_sidebar_notes#tasks .list");
         
                 if (newTask) {
                     makeRequest(`api/tasks/create/`, "POST", newTask)
@@ -2521,7 +2662,7 @@
                     makeRequest(`api/tasks/`, "GET")
                     .then((response) => {
                         tasks = response
-                        task_lists.querySelectorAll(".extension_sidebar_note").forEach(
+                        task_lists.querySelectorAll(".emuxn_sidebar_note").forEach(
                             note => {
                                 note.parentElement.removeChild(note)
                             }
@@ -2534,7 +2675,7 @@
                 
                 function createTemplateElem(Task) {
                     const elem = document.createElement("div");
-                    elem.className = 'extension_sidebar_note';
+                    elem.className = 'emuxn_sidebar_note';
                     elem.dataset.TaskId = Task.id;
                     elem.innerHTML = `
                         <span></span>
@@ -2563,13 +2704,20 @@
                     `;
                     elem.querySelector("span").style.backgroundColor = Task.color;
                     elem.querySelector(".delete_note").addEventListener("click", () => {
-                        makeRequest(`api/tasks/${Task.id}/delete/`, "DELETE")
-                        .then((response) => {
-                            renderTasks(null);
+                        confirmOperation()
+                        .then(() => {
+                            makeRequest(`api/tasks/${Task.id}/delete/`, "DELETE")
+                            .then((response) => {
+                                renderTasks(null);
+                            })
+                            .catch(err => {
+                                renderTasks(null);
+                            })
                         })
-                        .catch(err => {
-                            renderTasks(null);
+                        .catch(() => {
+                            // console.log("rejected")
                         })
+
                     })
                     elem.querySelector(".edit_note").addEventListener("click", () => editTask(Task))
                     // elem.addEventListener("click", () => editMemo(memo))
@@ -2581,8 +2729,8 @@
                 // get template
                 let template = templates.filter(temp => temp.id == task.template)[0];
                 // let template = templates.filter(template => template.name === task.template)[0]
-                let extensionTemplatesImages = JSON.parse(localStorage.getItem("extensionTemplatesImages"));
-                let img = extensionTemplatesImages.filter(data => data.id === template.id)[0]
+                let emuxnTemplatesImages = JSON.parse(localStorage.getItem("emuxnTemplatesImages"));
+                let img = emuxnTemplatesImages.filter(data => data.id === template.id)[0]
 
                 var imgUrl;
                 const row = document.createElement("div")
@@ -2614,7 +2762,7 @@
         
             function editTask(Task) {
                 schedule_msg_activator.click();
-                let modal = document.querySelector(".extension_modal#schedule_msg");
+                let modal = document.querySelector(".emuxn_modal#schedule_msg");
                 modal.querySelector("button[type='submit']").textContent = "Edit";
                 if (modal.classList.contains("inview")) {
 
@@ -2705,11 +2853,11 @@
 
                         if (document.querySelector(`[data-testid="chat-subtitle"] span`) && document.querySelector(`[data-testid="chat-subtitle"] span`).title.split("+").length > 1) {
                             // is group
-                            if (!chatHeader.querySelector(".extension_header_icon")) {
+                            if (!chatHeader.querySelector(".emuxn_header_icon")) {
                                 // add group list icon
                                 icons_area = chatHeader.querySelector("._1sPvB._2XdMx");
                                 let icon = document.createElement("div")
-                                icon.className = "extension_header_icon"
+                                icon.className = "emuxn_header_icon"
                                 icon.id = "group_modal_activator"
                                 icon.dataset.modalId = "group_modal"
                                 icon.style.cursor = "pointer"
@@ -2735,7 +2883,7 @@
                         }
                         
 
-                        const task_lists = document.querySelector(".extension_sidebar_notes#tasks");
+                        const task_lists = document.querySelector(".emuxn_sidebar_notes#tasks");
 
                         let userTasks = tasks.filter(task => task.contact === chatName);
                         if (userTasks) {
@@ -2888,7 +3036,7 @@
                             // send task and remove from task array
                             sendTask(task)
                             tasks = tasks.filter(_task => task.id != _task.id)
-                            localStorage.setItem("extension_tasks", JSON.stringify(tasks))
+                            localStorage.setItem("emuxn_tasks", JSON.stringify(tasks))
                         }
                         else {
                             pendingTask.push(task);
