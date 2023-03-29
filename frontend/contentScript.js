@@ -117,6 +117,7 @@
                     </div>
                 </div>
                 <div class="sidebar_part" id="memo">
+                    <p style="margin: .25rem 0 0 1rem;font-weight: bold;">Actions</p>
                     <div class="extension_sidebar_actions">
                         <button id="create_note_activator" data-modal-id="create_note">New Sticky Note</button>
                     </div>
@@ -127,6 +128,7 @@
                     </div>
                 </div>
                 <div class="sidebar_part" id="alarm">
+                    <p style="margin: .25rem 0 0 1rem;font-weight: bold;">Actions</p>
                     <div class="extension_sidebar_actions">
                         <button id="create_alarm_activator" data-modal-id="create_alarm">Create Buzzer</button>
                     </div>
@@ -155,7 +157,8 @@
                     </div>
                 </div>
                 <div class="sidebar_part" id="scheduling_msg">
-                    <div class="extension_sidebar_actions">
+                    <p style="margin: .25rem 0 0 1rem;font-weight: bold;">Actions</p>
+                    <div class="extension_sidebar_actions no-slipt">
                         <button data-modal-id="template_modal" id="template_modal_activator">New Template</button>
                         <button data-modal-id="schedule_msg" id="schedule_msg_activator">New Task</button>
                     </div>
@@ -179,7 +182,26 @@
         </div>
     `
 
-    var modalsUI = `
+    var blockSiteModal = `
+        <div id="site_blocked_modal" class="emuxn extension_modal tab_modal">
+            <div class="body">
+                <div class="bell">
+                    <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                    <svg width="80px" height="80px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.82474 13.934L5.09976 13.2452L5.82474 13.934ZM8 9C8 6.79086 9.79086 5 12 5V3C8.68629 3 6 5.68629 6 9H8ZM8 11.7564V9H6V11.7564H8ZM6 16C6 15.4658 6.20812 14.9823 6.54971 14.6228L5.09976 13.2452C4.41915 13.9616 4 14.9329 4 16H6ZM7 16H6V18H7V16ZM17 16H7V18H17V16ZM18 16H17V18H18V16ZM17.4503 14.6228C17.7919 14.9823 18 15.4658 18 16H20C20 14.9329 19.5809 13.9616 18.9002 13.2452L17.4503 14.6228ZM16 9V11.7564H18V9H16ZM12 5C14.2091 5 16 6.79086 16 9H18C18 5.68629 15.3137 3 12 3V5ZM18.9002 13.2452C18.2923 12.6054 18 12.1579 18 11.7564H16C16 13.05 16.8905 14.0336 17.4503 14.6228L18.9002 13.2452ZM4 16C4 17.1046 4.89543 18 6 18V16H4ZM18 18C19.1046 18 20 17.1046 20 16H18V18ZM6 11.7564C6 12.1579 5.70766 12.6054 5.09976 13.2452L6.54971 14.6228C7.10947 14.0336 8 13.05 8 11.7564H6Z" fill="#000000"/>
+                    <path d="M13.7976 19.8767C13.6312 20.2179 13.3712 20.5046 13.048 20.7035C12.7247 20.9023 12.3516 21.0051 11.9721 20.9998C11.5926 20.9945 11.2224 20.8813 10.9049 20.6735C10.5873 20.4657 10.3354 20.1718 10.1786 19.8262" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 3V4" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <p>Site Blocked Using Wamy</p>
+            </div>
+            <footer>
+                <button id="close_site_button">Close Site</button>
+            </footer>
+        </div>
+    `
+
+    var modalsUI = `        
         <div id="alarm_modal" class="emuxn extension_modal tab_modal">
             <header>
                 <h3 class="extension_modal_heading">You Have An Alarm.</h3>
@@ -1100,7 +1122,6 @@
                 }
                 document.body.classList.add("modal_open")
                 alarm_modal.classList.add("inview")
-                console.log(alarm_modal)
                 alarm_modal.querySelector("#alarm_name").textContent = alarm.name;
                 alarm_modal.querySelector("#alarm_date").textContent = `${alarm.alarm_date} ${alarm.alarm_time}`;
                 
@@ -1126,7 +1147,22 @@
     }
     
     function showBlockedSiteModal(site) {
-        
+        let modal = document.createElement("section");
+        modal.innerHTML = blockSiteModal;
+        document.body.appendChild(modal)
+        document.body.classList.add("modal_open")
+
+        if (!document.querySelector("#site_blocked_modal").classList.contains("inview")) {
+            let site_blocked_modal = document.querySelector("#site_blocked_modal");
+            site_blocked_modal.classList.add("inview");
+
+            site_blocked_modal.querySelector("#close_site_button")
+            .addEventListener("click", () => {
+                chrome.runtime.sendMessage({
+                    type:  'CLOSE_TAB'
+                });
+            })
+        }
     }
 
     function closeUI() {
@@ -1465,6 +1501,7 @@
                     color_selector.classList.add("inview");
 
                     document.querySelectorAll(".color_list").forEach(color_list => {
+                        color_list.innerHTML = "";
                         color_presets.forEach(val => {
                             if (document.querySelectorAll(".color_list").length < color_presets.length) {
                                 let span = document.createElement("span");
@@ -1486,7 +1523,8 @@
                     })
 
 
-                    color_selector.querySelector(".new_color").addEventListener("change", () => {
+                    color_selector.querySelector(".new_color").addEventListener("input", () => {
+                        document.querySelector(".extension_modal.inview").querySelector(".selected_color").style.backgroundColor = color_selector.querySelector(".new_color").value;
                         document.querySelector(".extension_modal.inview").querySelector(".selected_color_input").value = color_selector.querySelector(".new_color").value
                         color_selector.classList.remove("inview")
                     })
@@ -1812,6 +1850,9 @@
                                 _memo["inEdit"] = true;
                             }
                         })
+                        modal.querySelector("button[type='submit']").addEventListener("click", () => {
+                            modal.querySelector("button[type='submit']").textContent = "Create";
+                        })
                     }
                 }
             }
@@ -1879,22 +1920,22 @@
                 if (!alarm_name & !alarm_date & !alarm_time) return;
         
                 var editedFound = false;
-                alarms && alarms.map(alarm => {
-                    if (alarm.inEdit) {
+                alarms && alarms.map(_alarm => {
+                    if (_alarm.inEdit) {
                         editedFound = true;
-        
-                        alarm["inEdit"] = false;
-                        alarm["name "] = alarm_name ;
-                        alarm["display_area "] = display_area ;
-                        alarm["color "] = alarm_color ;
-                        alarm["alarm_date "] = alarm_date ;
-                        alarm["alarm_time "] = alarm_time ;
-                        alarm["template "] = alarm_template ;
-                        alarm["date_created"] = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+                        _alarm["inEdit"] = false;
+                        _alarm["name "] = alarm_name ;
+                        _alarm["display_area "] = display_area ;
+                        _alarm["color"] = alarm_color;
+                        _alarm["alarm_date "] = alarm_date ;
+                        _alarm["alarm_time "] = alarm_time ;
+                        _alarm["template "] = alarm_template ;
+                        _alarm["date_created"] = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
 
-                        delete alarm["inEdit"];
+                        delete _alarm["inEdit"];
 
-                        makeRequest(`api/alarms/${alarm.id}/update/`, "PUT", site)
+
+                        makeRequest(`api/alarms/${_alarm.id}/update/`, "PUT", _alarm)
                         .then((response) => {
                             // save template to backend, only render if post was successful
                             renderAlarms();
@@ -1904,6 +1945,7 @@
                             create_alarm_form.parentElement.querySelector(".cancel_button").click();
                         })
                         .catch(err => {
+                            console.log(err)
                         })
                     }
                 })
@@ -2015,7 +2057,7 @@
                         const create_alarm_form = modal.querySelector("form");
                         create_alarm_form.querySelector("#alarm_name").value = alarm.name;
                         create_alarm_form.querySelector("#display_area").value = alarm.display_area;
-                        create_alarm_form.querySelector("#alarm_color").value = alarm.color;
+                        create_alarm_form.querySelector(".selected_color").style.backgroundColor = alarm.color;
                         create_alarm_form.querySelector("#alarm_date").value = alarm.alarm_date;
                         create_alarm_form.querySelector("#alarm_time").value = alarm.alarm_time;
                         create_alarm_form.querySelector("#alarm_template").value = alarm_template;
@@ -2025,6 +2067,9 @@
                             if (_alarm.id === alarm.id) {
                                 _alarm["inEdit"] = true;
                             }
+                        })
+                        modal.querySelector("button[type='submit']").addEventListener("click", () => {
+                            modal.querySelector("button[type='submit']").textContent = "Create";
                         })
                     }
                 }
@@ -2164,6 +2209,9 @@
                             if (_site.id === site.id) {
                                 _site["inEdit"] = true;
                             }
+                        })
+                        modal.querySelector("button[type='submit']").addEventListener("click", () => {
+                            modal.querySelector("button[type='submit']").textContent = "Create";
                         })
                     }
                 }
@@ -2351,21 +2399,34 @@
                             _template["inEdit"] = true;
                         }
                     })
+                    modal.querySelector("button[type='submit']").addEventListener("click", () => {
+                        modal.querySelector("button[type='submit']").textContent = "Create";
+                    })
                 }
             }
         
             document.querySelector("#template_list_activator").addEventListener("click", () => {
+                document.querySelector("#template_list_activator").classList.add("highlight");
+                document.querySelector("#task_list_activator").classList.remove("highlight");
                 document.querySelectorAll(".area_lists").forEach(list => {
                     if (list.classList.contains("inview")) list.classList.remove("inview");
         
-                    if (list.id == "templates") list.classList.add("inview");
+                    if (list.id == "templates") {
+                        list.classList.add("inview");
+                        list.classList.add("highlight");
+                    }
                 })
             })
             document.querySelector("#task_list_activator").addEventListener("click", () => {
+                document.querySelector("#template_list_activator").classList.remove("highlight");
+                document.querySelector("#task_list_activator").classList.add("highlight");
                 document.querySelectorAll(".area_lists").forEach(list => {
                     if (list.classList.contains("inview")) list.classList.remove("inview");
         
-                    if (list.id == "tasks") list.classList.add("inview");
+                    if (list.id == "tasks") {
+                        list.classList.add("inview");
+                        list.classList.add("highlight");
+                    }
                 })
             })
         
@@ -2576,6 +2637,9 @@
                         if (_task.id === Task.id) {
                             _task["inEdit"] = true;
                         }
+                    })
+                    modal.querySelector("button[type='submit']").addEventListener("click", () => {
+                        modal.querySelector("button[type='submit']").textContent = "Create";
                     })
                 }
             }

@@ -3,6 +3,7 @@
 chrome.action.onClicked.addListener(onClick);
 
 var tabURI;
+var current_tab_id;
 
 async function onClick() {
   const tabId = await getTabId();
@@ -100,6 +101,7 @@ function fetchAlarms(access_token) {
 }
 
 chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
+  current_tab_id = tabId;
 
   chrome.storage.sync.get(['access_token', "refresh_token", "focus_mode_on"], function(items){
     fetchAlarms(items.access_token)
@@ -241,6 +243,9 @@ async function messageListener(request, sender, sendResponse) {
         fetchAlarms(items.access_token)
       })
     }, 5000)
+  }
+  else if(request.type === "CLOSE_TAB"){
+    chrome.tabs.remove(current_tab_id, function() {});
   }
   sendResponse();
 }
