@@ -1,8 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;1,300&display=swap');
-
-*,
-*::after,
-*::before {
+.emuxn_area *,
+.emuxn_area *::after,
+.emuxn_area *::before {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -302,7 +301,7 @@ button {
     display: grid;
     gap: .5rem;
     overflow-y: auto;
-    max-height: 55vh;
+    max-height: 65vh;
 }
 
 .emuxn_sidebar hr {
@@ -400,8 +399,14 @@ button {
     gap: 1rem;
     z-index: 100000;
     inset-block-start: 40%;
-    inset-inline-start: 50%;
+    left: 50%;
     transform: translate(-50%, -40%);
+}
+html:dir(rtl) {
+    inset-inline-start: 0% !important;
+}
+.emuxn.emuxn_modal button {
+    outline: none;
 }
 @media (max-width: 1200px) {
     .emuxn_modal {
@@ -431,6 +436,8 @@ button {
     place-items: center;
     background-color: transparent;
     font-size: 16px;
+    border: 2px solid #a51bcf;
+    color: #1d1c1c;
 }
 
 
@@ -479,7 +486,7 @@ button {
 .emuxn_modal_form textarea {
     border: 1px solid var(--border-color);
     padding: 0.5rem;
-    inline-size: 100%;
+    inline-size: 95%;
     font-size: .9rem;
     outline: none;  
 }

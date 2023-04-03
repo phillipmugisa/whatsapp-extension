@@ -54,11 +54,32 @@ chrome.contextMenus.create({
 });
 
 
+function fetchAlarms(access_token) {
+  fetch(`${backend_url}api/alarms/`,
+  {
+    method: "GET",
+    mode: "cors",
+    cache: "no-cache",
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+    'Content-Type' : 'application/json',
+    "headers" : {
+        Authorization: "JWT " + access_token,
+    }
+  })
+  .then(resp => resp.json())
+  .then(data => {
+    alarms = data;
+    stop_alarm = false;
+  })
+}
 
 chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
   current_tab_id = tabId;
 
   chrome.storage.sync.get(['access_token', "refresh_token", "focus_mode_on"], function(items){
+    fetchAlarms(items.access_token)
+
 
     if (items.focus_mode_on == false) return;
 
@@ -188,7 +209,7 @@ async function messageListener(request, sender, sendResponse) {
     openTab(`/`);
   }
   else if(request.type === "CLOSE_TAB"){
-    chrome.tabs.remove(current_tab_id, function() {});
+    chrome.tabs.remove(await getTabId(), function() {});
   }
   sendResponse();
 }

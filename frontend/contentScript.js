@@ -1142,7 +1142,6 @@
             })
             .then(resp => resp.json())
             .then(data => {
-                console.log(alarms)
                 alarms = data;
                 makingApiCall = false
             })
