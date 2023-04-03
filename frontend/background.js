@@ -30,16 +30,20 @@ const onAllowedSite = (tabId, source_name) => {
 }
 
 function switchToTab(url) {
-  chrome.tabs.query({url: url}, function(tabs) {
-    if (tabs.length > 0) {
-      chrome.tabs.update(tabs[0].id, {active: true});
-    } else {
-      chrome.tabs.create({
-        url: `https://web.whatsapp.com/`,
-        selected: true,
-      })
-    }
-  });
+  return new Promise((resolve, reject) => {
+    chrome.tabs.query({url: url}, function(tabs) {
+      if (tabs.length > 0) {
+        chrome.tabs.update(tabs[0].id, {active: true});
+        resolve();
+      } else {
+        chrome.tabs.create({
+          url: url,
+          selected: true,
+        })
+        resolve();
+      }
+    });
+  })
 }
 
 function isPhoneNumber(text) {
@@ -120,11 +124,13 @@ chrome.tabs.onUpdated.addListener( function (tabId, changeInfo, tab) {
       // check if text is a phone number
       // redirect to whatsapp tab and send message   
       // if (isPhoneNumber(info.selectionText)) {
-        switchToTab("https://web.whatsapp.com/");
-        chrome.tabs.sendMessage(tabId, {
-          type: "SEND_MESSAGE_FROM_OUTSITE",
-          number: info.selectionText
-        });
+        switchToTab("https://web.whatsapp.com/")
+        .then(() => {
+          chrome.tabs.sendMessage(tabId, {
+            type: "SEND_MESSAGE_FROM_OUTSITE",
+            number: info.selectionText
+          })
+        })
   
       // } else {
       //   return;

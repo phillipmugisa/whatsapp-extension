@@ -1111,6 +1111,7 @@
             }
         }
         else if (obj.type === "SEND_MESSAGE_FROM_OUTSITE") {
+            console.log("SEND_MESSAGE_FROM_OUTSITE")
             document.querySelector("#msg_to_new_user_activator").click();
             const sendMsgToNewNoform = document.querySelector("#sendMsgToNewNoform");
     
