@@ -915,6 +915,12 @@ input:checked + .slider:before {
     font-weight: bold;
 }
 
+.emuxn_modal button {
+    padding: .25rem .5rem;
+    border: none;
+    outline: transparent;
+}
+
 
 .emuxn .text_link {
     color: #a51bcf;
