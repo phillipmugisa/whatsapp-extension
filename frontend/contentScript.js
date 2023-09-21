@@ -1546,8 +1546,8 @@
             template_modal_activator.addEventListener("click", () => openExtensionModal(template_modal_activator))
         
 
-            const schedule_msg_sidebar_activator = document.querySelector("#schedule_msg_sidebar_activator");
-            schedule_msg_sidebar_activator.addEventListener("click", () => showSidebar(schedule_msg_sidebar_activator))
+            // const schedule_msg_sidebar_activator = document.querySelector("#schedule_msg_sidebar_activator");
+            // schedule_msg_sidebar_activator.addEventListener("click", () => showSidebar(schedule_msg_sidebar_activator))
         
             const memo_sidebar_activator = document.querySelector("#memo_sidebar_activator");
             memo_sidebar_activator.addEventListener("click", () => showSidebar(memo_sidebar_activator))
@@ -2783,111 +2783,111 @@
                 let pendingTask = [];
                 let completeTask = [];
 
-                document.querySelectorAll(".lhggkp7q.jnl3jror.p357zi0d.gndfcl4n.ac2vgrno.ln8gz9je.ppled2lx").forEach(elem => elem.addEventListener("click", () => {
+                // document.querySelectorAll(".lhggkp7q.jnl3jror.p357zi0d.gndfcl4n.ac2vgrno.ln8gz9je.ppled2lx").forEach(elem => elem.addEventListener("click", () => {
                     
-                    if (document.querySelector(".overlay._3IBSU")) {
-                        document.body.classList.add("image_open")
-                    } else {
-                        if (document.body.classList.contains("image_open")) {
-                            document.body.classList.remove("image_open")
-                        }
-                    }
-                }))
+                //     if (document.querySelector(".overlay._3IBSU")) {
+                //         document.body.classList.add("image_open")
+                //     } else {
+                //         if (document.body.classList.contains("image_open")) {
+                //             document.body.classList.remove("image_open")
+                //         }
+                //     }
+                // }))
 
-                if (document.querySelector(".overlay._3IBSU")) {
-                    document.body.classList.add("image_open")
-                } else {
-                    if (document.body.classList.contains("image_open")) {
-                        document.body.classList.remove("image_open")
-                    }
-                }
+                // if (document.querySelector(".overlay._3IBSU")) {
+                //     document.body.classList.add("image_open")
+                // } else {
+                //     if (document.body.classList.contains("image_open")) {
+                //         document.body.classList.remove("image_open")
+                //     }
+                // }
 
                 
-                function taskIsComplete (task) {
-                    let currentDate = new Date();
-                    return new Date(`${task.sending_date}:${task.sending_time}`) < currentDate;
+                // function taskIsComplete (task) {
+                //     let currentDate = new Date();
+                //     return new Date(`${task.sending_date}:${task.sending_time}`) < currentDate;
                     
-                }
+                // }
 
-                function sendTask(task) {
-                    document.querySelectorAll(".g0rxnol2._3fGK2 .ggj6brxn.gfz4du6o.r7fjleex.g0rxnol2.lhj4utae.le5p0ye3.l7jjieqr._11JPr").forEach(elem => {
-                        if (elem.title == task.contact || elem.textContent == task.contact) {
-                            let parentElem = elem.closest(".lhggkp7q.ln8gz9je.rx9719la");
-                            // simulate chat select
-                            parentElem.click()
-                        }
-                        // elem.querySelector(".delete_note").addEventListener("click", () => {
-                        //     makeRequest(`api/tasks/${task.id}/delete/`, "DELETE")
-                        //     .then((response) => {
-                        //         renderTasks(null);
-                        //     })
-                        //     .catch(err => {
-                        //         renderTasks(null);
-                        //     })
-                        // })
-                    })
+                // function sendTask(task) {
+                //     document.querySelectorAll(".g0rxnol2._3fGK2 .ggj6brxn.gfz4du6o.r7fjleex.g0rxnol2.lhj4utae.le5p0ye3.l7jjieqr._11JPr").forEach(elem => {
+                //         if (elem.title == task.contact || elem.textContent == task.contact) {
+                //             let parentElem = elem.closest(".lhggkp7q.ln8gz9je.rx9719la");
+                //             // simulate chat select
+                //             parentElem.click()
+                //         }
+                //         // elem.querySelector(".delete_note").addEventListener("click", () => {
+                //         //     makeRequest(`api/tasks/${task.id}/delete/`, "DELETE")
+                //         //     .then((response) => {
+                //         //         renderTasks(null);
+                //         //     })
+                //         //     .catch(err => {
+                //         //         renderTasks(null);
+                //         //     })
+                //         // })
+                //     })
 
                     
-                }
+                // }
 
                 // check if chat open has a scheduled task
                 // if so render it
                 function updateChat() {
-                    var chatHeader = document.querySelector("header._23P3O");
+                    var chatHeader = document.querySelector("header.AmmtE");
                     if (chatHeader) {
 
-                        let chatName = document.querySelector(`[data-testid="conversation-info-header-chat-title"]`).textContent
+                        // let chatName = document.querySelector(`[data-testid="conversation-info-header-chat-title"]`).textContent
 
-                        if (document.querySelector(`[data-testid="chat-subtitle"] span`) && document.querySelector(`[data-testid="chat-subtitle"] span`).title.split("+").length > 1) {
-                            // is group
-                            if (!chatHeader.querySelector(".emuxn_header_icon")) {
-                                // add group list icon
-                                icons_area = chatHeader.querySelector("._1sPvB._2XdMx");
-                                let icon = document.createElement("div")
-                                icon.className = "emuxn_header_icon"
-                                icon.id = "group_modal_activator"
-                                icon.dataset.modalId = "group_modal"
-                                icon.style.cursor = "pointer"
-                                icon.innerHTML = `
-                                <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-                                <svg width="20px" height="20px" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" stroke-width="3" stroke="#000000" fill="none"><polygon points="8.5 8.46 55.5 8.46 55.38 15 36 34 36 55.54 26 50 26 34 8.5 15 8.5 8.46"/><line x1="8.5" y1="14.47" x2="55.5" y2="14.47"/></svg>
-                                `
-                                icons_area.style.display = "flex"
-                                icons_area.style.alignItems = "center"
-                                icons_area.style.gap = ".5rem"
-                                icons_area.prepend(icon)
+                        // if (document.querySelector(`[data-testid="chat-subtitle"] span`) && document.querySelector(`[data-testid="chat-subtitle"] span`).title.split("+").length > 1) {
+                        //     // is group
+                        //     if (!chatHeader.querySelector(".emuxn_header_icon")) {
+                        //         // add group list icon
+                        //         icons_area = chatHeader.querySelector("._1sPvB._2XdMx");
+                        //         let icon = document.createElement("div")
+                        //         icon.className = "emuxn_header_icon"
+                        //         icon.id = "group_modal_activator"
+                        //         icon.dataset.modalId = "group_modal"
+                        //         icon.style.cursor = "pointer"
+                        //         icon.innerHTML = `
+                        //         <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                        //         <svg width="20px" height="20px" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" stroke-width="3" stroke="#000000" fill="none"><polygon points="8.5 8.46 55.5 8.46 55.38 15 36 34 36 55.54 26 50 26 34 8.5 15 8.5 8.46"/><line x1="8.5" y1="14.47" x2="55.5" y2="14.47"/></svg>
+                        //         `
+                        //         icons_area.style.display = "flex"
+                        //         icons_area.style.alignItems = "center"
+                        //         icons_area.style.gap = ".5rem"
+                        //         icons_area.prepend(icon)
 
-                                icon.addEventListener("click", () => {
-                                    // csvContent
-                                    csvContentName = chatName
+                        //         icon.addEventListener("click", () => {
+                        //             // csvContent
+                        //             csvContentName = chatName
 
-                                    csvContent = document.querySelector(`[data-testid="chat-subtitle"] span`).title.split(",").map(contact => `${contact}\n`)
+                        //             csvContent = document.querySelector(`[data-testid="chat-subtitle"] span`).title.split(",").map(contact => `${contact}\n`)
 
-                                    openExtensionModal(icon)
-                                })
-                            }
+                        //             openExtensionModal(icon)
+                        //         })
+                        //     }
                             
-                        }
+                        // }
                         
 
-                        const task_lists = document.querySelector(".emuxn_sidebar_notes#tasks");
+                        // const task_lists = document.querySelector(".emuxn_sidebar_notes#tasks");
 
-                        let userTasks = tasks.filter(task => task.contact === chatName);
-                        if (userTasks) {
-                            userTasks.forEach(
-                                _task => {
-                                    if (document.querySelectorAll(".scheduled_msg_area").length < 1) {
-                                        let chatArea = document.querySelector(".n5hs2j7m.oq31bsqd.gx1rr48f.qh5tioqs");
-                                        chatArea.appendChild(createScheduledMsgElem(_task))
-                                    }
-                                    else if (document.querySelectorAll(`[data-task-id="${_task.id}"]`).length < 1) {
-                                        // add to open whatsapp chat
-                                        let chatArea = document.querySelector(".n5hs2j7m.oq31bsqd.gx1rr48f.qh5tioqs");
-                                        chatArea.appendChild(createScheduledMsgElem(_task))
-                                    }
-                                }
-                            )
-                        }
+                        // let userTasks = tasks.filter(task => task.contact === chatName);
+                        // if (userTasks) {
+                        //     userTasks.forEach(
+                        //         _task => {
+                        //             if (document.querySelectorAll(".scheduled_msg_area").length < 1) {
+                        //                 let chatArea = document.querySelector(".n5hs2j7m.oq31bsqd.gx1rr48f.qh5tioqs");
+                        //                 chatArea.appendChild(createScheduledMsgElem(_task))
+                        //             }
+                        //             else if (document.querySelectorAll(`[data-task-id="${_task.id}"]`).length < 1) {
+                        //                 // add to open whatsapp chat
+                        //                 let chatArea = document.querySelector(".n5hs2j7m.oq31bsqd.gx1rr48f.qh5tioqs");
+                        //                 chatArea.appendChild(createScheduledMsgElem(_task))
+                        //             }
+                        //         }
+                        //     )
+                        // }
                         
                         // AI FEATURE
 
@@ -2932,7 +2932,7 @@
 
                         const messages = document.querySelectorAll(".message-in")
                         messages.forEach(message => {
-                            var reaction_area = message.querySelector(".p357zi0d.ktfrpxia.nu7pwgvd.fhf7t426.sap93d0t.gndfcl4n._1m68F");
+                            var reaction_area = message.querySelector(".message-in div div._1BOF7._2AOIt + div");
                             message.addEventListener("mouseenter", () => {
                                 
                                 if (!message.querySelector(".ai_activator")) {
