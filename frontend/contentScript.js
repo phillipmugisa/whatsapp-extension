@@ -1631,7 +1631,7 @@
                     color_selector.querySelector(".new_color").addEventListener("input", () => {
                         document.querySelector(".emuxn_modal.inview").querySelector(".selected_color").style.backgroundColor = color_selector.querySelector(".new_color").value;
                         document.querySelector(".emuxn_modal.inview").querySelector(".selected_color_input").value = color_selector.querySelector(".new_color").value
-                        color_selector.classList.remove("inview")
+                        // color_selector.classList.remove("inview")
                     })
                 })
             )
@@ -2863,38 +2863,39 @@
                     var chatHeader = document.querySelector("header.AmmtE");
                     if (chatHeader) {
 
-                        // let chatName = document.querySelector(`[data-testid="conversation-info-header-chat-title"]`).textContent
+                        let chatName = document.querySelector(`header.AmmtE .ggj6brxn.gfz4du6o.r7fjleex.g0rxnol2.lhj4utae.le5p0ye3.l7jjieqr._11JPr`).textContent
+                        let contacts_list = document.querySelector(`span.ggj6brxn.gfz4du6o.r7fjleex.lhj4utae.le5p0ye3._11JPr.selectable-text.copyable-text`)
+                        let is_group = contacts_list.title.split(",").length > 1
+                        if (contacts_list && is_group) {
+                            // is group
+                            if (!chatHeader.querySelector(".emuxn_header_icon")) {
+                                // add group list icon
+                                icons_area = chatHeader.querySelector("._1sPvB._2XdMx");
+                                let icon = document.createElement("div")
+                                icon.className = "emuxn_header_icon"
+                                icon.id = "group_modal_activator"
+                                icon.dataset.modalId = "group_modal"
+                                icon.style.cursor = "pointer"
+                                icon.innerHTML = `
+                                <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                                <svg width="20px" height="20px" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" stroke-width="3" stroke="#000000" fill="none"><polygon points="8.5 8.46 55.5 8.46 55.38 15 36 34 36 55.54 26 50 26 34 8.5 15 8.5 8.46"/><line x1="8.5" y1="14.47" x2="55.5" y2="14.47"/></svg>
+                                `
+                                icons_area.style.display = "flex"
+                                icons_area.style.alignItems = "center"
+                                icons_area.style.gap = ".5rem"
+                                icons_area.prepend(icon)
 
-                        // if (document.querySelector(`[data-testid="chat-subtitle"] span`) && document.querySelector(`[data-testid="chat-subtitle"] span`).title.split("+").length > 1) {
-                        //     // is group
-                        //     if (!chatHeader.querySelector(".emuxn_header_icon")) {
-                        //         // add group list icon
-                        //         icons_area = chatHeader.querySelector("._1sPvB._2XdMx");
-                        //         let icon = document.createElement("div")
-                        //         icon.className = "emuxn_header_icon"
-                        //         icon.id = "group_modal_activator"
-                        //         icon.dataset.modalId = "group_modal"
-                        //         icon.style.cursor = "pointer"
-                        //         icon.innerHTML = `
-                        //         <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-                        //         <svg width="20px" height="20px" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" stroke-width="3" stroke="#000000" fill="none"><polygon points="8.5 8.46 55.5 8.46 55.38 15 36 34 36 55.54 26 50 26 34 8.5 15 8.5 8.46"/><line x1="8.5" y1="14.47" x2="55.5" y2="14.47"/></svg>
-                        //         `
-                        //         icons_area.style.display = "flex"
-                        //         icons_area.style.alignItems = "center"
-                        //         icons_area.style.gap = ".5rem"
-                        //         icons_area.prepend(icon)
+                                icon.addEventListener("click", () => {
+                                    // csvContent
+                                    csvContentName = chatName
 
-                        //         icon.addEventListener("click", () => {
-                        //             // csvContent
-                        //             csvContentName = chatName
+                                    csvContent = contacts_list.title.split(",").map(contact => `${contact}\n`)
 
-                        //             csvContent = document.querySelector(`[data-testid="chat-subtitle"] span`).title.split(",").map(contact => `${contact}\n`)
-
-                        //             openExtensionModal(icon)
-                        //         })
-                        //     }
+                                    openExtensionModal(icon)
+                                })
+                            }
                             
-                        // }
+                        }
                         
 
                         // const task_lists = document.querySelector(".emuxn_sidebar_notes#tasks");
