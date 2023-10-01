@@ -986,3 +986,9 @@ input:checked + .slider:before {
     }
 }
   
+
+.close_color_selector {
+    background-color: rgb(165, 27, 207);
+    padding: 1rem 2rem;
+    color: white;
+}

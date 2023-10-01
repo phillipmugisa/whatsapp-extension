@@ -208,7 +208,7 @@
                 </div>
                 <p id="emp"></p>
                 <p id="alarm_date"></p>
-                <audio src="" style="display: none"></audio>
+                <audio src=""></audio>
             </div>
             <footer>
                 <button class="cancel_button">Dismiss</button>
@@ -242,8 +242,9 @@
                         <input type="color" id="memo_color" name="memo_color" class="selected_color_input" required style="opacity: 0;">
 
                         <div class="color_selector">
-                            <header>
+                            <header style="display: flex; gap: 1rem;align-items: center">
                                 <h2 style="font-weight: 500">Select Label Color.</h2>
+                                <span class="close_color_selector" style="padding: .5rem 1rem;">close</span>
                             </header>
                             <body>
                                 <div class="color_list"></div>
@@ -308,8 +309,9 @@
                         <input type="color" id="msg_color" name="msg_color" class="selected_color_input" required style="opacity: 0;">
 
                         <div class="color_selector">
-                            <header>
+                            <header style="display: flex; gap: 1rem;align-items: center">
                                 <h2 style="font-weight: 500">Select Label Color.</h2>
+                                <span class="close_color_selector" style="padding: .5rem 1rem;">close</span>
                             </header>
                             <body>
                                 <div class="color_list"></div>
@@ -358,8 +360,9 @@
                         <input type="color" id="template_color" name="template_color" class="selected_color_input" required style="opacity: 0;">
 
                         <div class="color_selector">
-                            <header>
+                            <header style="display: flex; gap: 1rem;align-items: center">
                                 <h2 style="font-weight: 500">Select Label Color.</h2>
+                                <span class="close_color_selector" style="padding: .5rem 1rem;">close</span>
                             </header>
                             <body>
                                 <div class="color_list"></div>
@@ -408,8 +411,9 @@
                         <input type="color" id="alarm_color" name="alarm_color" class="selected_color_input" required style="opacity: 0;">
 
                         <div class="color_selector">
-                            <header>
+                            <header style="display: flex; gap: 1rem;align-items: center">
                                 <h2 style="font-weight: 500">Select Label Color.</h2>
+                                <span class="close_color_selector" style="padding: .5rem 1rem;">close</span>
                             </header>
                             <body>
                                 <div class="color_list"></div>
@@ -936,7 +940,10 @@
                     </div>
                     <div class="emuxn_form_group" id="new_msg_link_area" style="display: none;">
                        <span style="font-size: .9rem;">Link:</span>
-                       <a style="color: teal;font-size: .9rem;" id="new_msg_link" href=""></a>
+                       <div style="display: flex; gap: 1rem;align-items: flex-start;">
+                        <span style="color: teal;font-size: .9rem;" id="new_msg_link"></span>
+                        <span id="new_msg_link_copied" style="display: none; background: rgba(0, 0, 0, 0.7);padding: 0.25rem;color: white;border-radius: 5px;font-size: 12px;">Copied</span>
+                       </div>
                     </div>
                 </div>
             </form>
@@ -1053,6 +1060,9 @@
       
     // make requests
     const makeRequest = async (url, method, data={}, access_token=null) => {
+        if (method === "POST") {
+            console.log(data)
+        }
 
         let fetchData = {
             method: method,
@@ -1590,6 +1600,10 @@
                 elem => elem.addEventListener("click", () => {
                     var color_selector = elem.closest(".emuxn_form_group").querySelector(".color_selector")
                     color_selector.classList.add("inview");
+                    color_selector.querySelector(".close_color_selector").addEventListener("click", (e) => {
+                        e.preventDefault()
+                        color_selector.classList.remove("inview")
+                    })
 
                     document.querySelectorAll(".color_list").forEach(color_list => {
                         color_list.innerHTML = "";
@@ -1605,9 +1619,9 @@
                                     document.querySelector(".emuxn_modal.inview").querySelector(".selected_color").style.backgroundColor = val;
                                     document.querySelector(".emuxn_modal.inview").querySelector(".selected_color_input").value = val;
                                     
-                                    color_list.innerHTML = "";
+                                    // color_list.innerHTML = "";
 
-                                    color_selector.classList.remove("inview")
+                                    // color_selector.classList.remove("inview")
                                 })
                             }
                         })
@@ -1789,10 +1803,17 @@
                 let fullNumber = `${countryCode}${phoneNumber[0] == '0' ? phoneNumber.slice(1) : phoneNumber}`
                 let requestUrl = `https://api.whatsapp.com/send?phone=${fullNumber}&text=${message}`;
                 new_msg_link.textContent = requestUrl;
-                new_msg_link.href = requestUrl;
 
+                document.querySelector("#generate_link").querySelector(".cancel_button").addEventListener("click", () => {
+                    new_msg_link.textContent = "";
+                    document.querySelector("#new_msg_link_area").style.display = "none";
+                })
                 new_msg_link.addEventListener("click", () => {
-                    document.querySelector("#generate_link").querySelector(".cancel_button").click();
+                    document.querySelector("#new_msg_link_copied").style.display = "grid"
+                    navigator.clipboard.writeText(requestUrl)
+                    setTimeout(() => {
+                        document.querySelector("#new_msg_link_copied").style.display = "none"
+                    }, 3000)
                 })
             }
         
@@ -1911,6 +1932,12 @@
                         </div>
                     `;
                     memoElem.querySelector("span").style.backgroundColor = memo.color;
+                    memoElem.querySelector(".content").addEventListener("click", (e) => {
+                        if (e.target.closest("note_actions") || e.target.classList.contains("edit_note") || e.target.classList.contains("delete_note")){
+                            return;
+                        }
+                        editMemo(memo)
+                    })
                     memoElem.querySelector(".delete_note").addEventListener("click", () => {
                         confirmOperation()
                         .then(() => {
@@ -2909,8 +2936,12 @@
 
                         function fetchRenderReplies(ai_replies, message_text, selected_tone_value) {
                             // make api call
-                            let url = `api/ai/${message_text}/${selected_tone_value}/`;
-                            makeRequest(url, "GET")
+                            let url = `api/ai/`;
+                            let request_data = {
+                                "message" : message_text,
+                                "tone": selected_tone_value
+                            }
+                            makeRequest(url, "POST", data=request_data)
                             .then((response) => {
 
                                 // ai_replies.childNodes.forEach(child => ai_replies.removeChild(child));
@@ -2960,7 +2991,7 @@
                                         }
 
                                         
-                                        var message_text = message.querySelector("._11JPr.selectable-text.copyable-text span").textContent.replace(/\n/g, "").replace(/[^\w\s]/gi, "").replace(/\s+/g, " ").trim();
+                                        var message_text = message.querySelector("._11JPr.selectable-text.copyable-text span").textContent.replace(/\n/g, "").replace(/\s+/g, " ").trim();
 
                                         // show modal
                                         const ai_modal = document.querySelector("#ai_modal");
